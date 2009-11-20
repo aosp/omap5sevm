@@ -1,0 +1,11 @@
+# system.prop for ldp
+# This overrides settings in the products/generic/system.prop file
+#
+# rild.libpath=/system/lib/libreference-ril.so
+# rild.libargs=-d /dev/ttyS0
+opencore.asmd=1
+keyguard.no_require_sim=1
+wifi.interface=tiwlan0
+alsa.mixer.playback.master=DAC2 Analog
+alsa.mixer.capture.master=Analog
+
