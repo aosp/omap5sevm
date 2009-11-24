@@ -188,7 +188,6 @@ on boot
 
     # Permissions for System Server and daemons.
     chmod 0444 /system/usr/keychars/omap_twl4030keypad.kcm.bin
-    chmod 0444 /system/usr/keychars/TWL4030_Keypad.kcm.bin
     chmod 0444 /system/usr/keychars/qwerty.kcm.bin
     chown radio system /sys/android_power/state
     chown radio system /sys/android_power/request_state

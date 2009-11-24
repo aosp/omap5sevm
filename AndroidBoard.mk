@@ -31,7 +31,6 @@ PRODUCT_COPY_FILES += \
 #
 include $(CLEAR_VARS)
 LOCAL_SRC_FILES := omap_twl4030keypad.kcm
-LOCAL_SRC_FILES := TWL4030_Keypad.kcm
 
 include $(BUILD_KEY_CHAR_MAP)
 
