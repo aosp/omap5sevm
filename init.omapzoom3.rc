@@ -327,7 +327,7 @@ service dbus /system/bin/dbus-daemon --system --nofork
     user bluetooth
     group bluetooth net_bt_admin
 
-service hcid /system/bin/hcid -s -n -f /etc/bluez/hcid.conf
+service bluetoothd /system/bin/bluetoothd -d -n
     socket bluetooth stream 660 bluetooth bluetooth
     socket dbus_bluetooth stream 660 bluetooth bluetooth
     # init.rc does not yet support applying capabilities, so run as root and
@@ -359,6 +359,12 @@ service hfag /system/bin/sdptool add --channel=10 HFAG
     oneshot
 
 service hsag /system/bin/sdptool add --channel=11 HSAG
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
+service opush /system/bin/sdptool add --channel=12 OPUSH
     user bluetooth
     group bluetooth net_bt_admin
     disabled
