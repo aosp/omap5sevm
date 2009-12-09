@@ -14,10 +14,11 @@
 # limitations under the License.
 #
 
-$(call inherit-product, vendor/ti/zoom3/zoom3_generic.mk)
+$(call inherit-product, vendor/ti/nextgen/omap_generic.mk)
 
 # Overrides
-PRODUCT_NAME := zoom3
+PRODUCT_NAME := omap4sdp
+PRODUCT_DEVICE := omap4dsp
 PRODUCT_MODEL := SDP Generic
 PRODUCT_LOCALES := en_US
 
@@ -32,7 +33,7 @@ PRODUCT_PACKAGES += \
 	FieldTest \
 	SdkSetup
 
-#PRODUCT_COPY_FILES += vendor/ti/zoom3/apns.xml:system/etc/apns-conf.xml
+#PRODUCT_COPY_FILES += vendor/ti/nextgen/apns.xml:system/etc/apns-conf.xml
 
 # Pick up audio package
 include frameworks/base/data/sounds/AudioPackage2.mk

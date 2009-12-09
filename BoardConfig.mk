@@ -6,7 +6,7 @@ TARGET_ARCH_VARIANT := armv7-a
 
 # Kernel/Bootloader machine name
 #
-TARGET_BOOTLOADER_BOARD_NAME := zoom3
+TARGET_BOOTLOADER_BOARD_NAME := omap4sdp
 TARGET_NO_KERNEL := true
 
 # Modem

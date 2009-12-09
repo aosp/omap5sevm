@@ -37,5 +37,5 @@ include $(BUILD_KEY_CHAR_MAP)
 # board specific init.rc
 #
 PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/init.omapzoom3.rc:root/init.omapzoom3.rc
+	$(LOCAL_PATH)/init.omap4sdp.rc:root/init.omap4sdp.rc
 

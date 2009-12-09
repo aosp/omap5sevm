@@ -17,6 +17,6 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/generic.mk)
 
 # Overrides
-PRODUCT_DEVICE := zoom3
+PRODUCT_DEVICE := nextgen
 PRODUCT_MANUFACTURER := TI
 

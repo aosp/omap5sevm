@@ -26,5 +26,5 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/zoom3.mk 
+    $(LOCAL_DIR)/omap4sdp.mk 
 
