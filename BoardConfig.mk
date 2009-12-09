@@ -3,6 +3,7 @@
 TARGET_NO_BOOTLOADER := true
 TARGET_CPU_ABI := armeabi
 TARGET_ARCH_VARIANT := armv7-a
+ARCH_ARM_HAVE_TLS_REGISTER := true
 
 # Kernel/Bootloader machine name
 #
