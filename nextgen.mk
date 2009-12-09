@@ -17,8 +17,7 @@
 $(call inherit-product, vendor/ti/nextgen/omap_generic.mk)
 
 # Overrides
-PRODUCT_NAME := omap4sdp
-PRODUCT_DEVICE := omap4dsp
+PRODUCT_NAME := nextgen
 PRODUCT_MODEL := SDP Generic
 PRODUCT_LOCALES := en_US
 

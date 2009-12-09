@@ -26,5 +26,5 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/omap4sdp.mk 
+    $(LOCAL_DIR)/nextgen.mk 
 
