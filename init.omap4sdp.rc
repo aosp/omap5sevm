@@ -336,6 +336,11 @@ service bluetoothd /system/bin/bluetoothd -d -n
     disabled
     oneshot
 
+service uim /system/xbin/uim /dev/ttyO1 3000000 1 /sys/uim/pid 21
+    user root
+    group media bluetooth
+    oneshot
+
 service hciattach /system/bin/hciattach -n /dev/ttyS1 texas 3000000
     user root
 # changing user to root from bluetooth is a potential security issue

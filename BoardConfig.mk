@@ -24,7 +24,7 @@ WIFI_DRIVER_MODULE_NAME     := "tiwlan_drv"
 WIFI_FIRMWARE_LOADER        := "wlan_loader"
 
 # Bluetooth
-#BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH := true
 
 # FM
 #BUILD_FM_RADIO := true
