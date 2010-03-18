@@ -18,7 +18,7 @@ TARGET_NO_RADIOIMAGE := true
 
 # Wifi
 BOARD_WPA_SUPPLICANT_DRIVER := CUSTOM
-BOARD_WLAN_TI_STA_DK_ROOT   := system/wlan/ti/wilink_6_1
+BOARD_WLAN_TI_STA_DK_ROOT   := system/wlan/ti/wilink7
 WIFI_DRIVER_MODULE_PATH     := "/system/etc/wifi/tiwlan_drv.ko"
 WIFI_DRIVER_MODULE_NAME     := "tiwlan_drv"
 WIFI_FIRMWARE_LOADER        := "wlan_loader"
