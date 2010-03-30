@@ -1,5 +1,6 @@
-# OMAP Zoom 1 Board configuration
+# OMAP Next Generation Board configuration
 #
+TARGET_BOARD_PLATFORM := omap4
 TARGET_NO_BOOTLOADER := true
 TARGET_CPU_ABI := armeabi
 TARGET_ARCH_VARIANT := armv7-a
