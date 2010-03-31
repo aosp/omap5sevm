@@ -187,7 +187,7 @@ on boot
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor conservative
 
     # Permissions for System Server and daemons.
-    chmod 0444 /system/usr/keychars/omap_twl4030keypad.kcm.bin
+    chmod 0444 /system/usr/keychars/omap_keypad.kcm.bin
     chmod 0444 /system/usr/keychars/qwerty.kcm.bin
     chown radio system /sys/android_power/state
     chown radio system /sys/android_power/request_state
