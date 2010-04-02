@@ -8,7 +8,7 @@ key 7     6
 key 8     7
 key 9     8
 key 10    9
-key 78    0
+key 78    PLUS
 key 158   BACK              WAKE_DROPPED
 key 14    BACK              WAKE_DROPPED
 key 230   SOFT_RIGHT        WAKE
@@ -25,23 +25,24 @@ key 228   POUND
 key 66    POUND
 key 227   STAR
 key 65    STAR
+key 63    STAR
+key 64    STAR
 key 231   CALL              WAKE_DROPPED
-key 102   CALL              WAKE_DROPPED
 key 232   DPAD_CENTER       WAKE_DROPPED
 key 108   DPAD_DOWN         WAKE_DROPPED
 key 103   DPAD_UP           WAKE_DROPPED
-key 63    HOME              WAKE
 key 105   DPAD_LEFT         WAKE_DROPPED
 key 106   DPAD_RIGHT        WAKE_DROPPED
 key 115   VOLUME_UP
 key 114   VOLUME_DOWN
 key 116   POWER             WAKE
 key 212   CAMERA
-key 148	  DPAD_CENTER
+key 148	  SEARCH
 key 149	  SEARCH
 key 202   EXPLORER
 key 203   ENVELOPE
 key 102	  HOME
+key 352   DPAD_CENTER
 key 16    Q
 key 17    W
 key 18    E
@@ -67,7 +68,7 @@ key 38    L
 key 39    SEMICOLON
 key 40    APOSTROPHE
 key 61    DEL
-key 352   ENTER
+key 353   ENTER
 key 44    Z
 key 45    X
 key 46    C
