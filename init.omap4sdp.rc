@@ -18,6 +18,7 @@ loglevel 3
     export PM_TBLFILE /system/etc/policytable.tbl
     export DECTYPE HW
 
+
 # Location of BT firmware files
     export BT_FW_PATH /system/lib/firmware    
 # Backward compatibility
@@ -128,6 +129,9 @@ loglevel 3
     # change permissions for Previewer and Resizer
     chmod 0777 /dev/omap-previewer
     chmod 0777 /dev/omap-resizer
+
+     # change permissions for Tiler driver
+     chmod 0777 /dev/tiler
 
     # double check the perms, in case lost+found already exists, and set owner
     chown root root /lost+found
