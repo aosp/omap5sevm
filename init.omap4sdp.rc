@@ -281,6 +281,12 @@ service omx_rm /system/bin/OMXResourceManager
 service adbd /sbin/adbd
     disabled
 
+service bootanim /system/bin/bootanimation
+    user graphics
+    group graphics
+    disabled
+    oneshot
+
 # adbd on at boot in emulator
 on property:ro.kernel.qemu=1
     start adbd
