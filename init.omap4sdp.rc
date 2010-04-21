@@ -178,6 +178,14 @@ on boot
     setprop ro.CONTENT_PROVIDER_MEM 5632
     setprop ro.EMPTY_APP_MEM 6144
 
+# Define JPEG codec to load. (Set libskiahw with 1 & Set ARM with 0)
+setprop jpeg.libskiahw.encoder.enable 0
+setprop jpeg.libskiahw.decoder.enable 0
+
+# Define JPEG Threashold for Image size (bytes)
+setprop jpeg.libskiahw.decoder.thresh 0
+setprop jpeg.libskiahw.encoder.thresh 0
+
 # Write value must be consistent with the above properties.
 # Note that the driver only supports 6 slots, so we have HOME_APP at the
 # same memory level as services.
