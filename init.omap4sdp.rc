@@ -13,8 +13,6 @@ loglevel 3
     export EXTERNAL_STORAGE /sdcard
     export BOOTCLASSPATH /system/framework/core.jar:/system/framework/ext.jar:/system/framework/framework.jar:/system/framework/android.policy.jar:/system/framework/services.jar
     export DSP_PATH /system/lib/dsp
-    export DEFAULT_BASEIMAGE /system/lib/dsp/baseimage.dof
-    export QOSDYN_FILE /system/lib/dsp/qosdyn_3430.dll64P
     export PM_TBLFILE /system/etc/policytable.tbl
     export DECTYPE HW
 
@@ -51,6 +49,12 @@ loglevel 3
 #    mount yaffs2 mtd@userdata /data nosuid nodev
     chown system system /data
     chmod 0771 /data
+	chmod 777 /dev/syslink-proc4430
+	chmod 777 /dev/syslink-procmgr
+	chmod 777 /dev/notifyducatidrv
+	chmod 777 /dev/ipcnotify
+	chmod 777 /dev/syslink_ipc
+	chmod 777 /dev/dmm
 
     # Same reason as /data above
 #    mount yaffs2 mtd@cache /cache nosuid nodev
@@ -287,18 +291,6 @@ setprop jpeg.libskiahw.encoder.thresh 0
 service console /system/bin/sh
     console
 
-# load DSP firmware
-service baseimage /system/bin/cexec.out /system/lib/dsp/baseimage.dof
-    user root
-    group audio
-    oneshot
-
-service omx_pm /system/bin/OMXPolicyManager
-    oneshot
-
-service omx_rm /system/bin/OMXResourceManager
-    oneshot
-
 # Initialize the SGX driver
 service pvrsrvinit /system/bin/pvrsrvinit
     user root
@@ -367,6 +359,13 @@ service media /system/bin/mediaserver
 service fw3a /system/bin/fw3a_core
     user root
     group root
+
+# load IVA firmware
+service baseimage /system/bin/syslink_daemon.out /data/Notify_MPUSYS_reroute_Test_Core0.xem3 /data/base_image_app_m3.xem3
+     critical
+     user root
+     group video
+     oneshot
 
 service bootsound /system/bin/playmp3
     user media
