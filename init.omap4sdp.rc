@@ -18,7 +18,7 @@ loglevel 3
 
 
 # Location of BT firmware files
-    export BT_FW_PATH /system/lib/firmware    
+    export BT_FW_PATH /system/lib/firmware
 # Backward compatibility
     symlink /system/etc /etc
 
@@ -49,12 +49,12 @@ loglevel 3
 #    mount yaffs2 mtd@userdata /data nosuid nodev
     chown system system /data
     chmod 0771 /data
-	chmod 777 /dev/syslink-proc4430
-	chmod 777 /dev/syslink-procmgr
-	chmod 777 /dev/notifyducatidrv
-	chmod 777 /dev/ipcnotify
-	chmod 777 /dev/syslink_ipc
-	chmod 777 /dev/dmm
+    chmod 777 /dev/syslink-proc4430
+    chmod 777 /dev/syslink-procmgr
+    chmod 777 /dev/notifyducatidrv
+    chmod 777 /dev/ipcnotify
+    chmod 777 /dev/syslink_ipc
+    chmod 777 /dev/dmm
 
     # Same reason as /data above
 #    mount yaffs2 mtd@cache /cache nosuid nodev
@@ -129,6 +129,31 @@ loglevel 3
     chmod 0777 /sys/devices/platform/omapdss/overlay1/zorder
     chmod 0777 /sys/devices/platform/omapdss/overlay2/zorder
     chmod 0777 /sys/devices/platform/omapdss/overlay3/zorder
+    # change permissions for manager tranparency parameters
+    chmod 0777 /sys/devices/platform/omapdss/manager0/name
+    chmod 0777 /sys/devices/platform/omapdss/manager0/display
+    chmod 0777 /sys/devices/platform/omapdss/manager0/trans_key_value
+    chmod 0777 /sys/devices/platform/omapdss/manager0/trans_key_type
+    chmod 0777 /sys/devices/platform/omapdss/manager0/trans_key_enabled
+    chmod 0777 /sys/devices/platform/omapdss/manager1/name
+    chmod 0777 /sys/devices/platform/omapdss/manager1/display
+    chmod 0777 /sys/devices/platform/omapdss/manager1/trans_key_value
+    chmod 0777 /sys/devices/platform/omapdss/manager1/trans_key_type
+    chmod 0777 /sys/devices/platform/omapdss/manager1/trans_key_enabled
+    chmod 0777 /sys/devices/platform/omapdss/manager2/name
+    chmod 0777 /sys/devices/platform/omapdss/manager2/display
+    chmod 0777 /sys/devices/platform/omapdss/manager2/trans_key_value
+    chmod 0777 /sys/devices/platform/omapdss/manager2/trans_key_type
+    chmod 0777 /sys/devices/platform/omapdss/manager2/trans_key_enabled
+    chmod 0777 /sys/devices/platform/omapdss/overlay0/enabled
+    chmod 0777 /sys/devices/platform/omapdss/overlay1/enabled
+    chmod 0777 /sys/devices/platform/omapdss/overlay2/enabled
+    chmod 0777 /sys/devices/platform/omapdss/overlay3/enabled
+    # change permissions for display timings to get the resolutions
+    chmod 0777 /sys/devices/platform/omapdss/display0/timings
+    chmod 0777 /sys/devices/platform/omapdss/display1/timings
+    chmod 0777 /sys/devices/platform/omapdss/display2/timings
+    chmod 0777 /sys/devices/platform/omapdss/display3/timings
 
     # change permissions for Previewer and Resizer
     chmod 0777 /dev/omap-previewer
@@ -279,9 +304,9 @@ setprop jpeg.libskiahw.encoder.thresh 0
 
 # Define modem related settings
     setprop ro.radio.use-ppp yes
-    setprop keyguard.no_require_sim 1 
+    setprop keyguard.no_require_sim 1
     setprop ro.config.nocheckin yes
-    
+
 # SGX driver
     chmod 0666 /dev/pvrsrvkm
 
@@ -319,7 +344,7 @@ on property:persist.service.adb.enable=0
 
 service mux /system/bin/gsm0710muxd -s /dev/ttyS0 -n 3 -m basic
 #service mux /system/bin/gsm0710muxd -v -s /dev/ttyS0 -b 460800 -n 3 -m advanced
-    user radio      
+    user radio
     group radio cache inet misc
     oneshot
 
@@ -395,7 +420,7 @@ service uim /system/xbin/uim /dev/ttyO1 3000000 1 /sys/uim/pid 21
 service hciattach /system/bin/hciattach -n /dev/ttyS1 texas 3000000
     user root
 # changing user to root from bluetooth is a potential security issue
-# service hciattach_legacy is used instead of hciattach because, we dont 
+# service hciattach_legacy is used instead of hciattach because, we dont
 # have nodes named ttyHS0
     group bluetooth net_bt_admin misc
     disabled
@@ -447,7 +472,7 @@ service wpa_supplicant /system/bin/wpa_supplicant -Dtiwlan0 -itiwlan0 -c/data/mi
     oneshot
 
 service dhcpcd /system/bin/dhcpcd -BKL -d tiwlan0
-    disabled 
+    disabled
     oneshot
 
 # Enable ALSA drivers on boot-up
