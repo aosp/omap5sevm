@@ -30,7 +30,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
 	Quake \
 	FieldTest \
-	SdkSetup
+	SdkSetup \
+	LiveWallpapers \
+	LiveWallpapersPicker \
+	MagicSmokeWallpapers \
+	VisualizationWallpapers
 
 #PRODUCT_COPY_FILES += vendor/ti/nextgen/apns.xml:system/etc/apns-conf.xml
 
