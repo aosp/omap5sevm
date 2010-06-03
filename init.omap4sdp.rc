@@ -69,6 +69,7 @@ loglevel 3
 # create basic filesystem structure
     mkdir /data/misc 01771 system misc
     mkdir /data/misc/hcid 0770 bluetooth bluetooth
+    mkdir /data/misc/keystore 0777 keystore keystore
     mkdir /data/misc/wifi 0771 wifi wifi
     mkdir /data/misc/wifi/sockets 0771 wifi wifi
     mkdir /data/misc/dhcp 0777 wifi wifi
@@ -475,3 +476,7 @@ service dhcpcd /system/bin/dhcpcd -BKL -d tiwlan0
     disabled
     oneshot
 
+service keystore /system/bin/keystore /data/misc/keystore
+    user keystore
+    group keystore
+    socket keystore stream 666
