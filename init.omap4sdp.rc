@@ -472,7 +472,7 @@ service wpa_supplicant /system/bin/wpa_supplicant -Dtiwlan0 -itiwlan0 -c/data/mi
     disabled
     oneshot
 
-service dhcpcd /system/bin/dhcpcd -BKL -d tiwlan0
+service dhcpcd /system/bin/dhcpcd -ABKL -d tiwlan0
     disabled
     oneshot
 
