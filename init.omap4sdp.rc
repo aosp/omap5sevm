@@ -54,6 +54,7 @@ loglevel 3
     chmod 777 /dev/notifyducatidrv
     chmod 777 /dev/ipcnotify
     chmod 777 /dev/syslink_ipc
+    chmod 777 /dev/syslink_platform
     chmod 777 /dev/dmm
 
     # Same reason as /data above
