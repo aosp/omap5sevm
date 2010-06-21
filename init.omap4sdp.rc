@@ -241,6 +241,10 @@ setprop jpeg.libskiahw.encoder.thresh 0
     write /proc/1/oom_adj -16
 
 # Enabling Power Management features
+	
+    # Hold a wakelock on omap4 till PM starts to work
+    # Else the system will just die
+    write /sys/power/wake_lock hack_suspend_blocker
 
     # Enabling sleep in idle path
     write /sys/power/sleep_while_idle 1
