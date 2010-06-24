@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-$(call inherit-product, device/ti/blaze/omap_generic.mk)
+$(call inherit-product, $(LOCAL_PATH)/omap_generic.mk)
 
 # Overrides
 PRODUCT_NAME := blaze
