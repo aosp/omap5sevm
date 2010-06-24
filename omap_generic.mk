@@ -17,6 +17,6 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/generic.mk)
 
 # Overrides
-PRODUCT_DEVICE := nextgen
+PRODUCT_DEVICE := blaze
 PRODUCT_MANUFACTURER := TI
 

@@ -14,11 +14,11 @@
 # limitations under the License.
 #
 
-$(call inherit-product, vendor/ti/nextgen/omap_generic.mk)
+$(call inherit-product, device/ti/blaze/omap_generic.mk)
 
 # Overrides
-PRODUCT_NAME := nextgen
-PRODUCT_MODEL := SDP Generic
+PRODUCT_NAME := blaze
+PRODUCT_MODEL := Blaze generic
 PRODUCT_LOCALES := en_US
 
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -36,7 +36,7 @@ PRODUCT_PACKAGES += \
 	MagicSmokeWallpapers \
 	VisualizationWallpapers
 
-#PRODUCT_COPY_FILES += vendor/ti/nextgen/apns.xml:system/etc/apns-conf.xml
+#PRODUCT_COPY_FILES += device/ti/blaze/apns.xml:system/etc/apns-conf.xml
 
 # Pick up audio package
 include frameworks/base/data/sounds/AudioPackage2.mk

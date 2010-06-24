@@ -26,5 +26,5 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/nextgen.mk 
+    $(LOCAL_DIR)/blaze.mk 
 
