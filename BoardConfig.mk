@@ -19,7 +19,7 @@ TARGET_NO_RADIOIMAGE := true
 
 # Wifi
 BOARD_WPA_SUPPLICANT_DRIVER := CUSTOM
-BOARD_WLAN_DEVICE           := wl1271
+BOARD_WLAN_DEVICE           := wl1283
 WPA_SUPPLICANT_VERSION      := VER_0_6_X
 WIFI_DRIVER_MODULE_PATH     := "/system/etc/wifi/tiwlan_drv.ko"
 WIFI_DRIVER_MODULE_NAME     := "tiwlan_drv"
