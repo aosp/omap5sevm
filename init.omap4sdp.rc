@@ -68,7 +68,7 @@ loglevel 3
 
 # create basic filesystem structure
     mkdir /data/misc 01771 system misc
-    mkdir /data/misc/hcid 0770 bluetooth bluetooth
+    mkdir /data/misc/bluetoothd 0770 bluetooth bluetooth
     mkdir /data/misc/keystore 0777 keystore keystore
     mkdir /data/misc/wifi 0771 wifi wifi
     mkdir /data/misc/wifi/sockets 0771 wifi wifi
@@ -412,7 +412,7 @@ service bluetoothd /system/bin/bluetoothd -d -n
     socket bluetooth stream 660 bluetooth bluetooth
     socket dbus_bluetooth stream 660 bluetooth bluetooth
     # init.rc does not yet support applying capabilities, so run as root and
-    # let hcid drop uid to bluetooth with the right linux capabilities
+    # let bluetoothd drop uid to bluetooth with the right linux capabilities
     group bluetooth net_bt_admin misc
     disabled
     oneshot
@@ -422,7 +422,7 @@ service uim /system/xbin/uim /dev/ttyO1 3000000 1 /sys/uim/pid 21
     group media bluetooth
     oneshot
 
-service hciattach /system/bin/hciattach -n /dev/ttyS1 texas 3000000
+service hciattach /system/bin/hciattach -l
     user root
 # changing user to root from bluetooth is a potential security issue
 # service hciattach_legacy is used instead of hciattach because, we dont
