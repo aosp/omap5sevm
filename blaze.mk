@@ -34,7 +34,8 @@ PRODUCT_PACKAGES += \
 	LiveWallpapers \
 	LiveWallpapersPicker \
 	MagicSmokeWallpapers \
-	VisualizationWallpapers
+	VisualizationWallpapers \
+        CameraOMAP4
 
 #PRODUCT_COPY_FILES += device/ti/blaze/apns.xml:system/etc/apns-conf.xml
 
