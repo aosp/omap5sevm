@@ -61,3 +61,5 @@ endif
 # This define enables the compilation of OpenCore's command line TestApps
 #BUILD_PV_TEST_APPS :=1
 
+# Enable Audio Modem
+BOARD_USES_TI_OMAP_MODEM_AUDIO := true
