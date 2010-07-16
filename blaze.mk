@@ -24,22 +24,22 @@ PRODUCT_MODEL := Blaze generic
 PRODUCT_LOCALES := en_US
 
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.com.android.dateformat=MM-dd-yyyy \
+        ro.com.android.dateformat=MM-dd-yyyy \
         ro.com.android.dataroaming=true \
-	ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
-	ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html
+        ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
+        ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html
 
 PRODUCT_PACKAGES += \
-	Quake \
-	FieldTest \
-	SdkSetup \
-	LiveWallpapers \
-	LiveWallpapersPicker \
-	MagicSmokeWallpapers \
-	VisualizationWallpapers \
+        Quake \
+        FieldTest \
+        SdkSetup \
+        LiveWallpapers \
+        LiveWallpapersPicker \
+        MagicSmokeWallpapers \
+        VisualizationWallpapers \
         CameraOMAP4
 
-#PRODUCT_COPY_FILES += device/ti/blaze/apns.xml:system/etc/apns-conf.xml
+PRODUCT_COPY_FILES += device/ti/blaze/apns.xml:system/etc/apns-conf.xml
 
 # Pick up audio package
 include frameworks/base/data/sounds/AudioPackage2.mk
