@@ -11,19 +11,20 @@ endif
 file := $(INSTALLED_KERNEL_TARGET)
 ALL_PREBUILT += $(file)
 $(file): $(TARGET_PREBUILT_KERNEL) | $(ACP)
-	$(transform-prebuilt-to-target)
+         $(transform-prebuilt-to-target)
 
 # keyboard layouts
 #
 PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/omap_keypad.kl:system/usr/keylayout/omap_keypad.kl 
+        $(LOCAL_PATH)/omap_keypad.kl:system/usr/keylayout/omap_keypad.kl 
 
 
 # system configuration files
 #
 PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/vold.conf:system/etc/vold.conf \
-	$(LOCAL_PATH)/asound.conf:system/etc/asound.conf \
+        $(LOCAL_PATH)/vold.conf:system/etc/vold.conf \
+        $(LOCAL_PATH)/vold.fstab:system/etc/vold.fstab \
+        $(LOCAL_PATH)/asound.conf:system/etc/asound.conf \
         $(TI_OMX_POLICY_MANAGER)/src/policytable.tbl:system/etc/policytable.tbl
 
 
