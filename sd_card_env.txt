@@ -1,0 +1,4 @@
+setenv bootargs androidboot.console=ttyO2 console=ttyO2,115200n8 mem=463M root=/dev/mmcblk0p2 rw rootdelay=1 init=/init omapfb.vram=0:4M
+setenv bootcmd 'mmcinit 0; fatload mmc 0 0x80000000 uImage;bootm 80000000'
+saveenv
+run bootcmd
