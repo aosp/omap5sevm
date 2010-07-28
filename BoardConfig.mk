@@ -53,6 +53,8 @@ BOARD_OPENCORE_LIBRARIES := libOMX_Core
 BOARD_OPENCORE_FLAGS := -DHARDWARE_OMX=1
 endif
 
+COMMON_GLOBAL_CFLAGS += -DOMAP_ENHANCEMENT
+
 # This define enables the compilation of OpenCore's command line TestApps
 #BUILD_PV_TEST_APPS :=1
 
