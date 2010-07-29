@@ -25,8 +25,8 @@ PRODUCT_COPY_FILES += \
         $(LOCAL_PATH)/vold.conf:system/etc/vold.conf \
         $(LOCAL_PATH)/vold.fstab:system/etc/vold.fstab \
         $(LOCAL_PATH)/asound.conf:system/etc/asound.conf \
-        $(TI_OMX_POLICY_MANAGER)/src/policytable.tbl:system/etc/policytable.tbl
-
+        $(TI_OMX_POLICY_MANAGER)/src/policytable.tbl:system/etc/policytable.tbl \
+        $(LOCAL_PATH)/media_profiles.xml:system/etc/media_profiles.xml
 
 # keyboard maps
 #
