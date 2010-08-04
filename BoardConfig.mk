@@ -5,6 +5,7 @@ TARGET_NO_BOOTLOADER := true
 TARGET_CPU_ABI := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
+OMAP_ENHANCEMENT := true
 
 # Kernel/Bootloader machine name
 #
@@ -53,7 +54,9 @@ BOARD_OPENCORE_LIBRARIES := libOMX_Core
 BOARD_OPENCORE_FLAGS := -DHARDWARE_OMX=1
 endif
 
+ifdef OMAP_ENHANCEMENT
 COMMON_GLOBAL_CFLAGS += -DOMAP_ENHANCEMENT
+endif
 
 # This define enables the compilation of OpenCore's command line TestApps
 #BUILD_PV_TEST_APPS :=1
