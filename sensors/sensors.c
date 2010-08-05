@@ -655,11 +655,9 @@ static int data__poll(struct sensors_data_context_t *dev, sensors_data_t* values
         /* read the next event */
         struct input_event event;
         uint32_t v;
-	LOGE("Read");
         int nread = read(fd, &event, sizeof(event));
-	LOGE("Read done");
         if (nread != sizeof(event)) {
-            LOGE("Event size sucks");
+            LOGE("Incorrect event size size=%i", nread);
             return -1;
         }
            //LOGD("type: %d code: %d value: %-5d time: %ds",
