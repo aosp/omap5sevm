@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+PRODUCT_PACKAGE_OVERLAYS := device/ti/blaze/overlay
+
 $(call inherit-product, $(LOCAL_PATH)/omap_generic.mk)
 
 # Overrides
