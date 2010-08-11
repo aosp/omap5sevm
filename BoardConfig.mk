@@ -55,7 +55,7 @@ BOARD_OPENCORE_FLAGS := -DHARDWARE_OMX=1
 endif
 
 ifdef OMAP_ENHANCEMENT
-COMMON_GLOBAL_CFLAGS += -DOMAP_ENHANCEMENT
+COMMON_GLOBAL_CFLAGS += -DOMAP_ENHANCEMENT -DTARGET_OMAP4
 endif
 
 # This define enables the compilation of OpenCore's command line TestApps
