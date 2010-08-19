@@ -10,3 +10,6 @@ alsa.mixer.playback.master=DAC2 Analog
 alsa.mixer.capture.master=Analog
 dalvik.vm.heapsize=32m
 
+# Define modem related settings
+ro.radio.use-ppp no
+ro.config.nocheckin yes
