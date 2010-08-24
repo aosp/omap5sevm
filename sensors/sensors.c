@@ -34,7 +34,7 @@
 
 /*****************************************************************************/
 
-#define MAX_NUM_SENSORS 6
+#define MAX_NUM_SENSORS 7
 
 #define SUPPORTED_SENSORS  ((1<<MAX_NUM_SENSORS)-1)
 
@@ -44,6 +44,7 @@
 #define ID_T  (3)
 #define ID_P  (4)
 #define ID_L  (5)
+#define ID_PRESS  (6)
 
 #define SENSORS_ACCELERATION   (1<<ID_A)
 #define SENSORS_MAGNETIC_FIELD (1<<ID_M)
@@ -51,8 +52,9 @@
 #define SENSORS_TEMPERATURE    (1<<ID_T)
 #define SENSORS_PROXIMITY      (1<<ID_P)
 #define SENSORS_LIGHT          (1<<ID_L)
+#define SENSORS_PRESSURE       (1<<ID_PRESS)
 
-#define MAX_NUM_DRIVERS 3
+#define MAX_NUM_DRIVERS 4
 
 #define BASE_LOCATION   0
 #define ENABLE_LOCATION  1
@@ -61,6 +63,7 @@
 
 #define ID_CMA  (0)
 #define ID_SFH  (1)
+#define ID_BMP  (2)
 
 struct driver_t {
     char *name;		/* name reported to input module */
@@ -81,6 +84,11 @@ static struct driver_t dDriverList[] = {
          "/sys/devices/platform/sfh7741.1/state",
          "",
          (SENSORS_PROXIMITY) },
+    {"bmp085",
+	"/sys/bus/i2c/drivers/bmp085/4-0077/",
+        "/sys/bus/i2c/drivers/bmp085/4-0077/enable",
+        "",
+        (SENSORS_PRESSURE | SENSORS_TEMPERATURE)  },
     {"bh1780gli",
          "",
          "",
@@ -119,6 +127,14 @@ static const struct sensor_t sSensorList[] = {
                 "OSRAM Opto Semiconductors",
                 1, SENSORS_HANDLE_BASE+ID_P,
                 SENSOR_TYPE_PROXIMITY, 2147483644.0f, 2147483644.0f, 0.045f, { } },
+        { "BMP085 Pressure sensor",
+                "Bosch",
+                1, SENSORS_HANDLE_BASE+ID_PRESS,
+                SENSOR_TYPE_PRESSURE, 2147483644.0f, 2147483644.0f, 0.045f, { } },
+        { "BMP085 Temperature sensor",
+                "Bosch",
+                1, SENSORS_HANDLE_BASE+ID_T,
+                SENSOR_TYPE_TEMPERATURE, 0.0f, 120.0f, 0.045f, { } },
         { "Ambient Light sensor",
                 "Unknown",
                 1, SENSORS_HANDLE_BASE+ID_L,
@@ -163,6 +179,9 @@ const struct sensors_module_t HAL_MODULE_INFO_SYM = {
 #define EVENT_TYPE_LIGHT            LED_MISC
 #define EVENT_TYPE_PROXIMITY        ABS_DISTANCE
 
+#define EVENT_TYPE_PRESSURE         ABS_PRESSURE
+#define EVENT_TYPE_TEMPERATURE      ABS_MISC
+
 // 1000 LSG = 1G
 #define LSG                         (1000.0f)
 
@@ -173,6 +192,8 @@ const struct sensors_module_t HAL_MODULE_INFO_SYM = {
 #define CONVERT_A_Z                 (CONVERT_A)
 
 #define CONVERT_P                   (1.0f/10.0f)
+#define CONVERT_PRESS               (1.0f/100.0f)
+#define CONVERT_TEMP                (1.0f/10.0f)
 
 /*PROX_HACK: This does not belong here this belongs in the kernel just hack it until the
 change is made */
@@ -298,6 +319,8 @@ static int uinput_create(char *name)
     ioctl(uinputfd, UI_SET_ABSBIT, EVENT_TYPE_ACCEL_Z);
 
     ioctl(uinputfd, UI_SET_ABSBIT, EVENT_TYPE_PROXIMITY);
+    ioctl(uinputfd, UI_SET_ABSBIT, EVENT_TYPE_PRESSURE);
+    ioctl(uinputfd, UI_SET_ABSBIT, EVENT_TYPE_TEMPERATURE);
     ioctl(uinputfd, UI_SET_LEDBIT, EVENT_TYPE_LIGHT);
 
     /* no need to filter since drivers already do */
@@ -384,6 +407,14 @@ static void *poll_thread(void *arg)
                                         new_sensors |= SENSORS_PROXIMITY;
                                         dev->filter_sensors[ID_P].distance = event.value;
                                         break;
+                                    case EVENT_TYPE_PRESSURE:
+                                        new_sensors |= SENSORS_PRESSURE;
+                                        dev->filter_sensors[ID_PRESS].pressure = event.value;
+                                        break;
+                                    case EVENT_TYPE_TEMPERATURE:
+                                        new_sensors |= SENSORS_TEMPERATURE;
+                                        dev->filter_sensors[ID_T].temperature = event.value;
+                                        break;
                                 }
                             } else if (event.type == EV_LED) {
                                 if (event.code == LED_MISC) {
@@ -421,6 +452,16 @@ static void *poll_thread(void *arg)
                                         case SENSORS_PROXIMITY:
                                             send_event(dev->uinput, EV_ABS, EVENT_TYPE_PROXIMITY,
                                                 dev->filter_sensors[ID_P].distance);
+                                            send_event(dev->uinput, EV_SYN, 0, 0);
+                                            break;
+                                        case SENSORS_PRESSURE:
+                                            send_event(dev->uinput, EV_ABS, EVENT_TYPE_PRESSURE,
+                                                dev->filter_sensors[ID_PRESS].pressure);
+                                            send_event(dev->uinput, EV_SYN, 0, 0);
+                                            break;
+                                        case SENSORS_TEMPERATURE:
+                                            send_event(dev->uinput, EV_ABS, EVENT_TYPE_TEMPERATURE,
+                                                dev->filter_sensors[ID_T].temperature);
                                             send_event(dev->uinput, EV_SYN, 0, 0);
                                             break;
                                         case SENSORS_LIGHT:
@@ -484,6 +525,7 @@ static int control__activate(struct sensors_control_context_t *dev,
 
     if ((handle<SENSORS_HANDLE_BASE) ||
             (handle>=SENSORS_HANDLE_BASE+MAX_NUM_SENSORS)) {
+	    LOGD("Max num of sensors is: %d and handle is %d",MAX_NUM_SENSORS, handle);
         return -1;
     }
 
@@ -535,6 +577,36 @@ static int control__activate(struct sensors_control_context_t *dev,
                 LOGE("ID_SFH open error");
                 err = fd;
             }
+        }
+
+        if (changed_enabled & (SENSORS_PRESSURE | SENSORS_TEMPERATURE)) {
+            int fd = open_dev(dev, ID_BMP, ENABLE_LOCATION);
+            if (fd >= 0) {
+		if (changed_enabled & SENSORS_PRESSURE) {
+			if (dev->active_sensors	& SENSORS_TEMPERATURE)
+				flags = (new_enabled & SENSORS_PRESSURE) ? 3 : 2;
+			else
+				flags = (new_enabled & SENSORS_PRESSURE) ? 1 : 0;
+		}
+		if (changed_enabled & SENSORS_TEMPERATURE) {
+			if (dev->active_sensors	& SENSORS_PRESSURE)
+				flags = (new_enabled & SENSORS_PRESSURE) ? 3 : 1;
+			else
+				flags = (new_enabled & SENSORS_PRESSURE) ? 2 : 0;
+		}
+	        char buffer[20];
+	        int bytes = sprintf(buffer, "%d\n", flags);
+                //LOGD("BMP085 SET ENABLE: flag = %d", flags);
+                if (write(fd, buffer, bytes) < 0) {
+                    LOGE("BMP085 SET ENABLE failed(%s)", strerror(errno));
+                    err = -errno;
+                }
+                close_dev(dev, ID_BMP, new_enabled, ENABLE_LOCATION);
+            } else {
+                LOGE("ID_BMP open error");
+                err = fd;
+            }
+	err = 0;
         }
 
         if (err < 0)
@@ -687,6 +759,14 @@ static int data__poll(struct sensors_data_context_t *dev, sensors_data_t* values
                         event.value = PROXIMITY_NEAR;
 
                     dev->sensors[ID_P].distance = event.value * CONVERT_P;
+                    break;
+                case EVENT_TYPE_PRESSURE:
+                    new_sensors |= SENSORS_PRESSURE;
+                    dev->sensors[ID_PRESS].pressure = event.value * CONVERT_PRESS;
+                    break;
+                case EVENT_TYPE_TEMPERATURE:
+                    new_sensors |= SENSORS_TEMPERATURE;
+                    dev->sensors[ID_T].temperature = event.value * CONVERT_TEMP;
                     break;
 		}
         } else if (event.type == EV_LED) {
