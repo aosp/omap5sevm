@@ -102,7 +102,11 @@ loglevel 3
     chmod 777 /dev/omap-rproc0
     chmod 777 /dev/omap-rproc1
     chmod 777 /dev/omap-rproc2
-    chmod 777 /dev/omap-iommu0
+    chmod 777 /dev/iovmm-omap0
+    chmod 777 /dev/iovmm-omap1
+    chmod 777 /dev/omap-devh0
+    chmod 777 /dev/omap-devh1
+    chmod 777 /dev/omap-devh2
 
     # Create dump dir and collect dumps.
     # Do this before we mount cache so eventually we can use cache for
