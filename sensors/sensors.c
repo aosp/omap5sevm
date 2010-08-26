@@ -168,7 +168,7 @@ const struct sensors_module_t HAL_MODULE_INFO_SYM = {
 
 // conversion of acceleration data to SI units (m/s^2)
 #define CONVERT_A                   (GRAVITY_EARTH / LSG)
-#define CONVERT_A_X                 (-CONVERT_A)
+#define CONVERT_A_X                 (CONVERT_A)
 #define CONVERT_A_Y                 (CONVERT_A)
 #define CONVERT_A_Z                 (CONVERT_A)
 
@@ -667,11 +667,11 @@ static int data__poll(struct sensors_data_context_t *dev, sensors_data_t* values
             switch (event.code) {
                 case EVENT_TYPE_ACCEL_X:
                     new_sensors |= SENSORS_ACCELERATION;
-                    dev->sensors[ID_A].acceleration.x = event.value * CONVERT_A_X;
+                    dev->sensors[ID_A].acceleration.y = event.value * CONVERT_A_Y;
                     break;
                 case EVENT_TYPE_ACCEL_Y:
                     new_sensors |= SENSORS_ACCELERATION;
-                    dev->sensors[ID_A].acceleration.y = event.value * CONVERT_A_Y;
+                    dev->sensors[ID_A].acceleration.x = event.value * CONVERT_A_X;
                     break;
                 case EVENT_TYPE_ACCEL_Z:
                     new_sensors |= SENSORS_ACCELERATION;
