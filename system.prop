@@ -3,6 +3,7 @@
 #
 # rild.libpath=/system/lib/libreference-ril.so
 # rild.libargs=-d /dev/ttyS0
+com.ti.omap_enhancement=true
 opencore.asmd=1
 keyguard.no_require_sim=1
 wifi.interface=tiwlan0
