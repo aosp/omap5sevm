@@ -201,13 +201,13 @@ loglevel 3
     chmod 0777 /dev/video0
 
     # change permissions for Sensors
-    chmod 0777 /sys/bus/i2c/drivers/cma3000_accl/4-001c
-    chmod 0777 /sys/bus/i2c/drivers/cma3000_accl/4-001c/enable
-    chmod 0777 /sys/bus/i2c/drivers/cma3000_accl/4-001c/delay
-    chmod 0777 /sys/devices/platform/sfh7741.1
-    chmod 0777 /sys/devices/platform/sfh7741.1/state
-    chmod 0777 /sys/bus/i2c/drivers/bmp085/4-0077
-    chmod 0777 /sys/bus/i2c/drivers/bmp085/4-0077/enable
+    chown system system /sys/bus/i2c/drivers/cma3000_accl/4-001c
+    chown system system /sys/bus/i2c/drivers/cma3000_accl/4-001c/enable
+    chown system system /sys/bus/i2c/drivers/cma3000_accl/4-001c/delay
+    chown system system /sys/devices/platform/sfh7741.1
+    chown system system /sys/devices/platform/sfh7741.1/state
+    chown system system /sys/bus/i2c/drivers/bmp085/4-0077
+    chown system system /sys/bus/i2c/drivers/bmp085/4-0077/enable
 
     # change permissions for Overlay
     chmod 0777 /dev/video1
