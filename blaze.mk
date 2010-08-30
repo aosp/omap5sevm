@@ -32,7 +32,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
         Quake \
         FieldTest \
-        SdkSetup \
         LiveWallpapers \
         LiveWallpapersPicker \
         MagicSmokeWallpapers \
