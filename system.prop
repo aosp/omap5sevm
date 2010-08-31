@@ -10,6 +10,7 @@ wifi.interface=tiwlan0
 alsa.mixer.playback.master=DAC2 Analog
 alsa.mixer.capture.master=Analog
 dalvik.vm.heapsize=32m
+ro.sf.lcd_density=240
 
 # Define modem related settings
 ro.radio.use-ppp no
