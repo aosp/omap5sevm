@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# protect makefile from other boards
+ifeq ($(TARGET_DEVICE),blaze)
+
 common_ti_dirs := sensors
 
 include $(call all-named-subdir-makefiles, $(common_ti_dirs))
+
+endif
