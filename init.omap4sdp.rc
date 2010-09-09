@@ -212,6 +212,9 @@ loglevel 3
     chown system system /sys/devices/platform/sfh7741.1/state
     chown system system /sys/bus/i2c/drivers/bmp085/4-0077
     chown system system /sys/bus/i2c/drivers/bmp085/4-0077/enable
+    chown system system /sys/bus/i2c/drivers/hmc5843/4-001e
+    chown system system /sys/bus/i2c/drivers/hmc5843/4-001e/enable
+    chown system system /sys/bus/i2c/drivers/hmc5843/4-001e/rate
 
     # change permissions for Overlay
     chmod 0777 /dev/video1
