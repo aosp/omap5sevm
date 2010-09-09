@@ -54,7 +54,7 @@
 #define SENSORS_LIGHT          (1<<ID_L)
 #define SENSORS_PRESSURE       (1<<ID_PRESS)
 
-#define MAX_NUM_DRIVERS 4
+#define MAX_NUM_DRIVERS 5
 
 #define BASE_LOCATION   0
 #define ENABLE_LOCATION  1
@@ -64,6 +64,7 @@
 #define ID_CMA  (0)
 #define ID_SFH  (1)
 #define ID_BMP  (2)
+#define ID_HMC  (3)
 
 struct driver_t {
     char *name;		/* name reported to input module */
@@ -89,6 +90,11 @@ static struct driver_t dDriverList[] = {
         "/sys/bus/i2c/drivers/bmp085/4-0077/enable",
         "",
         (SENSORS_PRESSURE | SENSORS_TEMPERATURE)  },
+    {"hmc5843",
+         "/sys/bus/i2c/drivers/hmc5843/4-001e/",
+         "/sys/bus/i2c/drivers/hmc5843/4-001e/enable",
+         "/sys/bus/i2c/drivers/hmc5843/4-001e/rate",
+        (SENSORS_MAGNETIC_FIELD) },
     {"bh1780gli",
          "",
          "",
@@ -135,6 +141,10 @@ static const struct sensor_t sSensorList[] = {
                 "Bosch",
                 1, SENSORS_HANDLE_BASE+ID_T,
                 SENSOR_TYPE_TEMPERATURE, 0.0f, 120.0f, 0.045f, { } },
+        { "HMC5843 3-Axis Magnetometer",
+                "HoneyWell",
+                1, SENSORS_HANDLE_BASE+ID_M,
+                SENSOR_TYPE_MAGNETIC_FIELD, 2000.0f, 1.0f, 6.7f, { } },
         { "Ambient Light sensor",
                 "Unknown",
                 1, SENSORS_HANDLE_BASE+ID_L,
@@ -176,6 +186,10 @@ const struct sensors_module_t HAL_MODULE_INFO_SYM = {
 #define EVENT_TYPE_ACCEL_Y          ABS_X
 #define EVENT_TYPE_ACCEL_Z          ABS_Z
 
+#define EVENT_TYPE_MAGV_X           ABS_HAT0Y
+#define EVENT_TYPE_MAGV_Y           ABS_HAT0X
+#define EVENT_TYPE_MAGV_Z           ABS_BRAKE
+
 #define EVENT_TYPE_LIGHT            LED_MISC
 #define EVENT_TYPE_PROXIMITY        ABS_DISTANCE
 
@@ -190,6 +204,12 @@ const struct sensors_module_t HAL_MODULE_INFO_SYM = {
 #define CONVERT_A_X                 (CONVERT_A)
 #define CONVERT_A_Y                 (CONVERT_A)
 #define CONVERT_A_Z                 (CONVERT_A)
+
+// conversion of magnetic data to uT units
+#define CONVERT_M                   (1.0f/16.0f)
+#define CONVERT_M_X                 (-CONVERT_M)
+#define CONVERT_M_Y                 (-CONVERT_M)
+#define CONVERT_M_Z                 (-CONVERT_M)
 
 #define CONVERT_P                   (1.0f/10.0f)
 #define CONVERT_PRESS               (1.0f/100.0f)
@@ -318,6 +338,10 @@ static int uinput_create(char *name)
     ioctl(uinputfd, UI_SET_ABSBIT, EVENT_TYPE_ACCEL_Y);
     ioctl(uinputfd, UI_SET_ABSBIT, EVENT_TYPE_ACCEL_Z);
 
+    ioctl(uinputfd, UI_SET_ABSBIT, EVENT_TYPE_MAGV_X);
+    ioctl(uinputfd, UI_SET_ABSBIT, EVENT_TYPE_MAGV_Y);
+    ioctl(uinputfd, UI_SET_ABSBIT, EVENT_TYPE_MAGV_Z);
+
     ioctl(uinputfd, UI_SET_ABSBIT, EVENT_TYPE_PROXIMITY);
     ioctl(uinputfd, UI_SET_ABSBIT, EVENT_TYPE_PRESSURE);
     ioctl(uinputfd, UI_SET_ABSBIT, EVENT_TYPE_TEMPERATURE);
@@ -403,6 +427,18 @@ static void *poll_thread(void *arg)
                                         new_sensors |= SENSORS_ACCELERATION;
                                         dev->filter_sensors[ID_A].acceleration.z = event.value;
                                         break;
+                                    case EVENT_TYPE_MAGV_X:
+		                        new_sensors |= SENSORS_MAGNETIC_FIELD;
+		                        dev->filter_sensors[ID_M].magnetic.x = event.value;
+		                        break;
+		                    case EVENT_TYPE_MAGV_Y:
+		                        new_sensors |= SENSORS_MAGNETIC_FIELD;
+		                        dev->filter_sensors[ID_M].magnetic.y = event.value;
+		                        break;
+		                    case EVENT_TYPE_MAGV_Z:
+			                 new_sensors |= SENSORS_MAGNETIC_FIELD;
+		                        dev->filter_sensors[ID_M].magnetic.z = event.value;
+		                        break;
                                     case EVENT_TYPE_PROXIMITY:
                                         new_sensors |= SENSORS_PROXIMITY;
                                         dev->filter_sensors[ID_P].distance = event.value;
@@ -449,6 +485,15 @@ static void *poll_thread(void *arg)
                                                 send_event(dev->uinput, EV_SYN, 0, 0);
                                             }
                                             break;
+                                        case SENSORS_MAGNETIC_FIELD:
+                                            send_event(dev->uinput, EV_ABS, EVENT_TYPE_MAGV_X,
+                                                dev->filter_sensors[ID_M].magnetic.x);
+                                            send_event(dev->uinput, EV_ABS, EVENT_TYPE_MAGV_Y,
+                                                dev->filter_sensors[ID_M].magnetic.y);
+                                            send_event(dev->uinput, EV_ABS, EVENT_TYPE_MAGV_Z,
+                                                dev->filter_sensors[ID_M].magnetic.z);
+                                            send_event(dev->uinput, EV_SYN, 0, 0);
+					    break;
                                         case SENSORS_PROXIMITY:
                                             send_event(dev->uinput, EV_ABS, EVENT_TYPE_PROXIMITY,
                                                 dev->filter_sensors[ID_P].distance);
@@ -561,6 +606,24 @@ static int control__activate(struct sensors_control_context_t *dev,
 	err = 0;
         }
 
+	if (changed_enabled & SENSORS_MAGNETIC_FIELD) {
+            int fd = open_dev(dev, ID_HMC, ENABLE_LOCATION);
+            if (fd >= 0) {
+                flags = (new_enabled & SENSORS_MAGNETIC_FIELD) ? 1 : 0;
+	        char buffer[20];
+	        int bytes = sprintf(buffer, "%d\n", flags);
+                //LOGD("HMC5843 set enable: flag = %d", flags);
+		if (write(fd, buffer, bytes) < 0) {
+                    LOGE("Writing HMC5843 error (%s)", strerror(errno));
+                    err = -errno;
+                }
+                close_dev(dev, ID_HMC, new_enabled, ENABLE_LOCATION);
+            } else {
+                LOGE("ID_HMC open error");
+                err = fd;
+            }
+        }
+
         if (changed_enabled & SENSORS_PROXIMITY) {
             int fd = open_dev(dev, ID_SFH, ENABLE_LOCATION);
             if (fd >= 0) {
@@ -625,20 +688,40 @@ static int control__set_delay(struct sensors_control_context_t *dev, int32_t ms)
     int delay = ms;
     short sdelay = ms;
     int err = 0;
+    int fd = 0;
 
-     int fd = open_dev(dev, ID_CMA, DELAY_LOCATION);
-     if (fd >= 0) {
-          char buffer[20];
-          int bytes = sprintf(buffer, "%d\n", ms);
-          //LOGD("CMA3000 set delay is: delay = %d", ms);
-          if (write(fd, buffer, bytes) < 0) {
-              LOGE("CMA3000 set delay failed (%s)", strerror(errno));
-              err = -errno;
-          }
-          close_dev(dev, ID_CMA, SENSORS_ACCELERATION, ENABLE_LOCATION);
-    } else {
-          LOGE("ID_CMA open set delay open error");
-          err = fd;
+     if (dev->active_sensors & SENSORS_ACCELERATION) {
+	     fd = open_dev(dev, ID_CMA, DELAY_LOCATION);
+	     if (fd >= 0) {
+		  char buffer[20];
+		  int bytes = sprintf(buffer, "%d\n", ms);
+		  LOGD("CMA3000 set delay is: delay = %d", ms);
+		  if (write(fd, buffer, bytes) < 0) {
+		      LOGE("CMA3000 set delay failed (%s)", strerror(errno));
+		      err = -errno;
+		  }
+		  close_dev(dev, ID_CMA, SENSORS_ACCELERATION, DELAY_LOCATION);
+	    } else {
+		  LOGE("ID_CMA open set delay open error");
+		  err = fd;
+	    }
+    }
+
+    if (dev->active_sensors & SENSORS_MAGNETIC_FIELD) {
+	     fd = open_dev(dev, ID_HMC, DELAY_LOCATION);
+	     if (fd >= 0) {
+		  char buffer[20];
+		  int bytes = sprintf(buffer, "%d\n", ms);
+		  LOGD("HMC5843 set delay is: delay = %d", ms);
+		  if (write(fd, buffer, bytes) < 0) {
+		      LOGE("HMC5843 set delay failed (%s)", strerror(errno));
+		      err = -errno;
+		  }
+		  close_dev(dev, ID_HMC, SENSORS_MAGNETIC_FIELD, DELAY_LOCATION);
+	    } else {
+		  LOGE("ID_HMC open set delay open error");
+		  err = fd;
+	    }
     }
 
     return err;
@@ -749,7 +832,18 @@ static int data__poll(struct sensors_data_context_t *dev, sensors_data_t* values
                     new_sensors |= SENSORS_ACCELERATION;
                     dev->sensors[ID_A].acceleration.z = event.value * CONVERT_A_Z;
                     break;
-
+                case EVENT_TYPE_MAGV_X:
+                    new_sensors |= SENSORS_MAGNETIC_FIELD;
+                    dev->sensors[ID_M].magnetic.x = event.value * CONVERT_M_X;
+                    break;
+                case EVENT_TYPE_MAGV_Y:
+                    new_sensors |= SENSORS_MAGNETIC_FIELD;
+                     dev->sensors[ID_M].magnetic.y = event.value * CONVERT_M_Y;
+                     break;
+                case EVENT_TYPE_MAGV_Z:
+                    new_sensors |= SENSORS_MAGNETIC_FIELD;
+                    dev->sensors[ID_M].magnetic.z = event.value * CONVERT_M_Z;
+                    break;
                 case EVENT_TYPE_PROXIMITY:
                     new_sensors |= SENSORS_PROXIMITY;
                     /* PROX_HACK: These values should come from the kernel driver */
