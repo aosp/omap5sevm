@@ -369,6 +369,10 @@ setprop jpeg.libskiahw.encoder.thresh 0
     chown system system /sys/kernel/ipv4/tcp_rmem_max
     chown root radio /proc/cmdline
 
+# Copying hostapd.conf (WLAN soft AP)
+    copy /system/etc/wifi/softap/hostapd.conf /data/misc/wifi/hostapd.conf
+    chown wifi wifi /data/misc/wifi
+
 # Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
     setprop net.tcp.buffersize.default 4096,87380,110208,4096,16384,110208
@@ -558,3 +562,16 @@ service dumpstate /system/bin/dumpstate -s
     socket dumpstate stream 0660 shell log
     disabled
     oneshot
+
+# TI WLAN Soft AP related services and configuration
+
+service wlan_ap_loader /system/bin/tiap_loader \
+    -f /system/etc/wifi/softap/firmware_ap.bin \
+    -i /system/etc/wifi/softap/tiwlan_ap.ini
+    disabled
+    oneshot
+
+service hostapd /system/bin/hostap -dd /data/misc/wifi/hostapd.conf
+    disabled
+    oneshot
+
