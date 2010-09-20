@@ -62,7 +62,6 @@ loglevel 3
     write /proc/sys/kernel/sched_wakeup_granularity_ns 2000000
     write /proc/sys/kernel/sched_compat_yield 1
     write /proc/sys/kernel/sched_child_runs_first 0
-    write /sys/power/wake_lock test
 
 # Create cgroup mount points for process groups
     mkdir /dev/cpuctl
