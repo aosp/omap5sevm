@@ -480,7 +480,7 @@ service bluetoothd /system/bin/bluetoothd -d -n
     disabled
     oneshot
 
-service uim /system/xbin/uim /dev/ttyO1 3000000 1 /sys/uim/pid 21
+service uim /system/xbin/uim-rfkill /dev/ttyO1 3000000 1 22
     user root
     group media bluetooth
     oneshot
