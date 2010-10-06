@@ -317,6 +317,10 @@ setprop jpeg.libskiahw.decoder.enable 0
 # Define JPEG Threashold for Image size (bytes)
 setprop jpeg.libskiahw.decoder.thresh 0
 setprop jpeg.libskiahw.encoder.thresh 0
+
+# Define Camera dcc loading. (Set 1 to load dcc & set 0 to not load dcc)
+setprop camera.dcc.enable 0
+
 # Write value must be consistent with the above properties.
 # Note that the driver only supports 6 slots, so we have HOME_APP at the
 # same memory level as services.
