@@ -41,7 +41,12 @@ PRODUCT_PACKAGES += \
         libRS \
         librs_jni
 
-PRODUCT_COPY_FILES += device/ti/blaze/apns.xml:system/etc/apns-conf.xml
+PRODUCT_COPY_FILES += device/ti/blaze/apns.xml:system/etc/apns-conf.xml \
+        frameworks/base/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
+        packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:/system/etc/permissions/android.software.live_wallpaper.xml \
+        frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
+        frameworks/base/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml
+
 
 # Pick up audio package
 include frameworks/base/data/sounds/AudioPackage2.mk
