@@ -190,11 +190,11 @@ loglevel 3
     chmod 0777  /dev/snd/timer
 
     #change permissions for alsa nodes for audio modem
-    chmod 0777 /dev/snd/pcmC0D2c
-    chmod 0777 /dev/snd/pcmC0D2p
+    chmod 0777 /dev/snd/pcmC0D5c
+    chmod 0777 /dev/snd/pcmC0D5p
 
     #change permissions for alsa nodes for HDMI
-    chmod 777  /dev/snd/pcmC0D5p
+    chmod 777  /dev/snd/pcmC0D7p
 
     # change permissions for modem
     chmod 0660 /dev/ttyS0
