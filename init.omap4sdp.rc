@@ -184,24 +184,17 @@ loglevel 3
     mkdir /cache/lost+found 0770
 
     # change permissions for alsa nodes
-    symlink /dev/snd/pcmC0D0c /dev/pcmC0D0c
-    symlink /dev/snd/pcmC0D0p /dev/pcmC0D0p
-    symlink /dev/snd/controlC0 /dev/controlC0
-    symlink /dev/snd/timer /dev/timer
-    chmod 0777 /dev/pcmC0D0c
-    chmod 0777 /dev/pcmC0D0p
-    chmod 0777 /dev/controlC0
-    chmod 0777 /dev/timer
+    chmod 0777  /dev/snd/pcmC0D0c
+    chmod 0777 /dev/snd/pcmC0D0p
+    chmod 0777  /dev/snd/controlC0
+    chmod 0777  /dev/snd/timer
 
     #change permissions for alsa nodes for audio modem
-    symlink /dev/snd/pcmC0D2c /dev/pcmC0D2c
-    symlink /dev/snd/pcmC0D2p /dev/pcmC0D2p
-    chmod 0777 /dev/pcmC0D2c
-    chmod 0777 /dev/pcmC0D2p
+    chmod 0777 /dev/snd/pcmC0D2c
+    chmod 0777 /dev/snd/pcmC0D2p
 
     #change permissions for alsa nodes for HDMI
-    symlink /dev/snd/pcmC0D5p /dev/pcmC0D5p
-    chmod 777 /dev/pcmC0D5p
+    chmod 777  /dev/snd/pcmC0D5p
 
     # change permissions for modem
     chmod 0660 /dev/ttyS0
