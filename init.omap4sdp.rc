@@ -62,6 +62,9 @@ loglevel 3
 
     # switch CPUfreq from performance to hotplug
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor hotplug
+    chmod 0646 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 0646 /sys/devices/system/cpu/cpu1/online
+    chmod 0646 /sys/devices/system/cpu/cpufreq/ondemand/up_threshold
 
     write /proc/sys/kernel/panic_on_oops 1
     write /proc/sys/kernel/hung_task_timeout_secs 0
