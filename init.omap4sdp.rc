@@ -552,7 +552,7 @@ service mtpd /system/bin/mtpd
     oneshot
 
 service wlan_loader /system/bin/wlan_loader \
-    -f /system/etc/wifi/firmware.bin -i /system/etc/wifi/tiwlan.ini
+    -f /system/etc/wifi/firmware.bin -i /system/etc/wifi/tiwlan.ini -e /data/misc/wifi/nvs_map.bin
      disabled
      oneshot
 
