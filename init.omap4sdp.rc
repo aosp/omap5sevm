@@ -485,7 +485,7 @@ service bluetoothd /system/bin/bluetoothd -d -n
     disabled
     oneshot
 
-service uim /system/xbin/uim-rfkill /dev/ttyO1 3000000 1 22
+service uim /system/bin/uim-rfkill /dev/ttyO1 3000000 1 22
     user root
     group media bluetooth
     oneshot
