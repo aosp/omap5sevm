@@ -38,7 +38,8 @@ PRODUCT_PACKAGES += \
         VisualizationWallpapers \
         CameraOMAP4 \
         libRS \
-        librs_jni
+        librs_jni \
+        libomap_mm_library_jni
 
 PRODUCT_COPY_FILES += device/ti/blaze/apns.xml:system/etc/apns-conf.xml \
         frameworks/base/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
@@ -50,3 +51,6 @@ PRODUCT_COPY_FILES += device/ti/blaze/apns.xml:system/etc/apns-conf.xml \
 # Pick up audio package
 include frameworks/base/data/sounds/AudioPackage2.mk
 
+# this make file is to extend FRAMEWORKS_BASE_SUBDIRS from pathmake.mk
+# and this is placed in common-open as this common between omap3 and omap4
+include device/ti/common-open/OmapMMLib.mk
