@@ -14,33 +14,67 @@
 # limitations under the License.
 #
 
-PRODUCT_PACKAGE_OVERLAYS := device/ti/blaze/overlay
+DEVICE_PACKAGE_OVERLAYS := device/ti/blaze/overlay
 
-$(call inherit-product, $(LOCAL_PATH)/omap_generic.mk)
+# These are the hardware-specific configuration files
+PRODUCT_COPY_FILES := \
+        device/ti/blaze/vold.fstab:system/etc/vold.fstab \
+        device/ti/blaze/vold.conf:system/etc/egl.conf
+#        device/ti/blaze/vold.conf:system/etc/vold.conf 
 
-# Overrides
-PRODUCT_NAME := blaze
-PRODUCT_MODEL := Blaze generic
-PRODUCT_LOCALES := en_US
+# Init files
+PRODUCT_COPY_FILES += \
+        device/ti/blaze/init.omap4sdp.rc:root/init.omap4sdp.rc \
+        device/ti/blaze/ueventd.omap4sdp.rc:root/ueventd.omap4sdp.rc
 
-PRODUCT_PROPERTY_OVERRIDES += \
-        ro.com.android.dateformat=MM-dd-yyyy \
-        ro.com.android.dataroaming=true \
-        ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
-        ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html
+# Prebuilt kl keymaps
+PRODUCT_COPY_FILES += \
+        device/ti/blaze/omap-keypad.kl:system/usr/keylayout/omap-keypad.kl 
 
+# Generated kcm keymaps
+PRODUCT_PACKAGES := \
+        omap-keypad.kcm 
+
+# Filesystem management tools
+PRODUCT_PACKAGES += \
+        make_ext4fs \
+        setup_fs
+
+# OpenMAX IL configuration
+TI_OMX_POLICY_MANAGER := hardware/ti/omx/system/src/openmax_il/omx_policy_manager
+PRODUCT_COPY_FILES += \
+        $(TI_OMX_POLICY_MANAGER)/src/policytable.tbl:system/etc/policytable.tbl \
+        device/ti/blaze/media_profiles.xml:system/etc/media_profiles.xml
+
+PRODUCT_PACKAGES += \
+	OMXCore
+
+# Alsa configuration
+PRODUCT_COPY_FILES += \
+        device/ti/blaze/asound.conf:system/etc/asound.conf \
+
+# Camera
+PRODUCT_PACKAGES += \
+        CameraOMAP4 
+
+
+# Misc other modules
 PRODUCT_PACKAGES += \
         Quake \
         FieldTest \
         LiveWallpapers \
         LiveWallpapersPicker \
         MagicSmokeWallpapers \
-        VisualizationWallpapers \
-        CameraOMAP4 \
+        VisualizationWallpapers 
+
+# Libs
+PRODUCT_PACKAGES += \
         libRS \
         librs_jni \
         libomap_mm_library_jni
 
+
+# These are the hardware-specific features
 PRODUCT_COPY_FILES += device/ti/blaze/apns.xml:system/etc/apns-conf.xml \
         frameworks/base/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
         packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:/system/etc/permissions/android.software.live_wallpaper.xml \
@@ -56,8 +90,21 @@ PRODUCT_COPY_FILES += device/ti/blaze/apns.xml:system/etc/apns-conf.xml \
 
 
 # Pick up audio package
-include frameworks/base/data/sounds/AudioPackage2.mk
+# no longer needed?
+#include frameworks/base/data/sounds/AudioPackage2.mk
 
-# this make file is to extend FRAMEWORKS_BASE_SUBDIRS from pathmake.mk
-# and this is placed in common-open as this common between omap3 and omap4
-include device/ti/common-open/OmapMMLib.mk
+# These are the hardware-specific settings that are stored in system properties.
+# Note that the only such settings should be the ones that are too low-level to
+# be reachable from resources or other mechanisms.
+#PRODUCT_PROPERTY_OVERRIDES += \
+        ro.com.android.dateformat=MM-dd-yyyy \
+        ro.com.android.dataroaming=true 
+#        dalvik.vm.heapsize=32m
+
+
+# See comment at the top of this file. This is where the other
+# half of the device-specific product definition file takes care
+# of the aspects that require proprietary drivers that aren't
+# commonly available
+$(call inherit-product-if-exists, vendor/ti/blaze/device-vendor.mk)
+

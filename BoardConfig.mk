@@ -6,7 +6,7 @@ TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
-OMAP_ENHANCEMENT := true
+#OMAP_ENHANCEMENT := true
 
 # Kernel/Bootloader machine name
 #
@@ -20,8 +20,8 @@ TARGET_NO_RADIOIMAGE := true
 # TARGET_HARDWARE_3D := true
 
 # Wifi
-USES_TI_WL1283 := true
-BOARD_WPA_SUPPLICANT_DRIVER := CUSTOM
+#USES_TI_WL1283 := true
+#BOARD_WPA_SUPPLICANT_DRIVER := CUSTOM
 ifdef USES_TI_WL1283
 BOARD_WLAN_DEVICE           := wl1283
 BOARD_SOFTAP_DEVICE         := wl1283
@@ -34,18 +34,21 @@ WIFI_FIRMWARE_LOADER        := "wlan_loader"
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 
+# Sensors
+#BOARD_HAVE_SENSORS := true
+
 # FM
 BUILD_FM_RADIO := true
 FM_CHR_DEV_ST := true
 #BOARD_HAVE_FM_ROUTING := true
 
 # MultiMedia defines
-#USE_CAMERA_STUB := true
-#BOARD_USES_GENERIC_AUDIO := true
-BOARD_USES_ALSA_AUDIO := true
-BUILD_WITH_ALSA_UTILS := true
-BOARD_USES_TI_CAMERA_HAL := true
-HARDWARE_OMX := true
+USE_CAMERA_STUB := true
+BOARD_USES_GENERIC_AUDIO := true
+#BOARD_USES_ALSA_AUDIO := true
+#BUILD_WITH_ALSA_UTILS := true
+#BOARD_USES_TI_CAMERA_HAL := true
+#HARDWARE_OMX := true
 #FW3A := true
 #ICAP := true
 #IMAGE_PROCESSING_PIPELINE := true 
