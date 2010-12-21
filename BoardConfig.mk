@@ -6,6 +6,7 @@ TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
+TARGET_USERIMAGES_USE_EXT4 := true
 #OMAP_ENHANCEMENT := true
 
 # Kernel/Bootloader machine name
@@ -17,7 +18,6 @@ TARGET_NO_KERNEL := true
 TARGET_NO_RADIOIMAGE := true
 
 # Graphics
-# TARGET_HARDWARE_3D := true
 
 # Wifi
 #USES_TI_WL1283 := true

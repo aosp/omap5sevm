@@ -18,8 +18,8 @@ DEVICE_PACKAGE_OVERLAYS := device/ti/blaze/overlay
 
 # These are the hardware-specific configuration files
 PRODUCT_COPY_FILES := \
-        device/ti/blaze/vold.fstab:system/etc/vold.fstab \
-        device/ti/blaze/vold.conf:system/etc/egl.conf
+        device/ti/blaze/vold.fstab:system/etc/vold.fstab 
+#        device/ti/blaze/egl.conf:system/etc/egl.conf
 #        device/ti/blaze/vold.conf:system/etc/vold.conf 
 
 # Init files
@@ -51,7 +51,7 @@ PRODUCT_PACKAGES += \
 
 # Alsa configuration
 PRODUCT_COPY_FILES += \
-        device/ti/blaze/asound.conf:system/etc/asound.conf \
+        device/ti/blaze/asound.conf:system/etc/asound.conf 
 
 # Camera
 PRODUCT_PACKAGES += \
@@ -75,7 +75,8 @@ PRODUCT_PACKAGES += \
 
 
 # These are the hardware-specific features
-PRODUCT_COPY_FILES += device/ti/blaze/apns.xml:system/etc/apns-conf.xml \
+PRODUCT_COPY_FILES += \
+        device/ti/blaze/apns.xml:system/etc/apns-conf.xml \
         frameworks/base/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
         packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:/system/etc/permissions/android.software.live_wallpaper.xml \
         frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
