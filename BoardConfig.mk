@@ -1,27 +1,71 @@
-# OMAP Next Generation Board configuration
+# Copyright (C) 2010 Texas Instruments Inc.
 #
-TARGET_BOARD_PLATFORM := omap4
-TARGET_NO_BOOTLOADER := true
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# BoardConfig.mk
+#
+# Product-specific compile-time definitions.
+#
+
+#OMAP_ENHANCEMENT := true
+# Use the non-open-source parts: Example: graphics, bt-firmware etc
+#-include vendor/ti/blaze/BoardConfigVendor.mk
+
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
-TARGET_ARCH_VARIANT := armv7-a-neon
-ARCH_ARM_HAVE_TLS_REGISTER := true
-TARGET_USERIMAGES_USE_EXT4 := true
-#OMAP_ENHANCEMENT := true
 
-# Kernel/Bootloader machine name
-#
-TARGET_BOOTLOADER_BOARD_NAME := omap4sdp
+BOARD_HAVE_BLUETOOTH := true
+
+
+TARGET_NO_BOOTLOADER := true
+
+#TODO: needed for boot.img auto-creation: disble for now
 TARGET_NO_KERNEL := true
 
-# Modem
 TARGET_NO_RADIOIMAGE := true
+TARGET_PROVIDES_INIT_TARGET_RC := true
+TARGET_BOARD_PLATFORM := omap4
+TARGET_BOOTLOADER_BOARD_NAME := omap4sdp
 
-# Graphics
+TARGET_SEC_INTERNAL_STORAGE := false
 
-# Wifi
-#USES_TI_WL1283 := true
-#BOARD_WPA_SUPPLICANT_DRIVER := CUSTOM
+# Enable NEON feature
+TARGET_ARCH_VARIANT := armv7-a-neon
+ARCH_ARM_HAVE_TLS_REGISTER := true
+
+USE_CAMERA_STUB := true
+ifeq ($(USE_CAMERA_STUB),false)
+BOARD_CAMERA_LIBRARIES := libcamera
+endif
+
+
+
+
+BOARD_KERNEL_BASE := 0x80000000
+BOARD_KERNEL_PAGESIZE := 4096
+BOARD_KERNEL_CMDLINE := console=ttyO2,115200n8 mem=456M@0x80000000 mem=512M@0xA0000000 init=/init vram=10M omapfb.vram=0:4M
+
+#TARGET_RECOVERY_UI_LIB := ?
+TARGET_RELEASETOOLS_EXTENSIONS := device/ti/blaze
+
+TARGET_USERIMAGES_USE_EXT4 := true
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 402653184
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 536870912
+BOARD_FLASH_BLOCK_SIZE := 4096
+
+# Connectivity - Wi-Fi
+USES_TI_WL1283 := true
+BOARD_WPA_SUPPLICANT_DRIVER := CUSTOM
 ifdef USES_TI_WL1283
 BOARD_WLAN_DEVICE           := wl1283
 BOARD_SOFTAP_DEVICE         := wl1283
@@ -30,9 +74,6 @@ WPA_SUPPLICANT_VERSION      := VER_0_6_X
 WIFI_DRIVER_MODULE_PATH     := "/system/etc/wifi/tiwlan_drv.ko"
 WIFI_DRIVER_MODULE_NAME     := "tiwlan_drv"
 WIFI_FIRMWARE_LOADER        := "wlan_loader"
-
-# Bluetooth
-BOARD_HAVE_BLUETOOTH := true
 
 # Sensors
 #BOARD_HAVE_SENSORS := true
@@ -43,7 +84,6 @@ FM_CHR_DEV_ST := true
 #BOARD_HAVE_FM_ROUTING := true
 
 # MultiMedia defines
-USE_CAMERA_STUB := true
 BOARD_USES_GENERIC_AUDIO := true
 #BOARD_USES_ALSA_AUDIO := true
 #BUILD_WITH_ALSA_UTILS := true
