@@ -17,7 +17,7 @@
 # Product-specific compile-time definitions.
 #
 
-#OMAP_ENHANCEMENT := true
+OMAP_ENHANCEMENT := true
 # Use the non-open-source parts: Example: graphics, bt-firmware etc
 #-include vendor/ti/blaze/BoardConfigVendor.mk
 
@@ -43,7 +43,7 @@ TARGET_SEC_INTERNAL_STORAGE := false
 TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
-USE_CAMERA_STUB := true
+#USE_CAMERA_STUB := true
 ifeq ($(USE_CAMERA_STUB),false)
 BOARD_CAMERA_LIBRARIES := libcamera
 endif
@@ -88,8 +88,8 @@ FM_CHR_DEV_ST := true
 #BOARD_USES_GENERIC_AUDIO := true
 BOARD_USES_ALSA_AUDIO := true
 #BUILD_WITH_ALSA_UTILS := true
-#BOARD_USES_TI_CAMERA_HAL := true
-#HARDWARE_OMX := true
+BOARD_USES_TI_CAMERA_HAL := true
+HARDWARE_OMX := true
 #FW3A := true
 #ICAP := true
 #IMAGE_PROCESSING_PIPELINE := true 
