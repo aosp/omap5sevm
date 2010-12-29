@@ -87,7 +87,7 @@ FM_CHR_DEV_ST := true
 # MultiMedia defines
 #BOARD_USES_GENERIC_AUDIO := true
 BOARD_USES_ALSA_AUDIO := true
-#BUILD_WITH_ALSA_UTILS := true
+BUILD_WITH_ALSA_UTILS := true
 BOARD_USES_TI_CAMERA_HAL := true
 HARDWARE_OMX := true
 #FW3A := true
