@@ -24,8 +24,8 @@ PRODUCT_COPY_FILES := \
 
 # Init files
 PRODUCT_COPY_FILES += \
-        device/ti/blaze/init.omap4sdp.rc:root/init.omap4sdp.rc \
-        device/ti/blaze/ueventd.omap4sdp.rc:root/ueventd.omap4sdp.rc
+        device/ti/blaze/init.omap4430.rc:root/init.omap4430.rc \
+        device/ti/blaze/ueventd.omap4430.rc:root/ueventd.omap4430.rc
 
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
