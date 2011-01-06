@@ -12,8 +12,8 @@ on boot
     setprop status.battery.level_scale 9
 
 # wi-fi
-#    mkdir /data/misc/wifi/sockets 0770 wifi wifi
-#    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
 
 # phone
 #    setprop ro.telephony.call_ring.multiple 0
@@ -165,6 +165,38 @@ service pvrsrvinit /system/bin/pvrsrvinit
 #service pvrsrvinit /system/vendor/bin/pvrsrvinit
     user root
     group root
+    oneshot
+
+#Load IVA firmware
+service baseimage /system/bin/syslink_daemon.out /data/Notify_MPUSYS_reroute_Test_Core0.xem3 /data/base_image_app_m3.xem3
+    critical
+    user root
+    group video
+    oneshot
+
+service uim /system/bin/uim-rfkill /dev/ttyO1 3000000 1 22
+    user root
+    group media bluetooth
+    oneshot
+
+service hciattach /system/bin/hciattach -l
+    user root
+# changing user to root from bluetooth is a potential security issue
+# service hciattach_legacy is used instead of hciattach because, we dont
+# have nodes named ttyHS0
+    group bluetooth net_bt_admin misc
+    disabled
+    oneshot
+
+# WLAN Related services
+service wlan_loader /system/bin/wlan_loader \
+    -f /system/etc/wifi/firmware.bin -i /system/etc/wifi/tiwlan.ini -e /data/misc/wifi/nvs_map.bin
+     disabled
+     oneshot
+
+service wpa_supplicant /system/bin/wpa_supplicant -Dtiwlan0 -itiwlan0 -c/data/misc/wifi/wpa_supplicant.conf -dd
+    socket wpa_tiwlan0 dgram 660 wifi wifi
+    disabled
     oneshot
 
 service dhcpcd /system/bin/dhcpcd -ABKL
