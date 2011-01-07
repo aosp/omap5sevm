@@ -111,6 +111,11 @@ PRODUCT_PACKAGES += \
     libfakecameraadapter \
     libomxcameraadapter
 
+#libskiahw-omap4
+PRODUCT_PACKAGES += \
+    libskiahwdec \
+    SkLibTiJpeg_Test
+
 #Overlay
 PRODUCT_PACKAGES += \
     overlay.omap4
