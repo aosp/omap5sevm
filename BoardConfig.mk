@@ -80,13 +80,13 @@ WIFI_FIRMWARE_LOADER        := "wlan_loader"
 #BOARD_HAVE_SENSORS := true
 
 # FM
-BUILD_FM_RADIO := true
-FM_CHR_DEV_ST := true
+#BUILD_FM_RADIO := true
+#FM_CHR_DEV_ST := true
 #BOARD_HAVE_FM_ROUTING := true
 
 # MultiMedia defines
-BOARD_USES_GENERIC_AUDIO := true
-#BOARD_USES_ALSA_AUDIO := true
+#BOARD_USES_GENERIC_AUDIO := true
+BOARD_USES_ALSA_AUDIO := true
 #BUILD_WITH_ALSA_UTILS := true
 #BOARD_USES_TI_CAMERA_HAL := true
 #HARDWARE_OMX := true
