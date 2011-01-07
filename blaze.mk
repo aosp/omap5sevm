@@ -47,11 +47,80 @@ PRODUCT_COPY_FILES += \
         device/ti/blaze/media_profiles.xml:system/etc/media_profiles.xml
 
 PRODUCT_PACKAGES += \
-	OMXCore
+    OMXCore \
+    libOMX_CoreOsal \
+    libOMX_Core \
+    libomx_rpc \
+    libomx_proxy_common \
+    libOMX.TI.DUCATI1.VIDEO.H264D \
+    libOMX.TI.DUCATI1.VIDEO.MPEG4D \
+    libOMX.TI.DUCATI1.VIDEO.VP6D \
+    libOMX.TI.DUCATI1.VIDEO.VP7D \
+    libOMX.TI.DUCATI1.VIDEO.H264E \
+    libOMX.TI.DUCATI1.VIDEO.MPEG4E \
+    libOMX.TI.DUCATI1.IMAGE.JPEGD \
+    libOMX.TI.DUCATI1.VIDEO.CAMERA \
+    libOMX.TI.DUCATI1.MISC.SAMPLE \
+    libOMX.TI.DUCATI1.VIDEO.DECODER
+
+# Tiler and Syslink
+PRODUCT_PACKAGES += \
+    libipcutils \
+    libipc \
+    libnotify \
+    syslink_trace_daemon.out \
+    librcm \
+    libsysmgr \
+    syslink_daemon.out \
+    dmm_daemontest.out \
+    event_listener.out \
+    interm3.out \
+    gateMPApp.out \
+    heapBufMPApp.out \
+    heapMemMPApp.out \
+    listMPApp.out \
+    messageQApp.out \
+    nameServerApp.out \
+    sharedRegionApp.out \
+    memmgrserver.out \
+    notifyping.out \
+    ducati_load.out \
+    procMgrApp.out \
+    slpmtest.out \
+    slpmresources.out \
+    slpmtransport.out \
+    rcm_multitest.out \
+    rcm_multithreadtest.out \
+    rcm_multiclienttest.out \
+    rcm_daemontest.out \
+    rcm_singletest.out \
+    syslink_tilertest.out \
+    utilsApp.out \
+    libd2cmap \
+    d2c_test \
+    libmemmgr \
+    memmgr_test \
+    utils_test \
+    tiler_ptest
+
+#TI CameraHal
+PRODUCT_PACKAGES += \
+    TICameraCameraProperties.xml \
+    libtiutils \
+    libcamera \
+    libfakecameraadapter \
+    libomxcameraadapter
+
+#Overlay
+PRODUCT_PACKAGES += \
+    overlay.omap4
 
 # Alsa configuration
 PRODUCT_COPY_FILES += \
         device/ti/blaze/asound.conf:system/etc/asound.conf 
+# Audio HAL
+PRODUCT_PACKAGES += \
+    alsa.omap4
 
 # Camera
 PRODUCT_PACKAGES += \
