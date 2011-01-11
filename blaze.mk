@@ -18,9 +18,8 @@ DEVICE_PACKAGE_OVERLAYS := device/ti/blaze/overlay
 
 # These are the hardware-specific configuration files
 PRODUCT_COPY_FILES := \
-        device/ti/blaze/vold.fstab:system/etc/vold.fstab 
-#        device/ti/blaze/egl.conf:system/etc/egl.conf
-#        device/ti/blaze/vold.conf:system/etc/vold.conf 
+        device/ti/blaze/vold.fstab:system/etc/vold.fstab \
+        device/ti/blaze/egl.cfg:system/lib/egl/egl.cfg
 
 # Init files
 PRODUCT_COPY_FILES += \
@@ -45,6 +44,10 @@ TI_OMX_POLICY_MANAGER := hardware/ti/omx/system/src/openmax_il/omx_policy_manage
 PRODUCT_COPY_FILES += \
         $(TI_OMX_POLICY_MANAGER)/src/policytable.tbl:system/etc/policytable.tbl \
         device/ti/blaze/media_profiles.xml:system/etc/media_profiles.xml
+
+# graphics
+PRODUCT_PACKAGES += \
+    sgx-driver 
 
 PRODUCT_PACKAGES += \
     OMXCore \
