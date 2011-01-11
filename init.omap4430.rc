@@ -155,6 +155,10 @@ on fs
     write /sys/devices/platform/omapdss/overlay1/manager "2lcd"
     write /sys/devices/platform/omapdss/overlay1/enabled 1
 
+# Copying hostapd.conf (WLAN HotSpot)
+    copy /system/etc/wifi/softap/hostapd.conf /data/misc/wifi/hostapd.conf
+    chown wifi wifi /data/misc/wifi
+
 # Enable hotplug detection for HDMI
     write /sys/devices/platform/omapdss/display2/hpd_enabled 1
 # Keypad permissions
@@ -205,3 +209,15 @@ service wpa_supplicant /system/bin/wpa_supplicant -Dtiwlan0 -itiwlan0 -c/data/mi
 service dhcpcd /system/bin/dhcpcd -ABKL
     disabled
     oneshot
+
+# HotSpot Related services
+service wlan_ap_loader /system/bin/tiap_loader \
+    -f /system/etc/wifi/softap/firmware_ap.bin \
+    -i /system/etc/wifi/softap/tiwlan_ap.ini
+    disabled
+    oneshot
+
+service hostapd /system/bin/hostap -dd /data/misc/wifi/hostapd.conf
+    disabled
+    oneshot
+
