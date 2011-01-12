@@ -12,8 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+LOCAL_PATH := $(call my-dir)
+
 # protect makefile from other boards
 ifeq ($(TARGET_DEVICE),blaze)
+
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := omap-keypad.kcm
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_KEY_CHAR_MAP)
 
 common_ti_dirs := sensors
 
