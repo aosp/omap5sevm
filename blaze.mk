@@ -134,6 +134,21 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
         CameraOMAP4 
 
+# Wi-Fi
+PRODUCT_PACKAGES += \
+	wlan_loader \
+	wlan_cu \
+	tiwlan.ini \
+	dhcpcd.conf \
+	wpa_supplicant.conf
+
+# HotSpot
+PRODUCT_PACKAGES += \
+	tiap_loader \
+	tiap_cu \
+	tiwlan_ap.ini \
+	hostap \
+	hostapd.conf
 
 # Misc other modules
 PRODUCT_PACKAGES += \
