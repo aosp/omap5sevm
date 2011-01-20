@@ -39,7 +39,7 @@
   <!-- Mexican Operators -->
   <apn carrier="movistar"
        mcc="334"
-       mnc="03"
+       mnc="030"
        apn="internet.movistar.mx"
        user="movistar"
        password="movistar"
