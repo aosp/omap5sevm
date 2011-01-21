@@ -18,6 +18,11 @@ on boot
 # phone
 #    setprop ro.telephony.call_ring.multiple 0
 
+on post-fs
+# Copying hostapd.conf (WLAN HotSpot)
+    copy /system/etc/wifi/softap/hostapd.conf /data/misc/wifi/hostapd.conf
+    chown wifi wifi /data/misc/wifi
+
 on fs
     mount ext4 /dev/block/platform/mmci-omap-hs.1/by-name/system /system wait ro
     mount ext4 /dev/block/platform/mmci-omap-hs.1/by-name/userdata /data wait noatime nosuid nodev
@@ -151,10 +156,6 @@ on fs
     write /sys/devices/platform/omapdss/overlay1/enabled 0
     write /sys/devices/platform/omapdss/overlay1/manager "2lcd"
     write /sys/devices/platform/omapdss/overlay1/enabled 1
-
-# Copying hostapd.conf (WLAN HotSpot)
-    copy /system/etc/wifi/softap/hostapd.conf /data/misc/wifi/hostapd.conf
-    chown wifi wifi /data/misc/wifi
 
 # Enable hotplug detection for HDMI
     write /sys/devices/platform/omapdss/display2/hpd_enabled 1
