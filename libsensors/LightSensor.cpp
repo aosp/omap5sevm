@@ -16,7 +16,6 @@
 
 #include <fcntl.h>
 #include <errno.h>
-#include <math.h>
 #include <poll.h>
 #include <unistd.h>
 #include <dirent.h>
@@ -27,19 +26,14 @@
 
 /*****************************************************************************/
 
-/* The Crespo ADC sends 4 somewhat bogus events after enabling the sensor.
-   This becomes a problem if the phone is turned off in bright light
-   and turned back on in the dark.
-   To avoid this we ignore the first 4 events received after enabling the sensor.
- */
-#define FIRST_GOOD_EVENT    5
-
 LightSensor::LightSensor()
     : SensorBase(NULL, "bh1780gli"),
-      mEnabled(0),
+      mEnabled(1),
       mEventsSinceEnable(0),
       mInputReader(4),
-      mHasPendingEvent(false)
+      mHasPendingEvent(false),
+      mPreviousLight(0)
+
 {
     mPendingEvent.version = sizeof(sensors_event_t);
     mPendingEvent.sensor = ID_L;
@@ -47,11 +41,8 @@ LightSensor::LightSensor()
     memset(mPendingEvent.data, 0, sizeof(mPendingEvent.data));
 
     if (data_fd) {
-        strcpy(input_sysfs_path, "/sys/class/input/");
-        strcat(input_sysfs_path, input_name);
-        strcat(input_sysfs_path, "/device/");
+        strcpy(input_sysfs_path, "/sys/bus/i2c/drivers/bh1780/3-0029/");
         input_sysfs_path_len = strlen(input_sysfs_path);
-        enable(0, 1);
     }
 }
 
@@ -63,38 +54,34 @@ LightSensor::~LightSensor() {
 
 int LightSensor::setDelay(int32_t handle, int64_t ns)
 {
-    int fd;
-    strcpy(&input_sysfs_path[input_sysfs_path_len], "poll_delay");
-    fd = open(input_sysfs_path, O_RDWR);
-    if (fd >= 0) {
-        char buf[80];
-        sprintf(buf, "%lld", ns);
-        write(fd, buf, strlen(buf)+1);
-        close(fd);
-        return 0;
-    }
-    return -1;
+    return 0;
 }
 
 int LightSensor::enable(int32_t handle, int en)
 {
     int flags = en ? 1 : 0;
-    mEventsSinceEnable = 0;
     mPreviousLight = -1;
+
     if (flags != mEnabled) {
         int fd;
-        strcpy(&input_sysfs_path[input_sysfs_path_len], "enable");
+
+        strcpy(&input_sysfs_path[input_sysfs_path_len], "power_state");
         fd = open(input_sysfs_path, O_RDWR);
         if (fd >= 0) {
             char buf[2];
             int err;
             buf[1] = 0;
             if (flags) {
-                buf[0] = '1';
+                buf[0] = '3';
             } else {
                 buf[0] = '0';
             }
             err = write(fd, buf, sizeof(buf));
+	    if (err) {
+                 LOGD("LightSensor:Write error\n");
+                 close(fd);
+                 return -1;
+            }
             close(fd);
             mEnabled = flags;
             return 0;
@@ -129,16 +116,15 @@ int LightSensor::readEvents(sensors_event_t* data, int count)
 
     while (count && mInputReader.readEvent(&event)) {
         int type = event->type;
-        if (type == EV_ABS) {
+        if (type == EV_LED) {
             if (event->code == EVENT_TYPE_LIGHT) {
-                mPendingEvent.light = indexToValue(event->value);
-                if (mEventsSinceEnable < FIRST_GOOD_EVENT)
-                    mEventsSinceEnable++;
+                mPendingEvent.light = event->value;
+                LOGD("LightSensor: Received LUX value=%d",
+                   event->value);
             }
         } else if (type == EV_SYN) {
             mPendingEvent.timestamp = timevalToNano(event->time);
-            if (mEnabled && (mPendingEvent.light != mPreviousLight) &&
-                    mEventsSinceEnable >= FIRST_GOOD_EVENT) {
+            if (mPendingEvent.light != mPreviousLight) {
                 *data++ = mPendingEvent;
                 count--;
                 numEventReceived++;
@@ -152,29 +138,4 @@ int LightSensor::readEvents(sensors_event_t* data, int count)
     }
 
     return numEventReceived;
-}
-
-float LightSensor::indexToValue(size_t index) const
-{
-    /* Driver gives a rolling average adc value.  We convert it lux levels. */
-    static const struct adcToLux {
-        size_t adc_value;
-        float  lux_value;
-    } adcToLux[] = {
-        {  150,   10.0 },  /* from    0 -  150 adc, we map to    10.0 lux */
-        {  800,  160.0 },  /* from  151 -  800 adc, we map to   160.0 lux */
-        {  900,  225.0 },  /* from  801 -  900 adc, we map to   225.0 lux */
-        { 1000,  320.0 },  /* from  901 - 1000 adc, we map to   320.0 lux */
-        { 1200,  640.0 },  /* from 1001 - 1200 adc, we map to   640.0 lux */
-        { 1400, 1280.0 },  /* from 1201 - 1400 adc, we map to  1280.0 lux */
-        { 1600, 2600.0 },  /* from 1401 - 1600 adc, we map to  2600.0 lux */
-        { 4095, 10240.0 }, /* from 1601 - 4095 adc, we map to 10240.0 lux */
-    };
-    size_t i;
-    for (i = 0; i < ARRAY_SIZE(adcToLux); i++) {
-        if (index < adcToLux[i].adc_value) {
-            return adcToLux[i].lux_value;
-        }
-    }
-    return adcToLux[ARRAY_SIZE(adcToLux)-1].lux_value;
 }

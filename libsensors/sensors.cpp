@@ -69,6 +69,10 @@ static const struct sensor_t sSensorList[] = {
                 "VTI",
                 1, SENSORS_ACCELERATION_HANDLE,
                 SENSOR_TYPE_ACCELEROMETER, RANGE_A, RESOLUTION_A, 0.23f, 20000, { } },
+        { "BH1780gli Light sensor",
+          "ROHM",
+          1, SENSORS_LIGHT_HANDLE,
+          SENSOR_TYPE_LIGHT, 3000.0f, 1.0f, 0.75f, 0, { } },
 };
 
 
@@ -112,9 +116,9 @@ struct sensors_poll_context_t {
 private:
     enum {
         accel           = 0,
+        light           = 1,
         numSensorDrivers,
         numFds,
-        light           = 1,
         proximity       = 2,
         gyro            = 3,
 	hwell		= 4,
@@ -153,6 +157,11 @@ sensors_poll_context_t::sensors_poll_context_t()
     mPollFds[accel].fd = mSensors[accel]->getFd();
     mPollFds[accel].events = POLLIN;
     mPollFds[accel].revents = 0;
+
+    mSensors[light] = new LightSensor();
+    mPollFds[light].fd = mSensors[light]->getFd();
+    mPollFds[light].events = POLLIN;
+    mPollFds[light].revents = 0;
 
     int wakeFds[2];
     int result = pipe(wakeFds);
