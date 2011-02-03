@@ -40,9 +40,7 @@ ProximitySensor::ProximitySensor()
     memset(mPendingEvent.data, 0, sizeof(mPendingEvent.data));
 
     if (data_fd) {
-        strcpy(input_sysfs_path, "/sys/class/input/");
-        strcat(input_sysfs_path, input_name);
-        strcat(input_sysfs_path, "/device/");
+        strcpy(input_sysfs_path, "/sys/devices/platform/sfh7741.1/");
         input_sysfs_path_len = strlen(input_sysfs_path);
         enable(0, 1);
     }
@@ -68,7 +66,7 @@ int ProximitySensor::enable(int32_t, int en) {
     int flags = en ? 1 : 0;
     if (flags != mEnabled) {
         int fd;
-        strcpy(&input_sysfs_path[input_sysfs_path_len], "enable");
+        strcpy(&input_sysfs_path[input_sysfs_path_len], "state");
         fd = open(input_sysfs_path, O_RDWR);
         if (fd >= 0) {
             char buf[2];

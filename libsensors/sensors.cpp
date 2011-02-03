@@ -73,6 +73,10 @@ static const struct sensor_t sSensorList[] = {
           "ROHM",
           1, SENSORS_LIGHT_HANDLE,
           SENSOR_TYPE_LIGHT, 3000.0f, 1.0f, 0.75f, 0, { } },
+        { "SFH7741 Proximity sensor",
+          "OSRAM Opto Semiconductors",
+          1, SENSORS_HANDLE_BASE+ID_P,
+          SENSOR_TYPE_PROXIMITY, 5.0f, 5.0f, 0.75f, 0, { } },
 };
 
 
@@ -117,9 +121,9 @@ private:
     enum {
         accel           = 0,
         light           = 1,
+        proximity       = 2,
         numSensorDrivers,
         numFds,
-        proximity       = 2,
         gyro            = 3,
 	hwell		= 4,
 
@@ -162,6 +166,11 @@ sensors_poll_context_t::sensors_poll_context_t()
     mPollFds[light].fd = mSensors[light]->getFd();
     mPollFds[light].events = POLLIN;
     mPollFds[light].revents = 0;
+
+    mSensors[proximity] = new ProximitySensor();
+    mPollFds[proximity].fd = mSensors[proximity]->getFd();
+    mPollFds[proximity].events = POLLIN;
+    mPollFds[proximity].revents = 0;
 
     int wakeFds[2];
     int result = pipe(wakeFds);
