@@ -22,8 +22,6 @@ LOCAL_SRC_FILES := omap-keypad.kcm
 LOCAL_MODULE_TAGS := optional
 include $(BUILD_KEY_CHAR_MAP)
 
-common_ti_dirs := libsensors
-
-include $(call all-named-subdir-makefiles, $(common_ti_dirs))
+include $(call all-makefiles-under,$(LOCAL_PATH))
 
 endif

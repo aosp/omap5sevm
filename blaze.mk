@@ -159,6 +159,10 @@ PRODUCT_PACKAGES += \
         MagicSmokeWallpapers \
         VisualizationWallpapers 
 
+# Sensors
+PRODUCT_PACKAGES += \
+        sensors.omap4
+
 # Libs
 PRODUCT_PACKAGES += \
         libRS \
