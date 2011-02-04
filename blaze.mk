@@ -112,7 +112,8 @@ PRODUCT_PACKAGES += \
     libtiutils \
     libcamera \
     libfakecameraadapter \
-    libomxcameraadapter
+    libomxcameraadapter \
+    camera_test
 
 #libskiahw-omap4
 PRODUCT_PACKAGES += \
