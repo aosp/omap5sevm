@@ -191,6 +191,10 @@ PRODUCT_COPY_FILES += \
 # no longer needed?
 #include frameworks/base/data/sounds/AudioPackage2.mk
 
+# this make file is to extend FRAMEWORKS_BASE_SUBDIRS from pathmake.mk
+# and this is placed in common-open as this common between omap3 and omap4
+include device/ti/common-open/OmapMMLib.mk
+
 # These are the hardware-specific settings that are stored in system properties.
 # Note that the only such settings should be the ones that are too low-level to
 # be reachable from resources or other mechanisms.
