@@ -221,7 +221,7 @@ service baseimage /system/bin/syslink_daemon.out /data/base_image_sys_m3.xem3 /d
     group video
     oneshot
 
-service uim /system/bin/uim-rfkill /dev/ttyO1 3000000 1 22
+service uim /system/bin/uim-sysfs
     user root
     group media bluetooth
     oneshot
