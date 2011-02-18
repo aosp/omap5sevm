@@ -179,7 +179,7 @@ service pvrsrvinit /system/bin/pvrsrvinit
     oneshot
 
 #Load IVA firmware
-service baseimage /system/bin/syslink_daemon.out /data/Notify_MPUSYS_reroute_Test_Core0.xem3 /data/base_image_app_m3.xem3
+service baseimage /system/bin/syslink_daemon.out /data/base_image_sys_m3.xem3 /data/base_image_app_m3.xem3
     critical
     user root
     group video
