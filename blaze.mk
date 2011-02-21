@@ -160,6 +160,10 @@ PRODUCT_PACKAGES += \
         MagicSmokeWallpapers \
         VisualizationWallpapers 
 
+# Lights
+PRODUCT_PACKAGES += \
+        lights.omap4
+
 # Sensors
 PRODUCT_PACKAGES += \
         sensors.omap4
