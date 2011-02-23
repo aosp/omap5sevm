@@ -109,51 +109,75 @@ on fs
     chown system system /sys/bus/i2c/drivers/hmc5843/4-001e/rate
 
     # change permissions for Overlay
-    chmod 0777 /dev/video1
-    chmod 0777 /dev/video2
-    chmod 0777 /dev/video3
+    chown system system /dev/video1
+    chmod 0770 /dev/video1
+    chown system system /dev/video2
+    chmod 0770 /dev/video2
+    chown system system /dev/video3
+    chmod 0770 /dev/video3
     # change permissions for overlay managers and display devices
-    chmod 0777 /sys/devices/platform/omapdss/display0/enabled
-    chmod 0777 /sys/devices/platform/omapdss/display1/enabled
-    chmod 0777 /sys/devices/platform/omapdss/display2/enabled
-    chmod 0777 /sys/devices/platform/omapdss/display3/enabled
-    chmod 0777 /sys/devices/platform/omapdss/display0/name
-    chmod 0777 /sys/devices/platform/omapdss/display1/name
-    chmod 0777 /sys/devices/platform/omapdss/display2/name
-    chmod 0777 /sys/devices/platform/omapdss/display3/name
-    chmod 0777 /sys/devices/platform/omapdss/overlay0/manager
-    chmod 0777 /sys/devices/platform/omapdss/overlay1/manager
-    chmod 0777 /sys/devices/platform/omapdss/overlay2/manager
-    chmod 0777 /sys/devices/platform/omapdss/overlay3/manager
-    chmod 0777 /sys/devices/platform/omapdss/overlay0/zorder
-    chmod 0777 /sys/devices/platform/omapdss/overlay1/zorder
-    chmod 0777 /sys/devices/platform/omapdss/overlay2/zorder
-    chmod 0777 /sys/devices/platform/omapdss/overlay3/zorder
+    chown system system /sys/devices/platform/omapdss/display0/enabled
+    chmod 0770 /sys/devices/platform/omapdss/display0/enabled
+    chown system system /sys/devices/platform/omapdss/display1/enabled
+    chmod 0770 /sys/devices/platform/omapdss/display1/enabled
+    chown system system /sys/devices/platform/omapdss/display2/enabled
+    chmod 0770 /sys/devices/platform/omapdss/display2/enabled
+    chown system system /sys/devices/platform/omapdss/display3/enabled
+    chmod 0770 /sys/devices/platform/omapdss/display3/enabled
+    chown system system /sys/devices/platform/omapdss/display0/name
+    chmod 0770 /sys/devices/platform/omapdss/display0/name
+    chown system system /sys/devices/platform/omapdss/display1/name
+    chmod 0770 /sys/devices/platform/omapdss/display1/name
+    chown system system /sys/devices/platform/omapdss/display2/name
+    chmod 0770 /sys/devices/platform/omapdss/display2/name
+    chown system system /sys/devices/platform/omapdss/display3/name
+    chmod 0770 /sys/devices/platform/omapdss/display3/name
+    chown system system /sys/devices/platform/omapdss/overlay0/manager
+    chmod 0770 /sys/devices/platform/omapdss/overlay0/manager
+    chown system system /sys/devices/platform/omapdss/overlay1/manager
+    chmod 0770 /sys/devices/platform/omapdss/overlay1/manager
+    chown system system /sys/devices/platform/omapdss/overlay2/manager
+    chmod 0770 /sys/devices/platform/omapdss/overlay2/manager
+    chown system system /sys/devices/platform/omapdss/overlay3/manager
+    chmod 0770 /sys/devices/platform/omapdss/overlay3/manager
+    chown system system /sys/devices/platform/omapdss/overlay0/zorder
+    chmod 0770 /sys/devices/platform/omapdss/overlay0/zorder
+    chown system system /sys/devices/platform/omapdss/overlay1/zorder
+    chmod 0770 /sys/devices/platform/omapdss/overlay1/zorder
+    chown system system /sys/devices/platform/omapdss/overlay2/zorder
+    chmod 0770 /sys/devices/platform/omapdss/overlay2/zorder
+    chown system system /sys/devices/platform/omapdss/overlay3/zorder
+    chmod 0770 /sys/devices/platform/omapdss/overlay3/zorder
     # change permissions for manager tranparency parameters
-    chmod 0777 /sys/devices/platform/omapdss/manager0/name
-    chmod 0777 /sys/devices/platform/omapdss/manager0/display
-    chmod 0777 /sys/devices/platform/omapdss/manager0/trans_key_value
-    chmod 0777 /sys/devices/platform/omapdss/manager0/trans_key_type
-    chmod 0777 /sys/devices/platform/omapdss/manager0/trans_key_enabled
-    chmod 0777 /sys/devices/platform/omapdss/manager1/name
-    chmod 0777 /sys/devices/platform/omapdss/manager1/display
-    chmod 0777 /sys/devices/platform/omapdss/manager1/trans_key_value
-    chmod 0777 /sys/devices/platform/omapdss/manager1/trans_key_type
-    chmod 0777 /sys/devices/platform/omapdss/manager1/trans_key_enabled
-    chmod 0777 /sys/devices/platform/omapdss/manager2/name
-    chmod 0777 /sys/devices/platform/omapdss/manager2/display
-    chmod 0777 /sys/devices/platform/omapdss/manager2/trans_key_value
-    chmod 0777 /sys/devices/platform/omapdss/manager2/trans_key_type
-    chmod 0777 /sys/devices/platform/omapdss/manager2/trans_key_enabled
-    chmod 0777 /sys/devices/platform/omapdss/overlay0/enabled
-    chmod 0777 /sys/devices/platform/omapdss/overlay1/enabled
-    chmod 0777 /sys/devices/platform/omapdss/overlay2/enabled
-    chmod 0777 /sys/devices/platform/omapdss/overlay3/enabled
+    chown system system /sys/devices/platform/omapdss/manager0/name
+    chmod 0770 /sys/devices/platform/omapdss/manager0/name
+    chown system system /sys/devices/platform/omapdss/manager0/display
+    chmod 0770 /sys/devices/platform/omapdss/manager0/display
+    chown system system /sys/devices/platform/omapdss/manager1/name
+    chmod 0770 /sys/devices/platform/omapdss/manager1/name
+    chown system system /sys/devices/platform/omapdss/manager1/display
+    chmod 0770 /sys/devices/platform/omapdss/manager1/display
+    chown system system /sys/devices/platform/omapdss/manager2/name
+    chmod 0770 /sys/devices/platform/omapdss/manager2/name
+    chown system system /sys/devices/platform/omapdss/manager2/display
+    chmod 0770 /sys/devices/platform/omapdss/manager2/display
+    chown system system /sys/devices/platform/omapdss/overlay0/enabled
+    chmod 0770 /sys/devices/platform/omapdss/overlay0/enabled
+    chown system system /sys/devices/platform/omapdss/overlay1/enabled
+    chmod 0770 /sys/devices/platform/omapdss/overlay1/enabled
+    chown system system /sys/devices/platform/omapdss/overlay2/enabled
+    chmod 0770 /sys/devices/platform/omapdss/overlay2/enabled
+    chown system system /sys/devices/platform/omapdss/overlay3/enabled
+    chmod 0770 /sys/devices/platform/omapdss/overlay3/enabled
     # change permissions for display timings to get the resolutions
-    chmod 0777 /sys/devices/platform/omapdss/display0/timings
-    chmod 0777 /sys/devices/platform/omapdss/display1/timings
-    chmod 0777 /sys/devices/platform/omapdss/display2/timings
-    chmod 0777 /sys/devices/platform/omapdss/display3/timings
+    chown system system /sys/devices/platform/omapdss/display0/timings
+    chmod 0770 /sys/devices/platform/omapdss/display0/timings
+    chown system system /sys/devices/platform/omapdss/display1/timings
+    chmod 0770 /sys/devices/platform/omapdss/display1/timings
+    chown system system /sys/devices/platform/omapdss/display2/timings
+    chmod 0770 /sys/devices/platform/omapdss/display2/timings
+    chown system system /sys/devices/platform/omapdss/display3/timings
+    chmod 0770 /sys/devices/platform/omapdss/display3/timings
      # change permissions for Tiler driver
     chmod 0777 /dev/tiler
     chmod 0777 /dev/dmm
@@ -165,6 +189,7 @@ on fs
 
 # Enable hotplug detection for HDMI
     write /sys/devices/platform/omapdss/display2/hpd_enabled 1
+
 # Keypad permissions
     chmod 0444 /system/usr/keychars/omap-keypad.kcm.bin
     chmod 0444 /system/usr/keychars/qwerty.kcm.bin
