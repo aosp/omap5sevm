@@ -122,7 +122,8 @@ PRODUCT_PACKAGES += \
 
 #Overlay
 PRODUCT_PACKAGES += \
-    overlay.omap4
+    overlay.omap4 \
+    overlay_test
 
 # Alsa configuration
 PRODUCT_COPY_FILES += \
