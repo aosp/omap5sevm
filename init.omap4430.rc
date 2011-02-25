@@ -257,6 +257,10 @@ service wlan_ap_loader /system/bin/tiap_loader \
     disabled
     oneshot
 
+service ifcfg_softap /system/bin/ifconfig tiap0 up
+    disabled
+    oneshot
+
 service hostapd /system/bin/hostap -dd /data/misc/wifi/hostapd.conf
     disabled
     oneshot
