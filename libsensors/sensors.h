@@ -67,9 +67,9 @@ __BEGIN_DECLS
 #define EVENT_TYPE_TEMPERATURE      ABS_MISC
 
 /* For AK8973iB */
-#define EVENT_TYPE_MAGV_X           REL_DIAL
-#define EVENT_TYPE_MAGV_Y           REL_HWHEEL
-#define EVENT_TYPE_MAGV_Z           REL_MISC
+#define EVENT_TYPE_MAGV_X           ABS_HAT0X
+#define EVENT_TYPE_MAGV_Y           ABS_HAT0Y
+#define EVENT_TYPE_MAGV_Z           ABS_BRAKE
 
 #define EVENT_TYPE_PROXIMITY        ABS_DISTANCE
 #define EVENT_TYPE_LIGHT            LED_MISC

@@ -36,6 +36,7 @@
 #include "LightSensor.h"
 #include "ProximitySensor.h"
 #include "BMP085Sensor.h"
+#include "HMC5843Sensor.h"
 
 
 /*****************************************************************************/
@@ -87,7 +88,11 @@ static const struct sensor_t sSensorList[] = {
         { "BMP085 Temperature sensor",
           "Bosch",
           1, SENSORS_TEMPERATURE_HANDLE,
-          SENSOR_TYPE_TEMPERATURE, 120.0f, 1.0f, 120.0f, 0.045f, { } }
+          SENSOR_TYPE_TEMPERATURE, 120.0f, 1.0f, 120.0f, 0.045f, { } },
+        { "HMC5843 3-Axis Magnetometer",
+          "HoneyWell",
+          1, SENSORS_MAGNETIC_FIELD_HANDLE,
+          SENSOR_TYPE_MAGNETIC_FIELD, 2000.0f, 2000.0f, 1.0f, 6.7f, { } },
 };
 
 
@@ -134,9 +139,10 @@ private:
         light           = 1,
         proximity       = 2,
 	press_temp	= 3,
+	magno		= 4,
         numSensorDrivers,
         numFds,
-	hwell		= 5,
+
 
     };
 
@@ -152,7 +158,7 @@ private:
 		return accel;
             case ID_M:
             case ID_O:
-                return hwell;
+                return magno;
             case ID_P:
                 return proximity;
             case ID_L:
@@ -189,6 +195,10 @@ sensors_poll_context_t::sensors_poll_context_t()
     mPollFds[press_temp].events = POLLIN;
     mPollFds[press_temp].revents = 0;
 
+    mSensors[magno] = new HMC5843Sensor();
+    mPollFds[magno].fd = mSensors[magno]->getFd();
+    mPollFds[magno].events = POLLIN;
+    mPollFds[magno].revents = 0;
 
     int wakeFds[2];
     int result = pipe(wakeFds);
