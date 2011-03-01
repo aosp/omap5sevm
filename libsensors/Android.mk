@@ -34,6 +34,7 @@ LOCAL_SRC_FILES := \
 				AccelSensor.cpp			\
 				LightSensor.cpp			\
 				ProximitySensor.cpp		\
+				BMP085Sensor.cpp		\
 				InputEventReader.cpp
 
 LOCAL_SHARED_LIBRARIES := liblog libcutils libdl

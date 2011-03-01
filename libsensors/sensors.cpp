@@ -35,6 +35,7 @@
 #include "AccelSensor.h"
 #include "LightSensor.h"
 #include "ProximitySensor.h"
+#include "BMP085Sensor.h"
 
 
 /*****************************************************************************/
@@ -50,6 +51,8 @@
 #define SENSORS_LIGHT            (1<<ID_L)
 #define SENSORS_PROXIMITY        (1<<ID_P)
 #define SENSORS_GYROSCOPE        (1<<ID_GY)
+#define SENSORS_PRESSURE         (1<<ID_PRESS)
+#define SENSORS_TEMPERATURE      (1<<ID_TEMP)
 
 #define SENSORS_ACCELERATION_HANDLE     0
 #define SENSORS_MAGNETIC_FIELD_HANDLE   1
@@ -66,17 +69,25 @@
 /* The SENSORS Module */
 static const struct sensor_t sSensorList[] = {
         { "VTI 3 axis accelerometer",
-                "VTI",
-                1, SENSORS_ACCELERATION_HANDLE,
-                SENSOR_TYPE_ACCELEROMETER, RANGE_A, RESOLUTION_A, 0.23f, 20000, { } },
+          "VTI",
+          1, SENSORS_ACCELERATION_HANDLE,
+          SENSOR_TYPE_ACCELEROMETER, RANGE_A, RESOLUTION_A, 0.23f, 20000, { } },
         { "BH1780gli Light sensor",
           "ROHM",
           1, SENSORS_LIGHT_HANDLE,
-          SENSOR_TYPE_LIGHT, 3000.0f, 1.0f, 0.75f, 0, { } },
+          SENSOR_TYPE_LIGHT, 27000.0f, 1.0f, 0.75f, 0, { } },
         { "SFH7741 Proximity sensor",
           "OSRAM Opto Semiconductors",
-          1, SENSORS_HANDLE_BASE+ID_P,
+          1, SENSORS_PROXIMITY_HANDLE,
           SENSOR_TYPE_PROXIMITY, 5.0f, 5.0f, 0.75f, 0, { } },
+        { "BMP085 Pressure sensor",
+          "Bosch",
+          1, SENSORS_PRESSURE_HANDLE,
+          SENSOR_TYPE_PRESSURE, RANGE_PRESS, 1.0f, 1, 20,{ } },
+        { "BMP085 Temperature sensor",
+          "Bosch",
+          1, SENSORS_TEMPERATURE_HANDLE,
+          SENSOR_TYPE_TEMPERATURE, 120.0f, 1.0f, 120.0f, 0.045f, { } }
 };
 
 
@@ -122,10 +133,10 @@ private:
         accel           = 0,
         light           = 1,
         proximity       = 2,
+	press_temp	= 3,
         numSensorDrivers,
         numFds,
-        gyro            = 3,
-	hwell		= 4,
+	hwell		= 5,
 
     };
 
@@ -146,8 +157,9 @@ private:
                 return proximity;
             case ID_L:
                 return light;
-            case ID_GY:
-                return gyro;
+            case ID_PRESS:
+            case ID_TEMP:
+                return press_temp;
         }
         return -EINVAL;
     }
@@ -171,6 +183,12 @@ sensors_poll_context_t::sensors_poll_context_t()
     mPollFds[proximity].fd = mSensors[proximity]->getFd();
     mPollFds[proximity].events = POLLIN;
     mPollFds[proximity].revents = 0;
+
+    mSensors[press_temp] = new BMP085Sensor();
+    mPollFds[press_temp].fd = mSensors[press_temp]->getFd();
+    mPollFds[press_temp].events = POLLIN;
+    mPollFds[press_temp].revents = 0;
+
 
     int wakeFds[2];
     int result = pipe(wakeFds);

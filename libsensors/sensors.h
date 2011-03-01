@@ -39,6 +39,8 @@ __BEGIN_DECLS
 #define ID_L  (3)
 #define ID_P  (4)
 #define ID_GY (5)
+#define ID_PRESS (6)
+#define ID_TEMP  (7)
 
 /*****************************************************************************/
 
@@ -61,13 +63,16 @@ __BEGIN_DECLS
 #define EVENT_TYPE_ROLL             REL_RZ
 #define EVENT_TYPE_ORIENT_STATUS    REL_WHEEL
 
+#define EVENT_TYPE_PRESSURE         ABS_PRESSURE
+#define EVENT_TYPE_TEMPERATURE      ABS_MISC
+
 /* For AK8973iB */
 #define EVENT_TYPE_MAGV_X           REL_DIAL
 #define EVENT_TYPE_MAGV_Y           REL_HWHEEL
 #define EVENT_TYPE_MAGV_Z           REL_MISC
 
 #define EVENT_TYPE_PROXIMITY        ABS_DISTANCE
-#define EVENT_TYPE_LIGHT            ABS_MISC
+#define EVENT_TYPE_LIGHT            LED_MISC
 
 #define EVENT_TYPE_GYRO_X           REL_RY
 #define EVENT_TYPE_GYRO_Y           REL_RX
@@ -78,6 +83,7 @@ __BEGIN_DECLS
 #define LSG                         (720.0f)
 #define NUMOFACCDATA                8
 
+#define RANGE_PRESS                 (100000.0f)
 // conversion of acceleration data to SI units (m/s^2)
 #define RANGE_A                     (2*GRAVITY_EARTH)
 #define RESOLUTION_A                (RANGE_A/(256*NUMOFACCDATA))
@@ -104,6 +110,9 @@ __BEGIN_DECLS
 #define CONVERT_GYRO_X              (CONVERT_GYRO)
 #define CONVERT_GYRO_Y              (-CONVERT_GYRO)
 #define CONVERT_GYRO_Z              (CONVERT_GYRO)
+
+#define CONVERT_TEMP                (1.0f/10.0f)
+#define CONVERT_PRESS               (1.0f/100.0f)
 
 #define SENSOR_STATE_MASK           (0x7FFF)
 
