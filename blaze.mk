@@ -132,6 +132,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     alsa.omap4
 
+# Modem
+PRODUCT_PACKAGES += \
+   libaudiomodemgeneric
+
 # Camera
 PRODUCT_PACKAGES += \
         CameraOMAP4 
