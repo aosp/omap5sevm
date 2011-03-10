@@ -200,7 +200,7 @@ PRODUCT_LOCALES += hdpi
 
 # Pick up audio package
 # no longer needed?
-#include frameworks/base/data/sounds/AudioPackage2.mk
+include frameworks/base/data/sounds/AudioPackage2.mk
 
 # this make file is to extend FRAMEWORKS_BASE_SUBDIRS from pathmake.mk
 # and this is placed in common-open as this common between omap3 and omap4
