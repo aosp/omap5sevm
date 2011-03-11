@@ -175,6 +175,7 @@ on fs
     chmod 0770 /sys/devices/platform/omapdss/display2/timings
     chown system system /sys/devices/platform/omapdss/display3/timings
     chmod 0770 /sys/devices/platform/omapdss/display3/timings
+    chown system system /sys/devices/platform/omapdss/display2/code
      # change permissions for Tiler driver
     chmod 0777 /dev/tiler
     chmod 0777 /dev/dmm
