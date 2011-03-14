@@ -101,7 +101,7 @@ PRODUCT_PACKAGES += \
     utilsApp.out \
     libd2cmap \
     d2c_test \
-    libmemmgr \
+    libtimemmgr \
     memmgr_test \
     utils_test \
     tiler_ptest
