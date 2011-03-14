@@ -132,6 +132,17 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     alsa.omap4
 
+# Kernel
+ifeq ($(TARGET_PREBUILT_KERNEL),)
+LOCAL_KERNEL := device/ti/blaze/boot/zImage
+else
+LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+endif
+
+PRODUCT_COPY_FILES += \
+	$(LOCAL_KERNEL):kernel
+
+
 # Modem
 PRODUCT_PACKAGES += \
    libaudiomodemgeneric
