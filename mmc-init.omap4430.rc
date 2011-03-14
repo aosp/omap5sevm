@@ -34,10 +34,6 @@ on post-fs
 # Re-mount rootfs in Read-write since this is not in ramdisk for SD boot
 mount rootfs rootfs / rw remount
 
-# Copying hostapd.conf (WLAN HotSpot)
-    copy /system/etc/wifi/softap/hostapd.conf /data/misc/wifi/hostapd.conf
-    chown wifi wifi /data/misc/wifi
-
 on fs
 #    For booting from SD card we should not be mounting eMMC paritions
 #    mount ext4 /dev/block/platform/mmci-omap-hs.1/by-name/system /system wait ro
