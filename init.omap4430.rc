@@ -175,10 +175,10 @@ on fs
     chmod 0777 /dev/tiler
     chmod 0777 /dev/dmm
 # Enable secondary display on Blaze
-    write /sys/devices/platform/omapdss/display1/enabled 1
-    write /sys/devices/platform/omapdss/overlay1/enabled 0
-    write /sys/devices/platform/omapdss/overlay1/manager "2lcd"
-    write /sys/devices/platform/omapdss/overlay1/enabled 1
+    #write /sys/devices/platform/omapdss/display1/enabled 1
+    #write /sys/devices/platform/omapdss/overlay1/enabled 0
+    #write /sys/devices/platform/omapdss/overlay1/manager "2lcd"
+    #write /sys/devices/platform/omapdss/overlay1/enabled 1
 
 # Enable hotplug detection for HDMI
     write /sys/devices/platform/omapdss/display2/hpd_enabled 1
