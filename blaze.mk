@@ -140,7 +140,13 @@ LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
 
 PRODUCT_COPY_FILES += \
-	$(LOCAL_KERNEL):kernel
+	$(LOCAL_KERNEL):kernel \
+	device/ti/blaze/boot/fastboot.sh:fastboot.sh \
+	$(LOCAL_KERNEL):boot/zImage \
+	device/ti/blaze/boot/MLO_es2.2_emu:boot/MLO_es2.2_emu \
+	device/ti/blaze/boot/MLO_es2.2_gp:boot/MLO_es2.2_gp \
+	device/ti/blaze/boot/u-boot.bin:boot/u-boot.bin \
+	device/ti/support-tools/boot/omap4/umulti.sh:umulti.sh
 
 
 # Modem

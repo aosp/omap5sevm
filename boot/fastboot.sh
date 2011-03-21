@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export FASTBOOT="./../../../../out/host/linux-x86/bin/fastboot"
-export PRODUCT_OUT="../../../../out/target/product/blaze"
+export FASTBOOT=${FASTBOOT-"./../../../../out/host/linux-x86/bin/fastboot"}
+export PRODUCT_OUT=${PRODUCT_OUT-"./"}
 
 usage ()
 {
@@ -25,8 +25,8 @@ while [ "$#" -gt 0 ]
 done
 
 echo "Flashing bootloader....."
-$FASTBOOT flash xloader 	$MLO
-$FASTBOOT flash bootloader 	./u-boot.bin
+$FASTBOOT flash xloader 	./boot/$MLO
+$FASTBOOT flash bootloader 	./boot/u-boot.bin
 
 echo "Reboot: make sure new bootloader runs..."
 $FASTBOOT reboot-bootloader
@@ -38,6 +38,7 @@ $FASTBOOT oem format
 
 echo "Flash android partitions"
 $FASTBOOT flash boot 		$PRODUCT_OUT/boot.img
+$FASTBOOT flash recovery	$PRODUCT_OUT/recovery.img
 $FASTBOOT flash system 		$PRODUCT_OUT/system.img
 $FASTBOOT flash userdata 	$PRODUCT_OUT/userdata.img
 
