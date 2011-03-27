@@ -79,15 +79,14 @@ __BEGIN_DECLS
 #define EVENT_TYPE_GYRO_Z           REL_RZ
 
 
-// 720 LSG = 1G
-#define LSG                         (720.0f)
-#define NUMOFACCDATA                8
+// 1000 LSG = 1G
+#define LSG                         (1000.0f)
 
 #define RANGE_PRESS                 (100000.0f)
 // conversion of acceleration data to SI units (m/s^2)
-#define RANGE_A                     (2*GRAVITY_EARTH)
-#define RESOLUTION_A                (RANGE_A/(256*NUMOFACCDATA))
-#define CONVERT_A                   (GRAVITY_EARTH / LSG / NUMOFACCDATA)
+#define RANGE_A                     (4*GRAVITY_EARTH)
+#define RESOLUTION_A                (GRAVITY_EARTH / LSG)
+#define CONVERT_A                   (GRAVITY_EARTH / LSG)
 #define CONVERT_A_X                 (CONVERT_A)
 #define CONVERT_A_Y                 (CONVERT_A)
 #define CONVERT_A_Z                 (CONVERT_A)
