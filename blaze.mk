@@ -33,7 +33,12 @@ PRODUCT_COPY_FILES += \
 
 # Generated kcm keymaps
 PRODUCT_PACKAGES := \
-        omap-keypad.kcm 
+        omap-keypad.kcm
+
+# Prebuilt idc files
+PRODUCT_COPY_FILES += \
+        device/ti/blaze/syn_tm12xx_ts_1.idc:system/usr/idc/syn_tm12xx_ts_1.idc \
+        device/ti/blaze/syn_tm12xx_ts_2.idc:system/usr/idc/syn_tm12xx_ts_2.idc
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
