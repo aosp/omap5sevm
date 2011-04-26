@@ -28,7 +28,8 @@ PRODUCT_COPY_FILES += \
 
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
-        device/ti/blaze/omap-keypad.kl:system/usr/keylayout/omap-keypad.kl 
+        device/ti/blaze/omap-keypad.kl:system/usr/keylayout/omap-keypad.kl \
+        device/ti/blaze/omap-keypad.kl:system/usr/keylayout/omap4-keypad.kl
 
 # Generated kcm keymaps
 PRODUCT_PACKAGES := \
