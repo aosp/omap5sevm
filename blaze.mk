@@ -29,7 +29,8 @@ PRODUCT_COPY_FILES += \
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
         device/ti/blaze/omap-keypad.kl:system/usr/keylayout/omap-keypad.kl \
-        device/ti/blaze/omap-keypad.kl:system/usr/keylayout/omap4-keypad.kl
+        device/ti/blaze/omap-keypad.kl:system/usr/keylayout/omap4-keypad.kl \
+        device/ti/blaze/twl6030_pwrbutton.kl:system/usr/keylayout/twl6030_pwrbutton.kl
 
 # Generated kcm keymaps
 PRODUCT_PACKAGES := \
