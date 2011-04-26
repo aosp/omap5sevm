@@ -204,6 +204,7 @@ on fs
 # Initialize the SGX driver
 service pvrsrvinit /system/bin/pvrsrvinit
 #service pvrsrvinit /system/vendor/bin/pvrsrvinit
+    class core
     user root
     group root
     oneshot
