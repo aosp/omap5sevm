@@ -12,7 +12,6 @@ key 78    PLUS
 key 158   BACK              WAKE_DROPPED
 key 14    BACK              WAKE_DROPPED
 key 230   SOFT_RIGHT        WAKE
-key 106   SOFT_RIGHT        WAKE
 key 107   ENDCALL           WAKE_DROPPED
 key 62    CAMERA
 key 60    ENDCALL           WAKE_DROPPED
