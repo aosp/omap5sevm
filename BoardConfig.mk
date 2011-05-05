@@ -31,6 +31,7 @@ TARGET_NO_BOOTLOADER := true
 
 #TODO: needed for boot.img auto-creation: disble for now
 TARGET_NO_KERNEL := false
+TARGET_NO_RECOVERY := true
 
 TARGET_NO_RADIOIMAGE := true
 TARGET_PROVIDES_INIT_TARGET_RC := true
@@ -49,14 +50,18 @@ BOARD_CAMERA_LIBRARIES := libcamera
 endif
 
 
-
-
+# kernel
+ifeq ($(TARGET_NO_KERNEL),false)
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_CMDLINE := console=ttyO2,115200n8 mem=456M@0x80000000 mem=512M@0xA0000000 init=/init vram=10M omapfb.vram=0:4M
+endif
 
+# Recovery
+ifeq ($(TARGET_NO_RECOVERY),false)
 TARGET_RECOVERY_UI_LIB := librecovery_ui_blaze
 TARGET_RELEASETOOLS_EXTENSIONS := device/ti/blaze
+endif
 
 TARGET_USERIMAGES_USE_EXT4 := true
 #TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
@@ -112,4 +117,4 @@ endif
 #BUILD_PV_TEST_APPS :=1
 
 # Enable Audio Modem
-BOARD_USES_TI_OMAP_MODEM_AUDIO := true
+#BOARD_USES_TI_OMAP_MODEM_AUDIO := true
