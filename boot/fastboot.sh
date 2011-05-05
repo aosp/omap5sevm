@@ -54,3 +54,6 @@ fi
 
 #flash cache.img
 $FASTBOOT flash cache 		./cache.img
+
+#auto reboot
+$FASTBOOT reboot
