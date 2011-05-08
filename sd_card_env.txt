@@ -1,9 +1,0 @@
-# The following command line is for 1GB support
-setenv bootargs console=ttyO2,115200n8 mem=456M@0x80000000 mem=512M@0xA0000000 root=/dev/mmcblk1p2 rw rootdelay=2 init=/init  vram="10M" omapfb.vram="0:4M"
-setenv bootcmd 'mmcinit 0; fatload mmc 0 0x80000000 uImage;bootm 80000000'
-saveenv
-run bootcmd
-
-# For 512MB Support: use the following bootargs
-# setenv bootargs 'console=ttyO2,115200n8 root=/dev/mmcblk1p2 rw rootdelay=2 init=/init androidboot.console=ttyO2 mem=460M ip=dhcp'
-
