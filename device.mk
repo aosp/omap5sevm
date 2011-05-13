@@ -20,8 +20,6 @@ else
 LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
 
-DEVICE_PACKAGE_OVERLAYS := device/ti/blaze/overlay
-
 PRODUCT_COPY_FILES := \
 	$(LOCAL_KERNEL):kernel \
         device/ti/blaze/boot/fastboot.sh:fastboot.sh \
