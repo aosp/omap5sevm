@@ -46,7 +46,9 @@ PRODUCT_COPY_FILES := \
 	device/ti/blaze/omap4-keypad.kl:system/usr/keylayout/omap4-keypad.kl \
 	device/ti/blaze/media_profiles.xml:system/etc/media_profiles.xml \
 	frameworks/base/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
-	frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml
+	frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
+        device/ti/blaze/syn_tm12xx_ts_1.idc:system/usr/idc/syn_tm12xx_ts_1.idc \
+        device/ti/blaze/syn_tm12xx_ts_2.idc:system/usr/idc/syn_tm12xx_ts_2.idc
 
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
