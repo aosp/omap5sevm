@@ -22,6 +22,18 @@ on fs
 # take a wakelock on boot until PM is working
 	write /sys/power/wake_lock hack
 
+# change permissions for Sensors
+    chown system system /sys/bus/i2c/drivers/cma3000_accl/4-001c
+    chown system system /sys/bus/i2c/drivers/cma3000_accl/4-001c/enable
+    chown system system /sys/bus/i2c/drivers/cma3000_accl/4-001c/delay
+    chown system system /sys/devices/platform/sfh7741.1
+    chown system system /sys/devices/platform/sfh7741.1/state
+    chown system system /sys/bus/i2c/drivers/bmp085/4-0077
+    chown system system /sys/bus/i2c/drivers/bmp085/4-0077/enable
+    chown system system /sys/bus/i2c/drivers/hmc5843/4-001e
+    chown system system /sys/bus/i2c/drivers/hmc5843/4-001e/enable
+    chown system system /sys/bus/i2c/drivers/hmc5843/4-001e/rate
+
 service pvrsrvinit /vendor/bin/pvrsrvinit
 	class core
 	user root
