@@ -75,6 +75,10 @@ PRODUCT_PACKAGES += \
 # Audio HAL module
 PRODUCT_PACKAGES += audio.primary.blaze
 
+# Lights
+PRODUCT_PACKAGES += \
+        lights.omap4
+
 # Sensors
 PRODUCT_PACKAGES += \
         sensors.omap4
