@@ -18,7 +18,7 @@
 # by BoardConfigVendor.mk
 BOARD_USES_GENERIC_AUDIO := true
 USE_CAMERA_STUB := true
-
+OMAP_ENHANCEMENT := true
 # Use the non-open-source parts, if they're present
 #-include vendor/ti/blaze/BoardConfigVendor.mk
 
@@ -33,7 +33,7 @@ TARGET_NO_BOOTLOADER := true
 TARGET_NO_RECOVERY := true
 
 BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_CMDLINE := console=ttyO2,115200n8 mem=1024M androidboot.console=ttyO2 vram=20M omapfb.vram=0:8M
+BOARD_KERNEL_CMDLINE := console=ttyO2,115200n8 mem=920M@0x80000000 init=/init vram=10M omapfb.vram=0:4M
 
 TARGET_NO_RADIOIMAGE := true
 TARGET_BOARD_PLATFORM := omap4
@@ -54,3 +54,6 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 #TARGET_PROVIDES_INIT_RC := true
 #TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
+ifdef OMAP_ENHANCEMENT
+COMMON_GLOBAL_CFLAGS += -DOMAP_ENHANCEMENT -DTARGET_OMAP4
+endif

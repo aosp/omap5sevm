@@ -14,6 +14,19 @@
 # limitations under the License.
 #
 
+PRODUCT_PACKAGES := \
+    ti_omap4_ducati_bins \
+    libOMX_Core \
+    libOMX.TI.DUCATI1.VIDEO.DECODER
+
+# Tiler
+PRODUCT_PACKAGES += \
+    libtimemmgr
+
+#HWC Hal
+PRODUCT_PACKAGES += \
+    hwcomposer.omap4
+
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 LOCAL_KERNEL := device/ti/blaze/boot/zImage
 else
@@ -23,6 +36,7 @@ endif
 PRODUCT_COPY_FILES := \
 	$(LOCAL_KERNEL):kernel \
         device/ti/blaze/boot/fastboot.sh:fastboot.sh \
+	device/ti/blaze/boot/fastboot:fastboot \
         $(LOCAL_KERNEL):boot/zImage \
         device/ti/blaze/boot/MLO_es2.2_emu:boot/MLO_es2.2_emu \
         device/ti/blaze/boot/MLO_es2.2_gp:boot/MLO_es2.2_gp \
@@ -34,7 +48,7 @@ PRODUCT_COPY_FILES := \
 	frameworks/base/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
 	frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml
 
-PRODUCT_PACKAGES := \
+PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
 
 PRODUCT_PROPERTY_OVERRIDES := \
