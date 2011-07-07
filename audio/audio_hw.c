@@ -588,6 +588,9 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
 
     out->config = pcm_config_mm;
 
+    ladev->out_device = devices;
+    select_route(ladev);
+
     out->pcm = pcm_open(0, PORT_MM, PCM_OUT, &out->config);
     if (!pcm_is_ready(out->pcm)) {
         LOGE("cannot open pcm_out driver: %s", pcm_get_error(out->pcm));
