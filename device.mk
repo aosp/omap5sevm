@@ -56,6 +56,9 @@ PRODUCT_PACKAGES := \
 	lights.omap4
 
 PRODUCT_PACKAGES += \
+	sensors.omap4
+
+PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
 
 PRODUCT_PROPERTY_OVERRIDES := \
