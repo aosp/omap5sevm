@@ -90,11 +90,11 @@ PRODUCT_PACKAGES += audio.primary.blaze
 
 # Lights
 PRODUCT_PACKAGES += \
-        lights.omap4
+        lights.blaze
 
 # Sensors
 PRODUCT_PACKAGES += \
-        sensors.omap4
+        sensors.blaze
 
 $(call inherit-product, frameworks/base/build/tablet-dalvik-heap.mk)
 $(call inherit-product-if-exists, vendor/ti/proprietary/omap4/ti-omap4-vendor.mk)
