@@ -49,6 +49,7 @@ PRODUCT_COPY_FILES := \
 	device/ti/blaze/media_profiles.xml:system/etc/media_profiles.xml \
 	frameworks/base/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
 	frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
+	frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
         device/ti/blaze/syn_tm12xx_ts_1.idc:system/usr/idc/syn_tm12xx_ts_1.idc \
         device/ti/blaze/syn_tm12xx_ts_2.idc:system/usr/idc/syn_tm12xx_ts_2.idc
 
@@ -79,6 +80,10 @@ PRODUCT_PACKAGES += \
 # Generated kcm keymaps
 PRODUCT_PACKAGES += \
         omap4-keypad.kcm
+
+# WI-Fi
+PRODUCT_PACKAGES += \
+	dhcpcd.conf
 
 # Audio HAL module
 PRODUCT_PACKAGES += audio.primary.blaze
