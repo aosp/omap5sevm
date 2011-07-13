@@ -53,12 +53,6 @@ PRODUCT_COPY_FILES := \
         device/ti/blaze/syn_tm12xx_ts_1.idc:system/usr/idc/syn_tm12xx_ts_1.idc \
         device/ti/blaze/syn_tm12xx_ts_2.idc:system/usr/idc/syn_tm12xx_ts_2.idc
 
-PRODUCT_PACKAGES := \
-	lights.omap4
-
-PRODUCT_PACKAGES += \
-	sensors.omap4
-
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
 
