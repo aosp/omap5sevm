@@ -85,7 +85,9 @@ PRODUCT_PACKAGES += \
 
 # WI-Fi
 PRODUCT_PACKAGES += \
-	dhcpcd.conf
+	dhcpcd.conf \
+	TQS_D_1.7.ini \
+	calibrator
 
 # Audio HAL module
 PRODUCT_PACKAGES += audio.primary.blaze
