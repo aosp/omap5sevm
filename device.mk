@@ -50,6 +50,7 @@ PRODUCT_COPY_FILES := \
 	frameworks/base/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
 	frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
 	frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
+	device/ti/blaze/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
         device/ti/blaze/syn_tm12xx_ts_1.idc:system/usr/idc/syn_tm12xx_ts_1.idc \
         device/ti/blaze/syn_tm12xx_ts_2.idc:system/usr/idc/syn_tm12xx_ts_2.idc \
 	hardware/ti/omap4/domx/Ducati_binary/etc/firmware/ducati-m3.bin:system/vendor/firmware/ducati-m3.bin
