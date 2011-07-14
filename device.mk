@@ -93,6 +93,10 @@ PRODUCT_PACKAGES += \
 # Audio HAL module
 PRODUCT_PACKAGES += audio.primary.blaze
 
+
+# BlueZ a2dp Audio HAL module
+PRODUCT_PACKAGES += audio.a2dp.default
+
 # Lights
 PRODUCT_PACKAGES += \
         lights.blaze
