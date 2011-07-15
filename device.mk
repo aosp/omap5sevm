@@ -54,6 +54,10 @@ PRODUCT_COPY_FILES := \
         device/ti/blaze/syn_tm12xx_ts_2.idc:system/usr/idc/syn_tm12xx_ts_2.idc \
 	hardware/ti/omap4/domx/Ducati_binary/etc/firmware/ducati-m3.bin:system/vendor/firmware/ducati-m3.bin
 
+# to mount the external storage (sdcard)
+PRODUCT_COPY_FILES += \
+        device/ti/blaze/vold.fstab:system/etc/vold.fstab
+
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
 
