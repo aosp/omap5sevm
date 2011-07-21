@@ -274,8 +274,7 @@ struct blaze_audio_device {
 
 #ifdef USE_RIL
     /* RIL */
-    void *ril_handle;
-    void *ril_client;
+    struct ril_handle ril;
 #endif
 };
 
@@ -363,8 +362,8 @@ static int start_call(struct blaze_audio_device *adev)
         }
     }
 
-    ril_set_call_clock_sync(adev->ril_client, SOUND_CLOCK_START);
-    ril_set_call_audio_path(adev->ril_client, SOUND_AUDIO_PATH_HANDSET);
+    ril_set_call_clock_sync(&adev->ril, SOUND_CLOCK_START);
+    ril_set_call_audio_path(&adev->ril, SOUND_AUDIO_PATH_HANDSET);
 
     pcm_start(adev->pcm_modem_dl);
     pcm_start(adev->pcm_modem_ul);
@@ -899,7 +898,7 @@ static int adev_set_voice_volume(struct audio_hw_device *dev, float volume)
     /* convert the float volume to something suitable for the RIL */
     if (adev->in_call) {
         int int_volume = (int)(volume * 5);
-        ril_set_call_volume(adev->ril_client, SOUND_TYPE_VOICE, int_volume);
+        ril_set_call_volume(&adev->ril, SOUND_TYPE_VOICE, int_volume);
     }
 
     return 0;
@@ -1045,7 +1044,7 @@ static int adev_close(hw_device_t *device)
 
 #ifdef USE_RIL
     /* RIL */
-    ril_close(adev->ril_handle, adev->ril_client);
+    ril_close(&adev->ril);
 #endif
 
     mixer_close(adev->mixer);
@@ -1142,7 +1141,7 @@ static int adev_open(const hw_module_t* module, const char* name,
 
 #ifdef USE_RIL
     /* RIL */
-    ril_open(&adev->ril_handle, &adev->ril_client);
+    ril_open(&adev->ril);
 #endif
 
     *device = &adev->device.common;
