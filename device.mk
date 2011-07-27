@@ -53,9 +53,7 @@ PRODUCT_COPY_FILES := \
 	device/ti/blaze/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
         device/ti/blaze/syn_tm12xx_ts_1.idc:system/usr/idc/syn_tm12xx_ts_1.idc \
         device/ti/blaze/syn_tm12xx_ts_2.idc:system/usr/idc/syn_tm12xx_ts_2.idc \
-	hardware/ti/omap4/domx/Ducati_binary/etc/firmware/ducati-m3.bin:system/vendor/firmware/ducati-m3.bin \
-	hardware/ti/omap4/camera-omap4/data/TICamera_IMX060.xml:system/etc/TICamera_IMX060.xml \
-	hardware/ti/omap4/camera-omap4/data/TICamera_OV5650.xml:system/etc/TICamera_OV5650.xml
+	hardware/ti/omap4/domx/Ducati_binary/etc/firmware/ducati-m3.bin:system/vendor/firmware/ducati-m3.bin
 
 # to mount the external storage (sdcard)
 PRODUCT_COPY_FILES += \
