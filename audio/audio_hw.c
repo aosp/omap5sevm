@@ -741,6 +741,7 @@ static int start_input_stream(struct blaze_stream_in *in)
     * Also check how capture is possible during voice calls or if both use cases are mutually
     * exclusive.
     */
+    pthread_mutex_lock(&adev->lock);
     if (in->port == PORT_VX)
         set_route_by_array(adev->mixer, vx_ul_amic, 1);
     else
@@ -748,6 +749,7 @@ static int start_input_stream(struct blaze_stream_in *in)
 
     mixer_ctl_set_enum_by_string(adev->mixer_ctls.left_capture,
                                  MIXER_MAIN_MIC);
+    pthread_mutex_unlock(&adev->lock);
 
     /* this assumes routing is done previously */
     in->pcm = pcm_open(0, in->port, PCM_IN, &in->config);
@@ -1279,6 +1281,7 @@ static int adev_open(const hw_module_t* module, const char* name,
     }
 
     /* Set the default route before the PCM stream is opened */
+    pthread_mutex_lock(&adev->lock);
     set_route_by_array(adev->mixer, defaults, 1);
     adev->mode = AUDIO_MODE_NORMAL;
     adev->out_device = AUDIO_DEVICE_OUT_SPEAKER;
@@ -1292,6 +1295,7 @@ static int adev_open(const hw_module_t* module, const char* name,
     /* RIL */
     ril_open(&adev->ril);
 #endif
+    pthread_mutex_unlock(&adev->lock);
 
     *device = &adev->device.common;
 
