@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+DEVICE_PACKAGE_OVERLAYS := device/ti/blaze/overlay
+
 PRODUCT_PACKAGES := \
     ti_omap4_ducati_bins \
     libOMX_Core \
