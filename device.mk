@@ -53,7 +53,7 @@ PRODUCT_COPY_FILES := \
 	device/ti/blaze/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
         device/ti/blaze/syn_tm12xx_ts_1.idc:system/usr/idc/syn_tm12xx_ts_1.idc \
         device/ti/blaze/syn_tm12xx_ts_2.idc:system/usr/idc/syn_tm12xx_ts_2.idc \
-	hardware/ti/omap4/domx/Ducati_binary/etc/firmware/ducati-m3.bin:system/vendor/firmware/ducati-m3.bin
+	hardware/ti/omap4xxx/domx/Ducati_binary/etc/firmware/ducati-m3.bin:system/vendor/firmware/ducati-m3.bin
 
 # to mount the external storage (sdcard)
 PRODUCT_COPY_FILES += \
@@ -112,5 +112,5 @@ PRODUCT_PACKAGES += \
 	hcitool
 
 $(call inherit-product, frameworks/base/build/tablet-dalvik-heap.mk)
-$(call inherit-product, hardware/ti/omap4/omap4.mk)
+$(call inherit-product, hardware/ti/omap4xxx/omap4.mk)
 $(call inherit-product-if-exists, vendor/ti/proprietary/omap4/ti-omap4-vendor.mk)
