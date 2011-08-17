@@ -69,7 +69,7 @@ PRODUCT_PROPERTY_OVERRIDES := \
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 	persist.sys.usb.config=mtp
 
-PRODUCT_CHARACTERISTICS := tablet,nosdcard
+PRODUCT_CHARACTERISTICS := tablet
 
 PRODUCT_TAGS += dalvik.gc.type-precise
 
