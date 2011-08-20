@@ -33,4 +33,5 @@ $(call inherit-product-if-exists, vendor/ti/proprietary/omap4/ti-omap4-vendor.mk
 PRODUCT_NAME := full_blaze
 PRODUCT_DEVICE := blaze
 PRODUCT_BRAND := Android
-PRODUCT_MODEL := Full AOSP on Blaze
+PRODUCT_MODEL := Blaze
+PRODUCT_MANUFACTURER := Texas_Instruments_Inc
