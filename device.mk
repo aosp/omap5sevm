@@ -105,7 +105,8 @@ PRODUCT_PACKAGES += \
 
 # Sensors
 PRODUCT_PACKAGES += \
-        sensors.blaze
+        sensors.blaze \
+        sensor.test
 
 # BlueZ test tools & Shared Transport user space mgr
 PRODUCT_PACKAGES += \
