@@ -89,6 +89,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	dhcpcd.conf \
 	hostapd.conf \
+	wifical.sh \
 	TQS_D_1.7.ini \
 	calibrator
 
