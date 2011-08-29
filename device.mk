@@ -16,19 +16,6 @@
 
 DEVICE_PACKAGE_OVERLAYS := device/ti/blaze/overlay
 
-PRODUCT_PACKAGES := \
-    ti_omap4_ducati_bins \
-    libOMX_Core \
-    libOMX.TI.DUCATI1.VIDEO.DECODER
-
-# Tiler
-PRODUCT_PACKAGES += \
-    libtimemmgr
-
-#HWC Hal
-PRODUCT_PACKAGES += \
-    hwcomposer.omap4
-
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 LOCAL_KERNEL := device/ti/blaze/boot/zImage
 else
@@ -59,6 +46,19 @@ PRODUCT_COPY_FILES := \
 # to mount the external storage (sdcard)
 PRODUCT_COPY_FILES += \
         device/ti/blaze/vold.fstab:system/etc/vold.fstab
+
+PRODUCT_PACKAGES := \
+    ti_omap4_ducati_bins \
+    libOMX_Core \
+    libOMX.TI.DUCATI1.VIDEO.DECODER
+
+# Tiler
+PRODUCT_PACKAGES += \
+    libtimemmgr
+
+#HWC Hal
+PRODUCT_PACKAGES += \
+    hwcomposer.omap4
 
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
