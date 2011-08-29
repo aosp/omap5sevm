@@ -15,3 +15,4 @@
 #
 
 add_lunch_combo full_blaze-userdebug
+add_lunch_combo full_blaze-eng
