@@ -76,6 +76,12 @@ PRODUCT_PROPERTY_OVERRIDES := \
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 	persist.sys.usb.config=mtp
 
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.opengles.version=131072
+
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.sf.lcd_density=240
+
 PRODUCT_CHARACTERISTICS := tablet
 
 PRODUCT_TAGS += dalvik.gc.type-precise
