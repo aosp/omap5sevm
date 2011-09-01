@@ -70,6 +70,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
 
+PRODUCT_PACKAGES += \
+	boardidentity
+
 PRODUCT_PROPERTY_OVERRIDES := \
 	hwui.render_dirty_regions=false
 
