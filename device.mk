@@ -71,7 +71,10 @@ PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
 
 PRODUCT_PACKAGES += \
-	boardidentity
+	boardidentity \
+	libboardidentity \
+	libboard_idJNI \
+	Board_id
 
 PRODUCT_PROPERTY_OVERRIDES := \
 	hwui.render_dirty_regions=false
