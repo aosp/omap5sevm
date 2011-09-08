@@ -108,6 +108,7 @@ PRODUCT_PACKAGES += \
 	hostapd.conf \
 	wifical.sh \
 	TQS_D_1.7.ini \
+	TQS_D_1.7_127x.ini \
 	calibrator
 
 # Audio HAL module
