@@ -110,6 +110,8 @@ PRODUCT_PACKAGES += \
 	wifical.sh \
 	TQS_D_1.7.ini \
 	TQS_D_1.7_127x.ini \
+	crda \
+	regulatory.bin \
 	calibrator
 
 # Audio HAL module
