@@ -68,6 +68,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     hwcomposer.omap4
 
+# Camera
+PRODUCT_PACKAGES += \
+    Camera \
+    CameraOMAP4
+
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
 
