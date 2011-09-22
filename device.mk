@@ -127,6 +127,9 @@ PRODUCT_PACKAGES += audio.primary.blaze
 # BlueZ a2dp Audio HAL module
 PRODUCT_PACKAGES += audio.a2dp.default
 
+# Audioout libs
+PRODUCT_PACKAGES += libaudioutils
+
 # Lights
 PRODUCT_PACKAGES += \
         lights.blaze
