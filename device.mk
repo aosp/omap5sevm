@@ -71,7 +71,8 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     Camera \
-    CameraOMAP4
+    CameraOMAP4 \
+    camera_test
 
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
