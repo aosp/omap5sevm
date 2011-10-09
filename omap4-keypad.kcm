@@ -20,7 +20,7 @@
 # a new key character map file with the required keyboard configuration.
 #
 
-type FULL
+type ALPHA
 
 ### Basic QWERTY keys ###
 
