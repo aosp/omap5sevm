@@ -167,6 +167,11 @@ PRODUCT_PACKAGES += \
         tfsw_jce_provider.jar \
         tfctrl
 
+PRODUCT_PACKAGES += \
+	tinymix \
+	tinyplay \
+	tinycap
+
 $(call inherit-product, frameworks/base/build/tablet-dalvik-heap.mk)
 $(call inherit-product, hardware/ti/omap4xxx/omap4.mk)
 $(call inherit-product-if-exists, hardware/ti/wpan/ti-wpan-products.mk)
