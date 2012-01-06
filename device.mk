@@ -34,6 +34,7 @@ PRODUCT_COPY_FILES := \
 	device/ti/blaze/init.omap4blazeboard.usb.rc:root/init.omap4blazeboard.usb.rc \
 	device/ti/blaze/ueventd.omap4blazeboard.rc:root/ueventd.omap4blazeboard.rc \
 	device/ti/blaze/omap4-keypad.kl:system/usr/keylayout/omap4-keypad.kl \
+	device/ti/blaze/qtouch-touchscreen.idc:system/usr/idc/qtouch-touchscreen.idc \
 	device/ti/blaze/omap4-keypad.kcm:system/usr/keychars/omap4-keypad.kcm \
         device/ti/blaze/twl6030_pwrbutton.kl:system/usr/keylayout/twl6030_pwrbutton.kl \
 	device/ti/blaze/media_profiles.xml:system/etc/media_profiles.xml \
