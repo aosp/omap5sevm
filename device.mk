@@ -30,6 +30,8 @@ PRODUCT_COPY_FILES := \
         device/ti/blaze/boot/MLO_es2.2_emu:boot/MLO_es2.2_emu \
         device/ti/blaze/boot/MLO_es2.2_gp:boot/MLO_es2.2_gp \
         device/ti/blaze/boot/u-boot.bin:boot/u-boot.bin \
+        device/ti/blaze/init.omap5430evmboard.rc:root/init.omap5430evmboard.rc \
+        device/ti/blaze/ueventd.omap5430evmboard.rc:root/ueventd.omap5430evmboard.rc \
 	device/ti/blaze/init.omap4blazeboard.rc:root/init.omap4blazeboard.rc \
 	device/ti/blaze/init.omap4blazeboard.usb.rc:root/init.omap4blazeboard.usb.rc \
 	device/ti/blaze/ueventd.omap4blazeboard.rc:root/ueventd.omap4blazeboard.rc \
