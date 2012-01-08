@@ -3,6 +3,7 @@ on early-init
     mkdir /mnt/sdcard 0000 system system
     # for backwards compatibility
     symlink /mnt/sdcard /sdcard
+    chmod 0777 /mnt/sdcard
 
 # create Ext SDcard mountpoint
     mkdir /mnt/ext_sdcard 0000 system system
@@ -13,6 +14,7 @@ on post-fs-data
     mkdir /data/media 0775 media_rw media_rw
     chown media_rw media_rw /data/media
     mkdir /data/smc 0770 drmrpc drmrpc
+    chmod 0777 /mnt/sdcard/Android/data/com.android.gallery3d/cache
 
 on boot
 	mount debugfs /sys/kernel/debug /sys/kernel/debug
