@@ -70,7 +70,7 @@ PRODUCT_PACKAGES += \
 
 #HWC Hal
 PRODUCT_PACKAGES += \
-    hwcomposer.omap4
+    hwcomposer.omap5430evmboard
 
 #Lib Skia test
 PRODUCT_PACKAGES += \
