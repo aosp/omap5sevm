@@ -1,2 +1,2 @@
-require board=omap4blazeboard
+require board=omap5430evmboard
 

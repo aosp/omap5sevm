@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-PRODUCT_MAKEFILES := $(LOCAL_DIR)/full_blaze.mk
+PRODUCT_MAKEFILES := $(LOCAL_DIR)/full_omap5sevm.mk

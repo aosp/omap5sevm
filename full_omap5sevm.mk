@@ -23,11 +23,11 @@
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
-$(call inherit-product, device/ti/blaze/device.mk)
+$(call inherit-product, device/ti/omap5sevm/device.mk)
 $(call inherit-product-if-exists, vendor/ti/proprietary/omap4/ti-omap4-vendor.mk)
 
-PRODUCT_NAME := full_blaze
-PRODUCT_DEVICE := blaze
+PRODUCT_NAME := full_omap5sevm
+PRODUCT_DEVICE := omap5sevm
 PRODUCT_BRAND := Android
-PRODUCT_MODEL := Blaze
+PRODUCT_MODEL := Omap5sevm
 PRODUCT_MANUFACTURER := Texas_Instruments_Inc

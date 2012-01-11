@@ -14,38 +14,35 @@
 # limitations under the License.
 #
 
-DEVICE_PACKAGE_OVERLAYS := device/ti/blaze/overlay
+DEVICE_PACKAGE_OVERLAYS := device/ti/omap5sevm/overlay
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
-LOCAL_KERNEL := device/ti/blaze/boot/zImage
+LOCAL_KERNEL := device/ti/omap5sevm/boot/zImage
 else
 LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
 
 PRODUCT_COPY_FILES := \
 	$(LOCAL_KERNEL):kernel \
-        device/ti/blaze/boot/fastboot.sh:fastboot.sh \
-	device/ti/blaze/boot/fastboot:fastboot \
+        device/ti/omap5sevm/boot/fastboot.sh:fastboot.sh \
+	device/ti/omap5sevm/boot/fastboot:fastboot \
         $(LOCAL_KERNEL):boot/zImage \
-        device/ti/blaze/boot/MLO_es2.2_emu:boot/MLO_es2.2_emu \
-        device/ti/blaze/boot/MLO_es2.2_gp:boot/MLO_es2.2_gp \
-        device/ti/blaze/boot/u-boot.bin:boot/u-boot.bin \
-        device/ti/blaze/init.omap5430evmboard.rc:root/init.omap5430evmboard.rc \
-        device/ti/blaze/ueventd.omap5430evmboard.rc:root/ueventd.omap5430evmboard.rc \
-	device/ti/blaze/init.omap4blazeboard.rc:root/init.omap4blazeboard.rc \
-	device/ti/blaze/init.omap4blazeboard.usb.rc:root/init.omap4blazeboard.usb.rc \
-	device/ti/blaze/ueventd.omap4blazeboard.rc:root/ueventd.omap4blazeboard.rc \
-	device/ti/blaze/omap4-keypad.kl:system/usr/keylayout/omap4-keypad.kl \
-	device/ti/blaze/qtouch-touchscreen.idc:system/usr/idc/qtouch-touchscreen.idc \
-	device/ti/blaze/omap4-keypad.kcm:system/usr/keychars/omap4-keypad.kcm \
-        device/ti/blaze/twl6030_pwrbutton.kl:system/usr/keylayout/twl6030_pwrbutton.kl \
-	device/ti/blaze/media_profiles.xml:system/etc/media_profiles.xml \
-        device/ti/blaze/syn_tm12xx_ts_1.idc:system/usr/idc/syn_tm12xx_ts_1.idc \
-        device/ti/blaze/syn_tm12xx_ts_2.idc:system/usr/idc/syn_tm12xx_ts_2.idc
+        device/ti/omap5sevm/boot/MLO_es2.2_emu:boot/MLO_es2.2_emu \
+        device/ti/omap5sevm/boot/MLO_es2.2_gp:boot/MLO_es2.2_gp \
+        device/ti/omap5sevm/boot/u-boot.bin:boot/u-boot.bin \
+        device/ti/omap5sevm/init.omap5430evmboard.rc:root/init.omap5430evmboard.rc \
+        device/ti/omap5sevm/ueventd.omap5430evmboard.rc:root/ueventd.omap5430evmboard.rc \
+	device/ti/omap5sevm/omap4-keypad.kl:system/usr/keylayout/omap4-keypad.kl \
+	device/ti/omap5sevm/qtouch-touchscreen.idc:system/usr/idc/qtouch-touchscreen.idc \
+	device/ti/omap5sevm/omap4-keypad.kcm:system/usr/keychars/omap4-keypad.kcm \
+        device/ti/omap5sevm/twl6030_pwrbutton.kl:system/usr/keylayout/twl6030_pwrbutton.kl \
+	device/ti/omap5sevm/media_profiles.xml:system/etc/media_profiles.xml \
+        device/ti/omap5sevm/syn_tm12xx_ts_1.idc:system/usr/idc/syn_tm12xx_ts_1.idc \
+        device/ti/omap5sevm/syn_tm12xx_ts_2.idc:system/usr/idc/syn_tm12xx_ts_2.idc
 
 # to mount the external storage (sdcard)
 PRODUCT_COPY_FILES += \
-        device/ti/blaze/vold.fstab:system/etc/vold.fstab
+        device/ti/omap5sevm/vold.fstab:system/etc/vold.fstab
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
@@ -53,7 +50,7 @@ PRODUCT_COPY_FILES += \
 	frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
 	frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
 	frameworks/base/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
-	device/ti/blaze/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
+	device/ti/omap5sevm/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
 	frameworks/base/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
 	frameworks/base/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
 	frameworks/base/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
@@ -178,6 +175,6 @@ PRODUCT_PACKAGES += \
 $(call inherit-product, frameworks/base/build/tablet-dalvik-heap.mk)
 $(call inherit-product, hardware/ti/omap4xxx/omap4.mk)
 $(call inherit-product-if-exists, hardware/ti/wpan/ti-wpan-products.mk)
-$(call inherit-product-if-exists, vendor/ti/blaze/device-vendor.mk)
+$(call inherit-product-if-exists, vendor/ti/omap5sevm/device-vendor.mk)
 $(call inherit-product-if-exists, device/ti/proprietary-open/omap4/ti-omap4-vendor.mk)
 $(call inherit-product-if-exists, device/ti/proprietary-open/wl12xx/wlan/wl12xx-wlan-fw-products.mk)

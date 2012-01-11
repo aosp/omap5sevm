@@ -14,5 +14,5 @@
 # limitations under the License.
 #
 
-add_lunch_combo full_blaze-userdebug
-add_lunch_combo full_blaze-eng
+add_lunch_combo full_omap5sevm-userdebug
+add_lunch_combo full_omap5sevm-eng
