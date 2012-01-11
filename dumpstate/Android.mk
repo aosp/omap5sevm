@@ -19,7 +19,7 @@ LOCAL_C_INCLUDES := frameworks/base/cmds/dumpstate
 
 LOCAL_SRC_FILES := dumpstate.c
 
-LOCAL_MODULE := libdumpstate.blaze
+LOCAL_MODULE := libdumpstate.omap5sevm
 
 LOCAL_MODULE_TAGS := optional
 
