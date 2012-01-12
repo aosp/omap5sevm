@@ -137,11 +137,11 @@ PRODUCT_PACKAGES += libaudioutils
 
 # Lights
 PRODUCT_PACKAGES += \
-        lights.blaze
+        lights.omap5sevm
 
 # Sensors
 PRODUCT_PACKAGES += \
-        sensors.blaze \
+        sensors.omap5sevm \
         sensor.test
 
 # BlueZ test tools & Shared Transport user space mgr

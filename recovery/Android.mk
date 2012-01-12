@@ -1,4 +1,4 @@
-ifeq ($(TARGET_DEVICE),blaze)
+ifeq ($(TARGET_DEVICE),omap5sevm)
 
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
