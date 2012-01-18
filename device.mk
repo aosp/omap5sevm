@@ -125,7 +125,7 @@ PRODUCT_PACKAGES += \
 	calibrator
 
 # Audio HAL module
-PRODUCT_PACKAGES += audio.primary.blaze
+PRODUCT_PACKAGES += audio.primary.omap5430evmboard
 
 
 # BlueZ a2dp Audio HAL module
