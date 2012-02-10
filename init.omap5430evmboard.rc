@@ -34,11 +34,23 @@ on boot
 # change permissions for ION driver
     chmod 0777 /dev/ion
 
+# change permissions for Bluetooth/FM/GPS
+    chmod 0660 /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+    chmod 0660 /dev/ttyO4
+    chown bluetooth bluetooth /dev/ttyO4
+
 service pvrsrvinit /vendor/bin/pvrsrvinit
 	class core
 	user root
 	group root
 	oneshot
+
+#shared transport user space mgr service for Bluetooth, FM and GPS
+service uim /system/bin/uim-sysfs
+         class core
+         user bluetooth
+         group bluetooth net_bt_admin
 
 # create virtual SD card at /mnt/sdcard, based on the /data/media directory
 # daemon will drop to user/group system/media_rw after initializing
