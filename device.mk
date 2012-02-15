@@ -37,8 +37,6 @@ PRODUCT_COPY_FILES := \
 	device/ti/omap5sevm/omap4-keypad.kcm:system/usr/keychars/omap4-keypad.kcm \
         device/ti/omap5sevm/twl6030_pwrbutton.kl:system/usr/keylayout/twl6030_pwrbutton.kl \
 	device/ti/omap5sevm/media_profiles.xml:system/etc/media_profiles.xml \
-        device/ti/omap5sevm/syn_tm12xx_ts_1.idc:system/usr/idc/syn_tm12xx_ts_1.idc \
-        device/ti/omap5sevm/syn_tm12xx_ts_2.idc:system/usr/idc/syn_tm12xx_ts_2.idc \
 	device/ti/omap5sevm/init.rc:root/init.rc
 
 # to mount the external storage (sdcard)
