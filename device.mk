@@ -73,10 +73,10 @@ PRODUCT_PACKAGES += \
     SkLibTiJpeg_Test
 
 # Camera
-#PRODUCT_PACKAGES += \
-#    Camera \
-#    CameraOMAP4 \
-#    camera_test
+PRODUCT_PACKAGES += \
+    Camera \
+    CameraOMAP4 \
+    camera_test
 
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
