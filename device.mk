@@ -31,6 +31,7 @@ PRODUCT_COPY_FILES := \
         device/ti/omap5sevm/boot/MLO_es2.2_gp:boot/MLO_es2.2_gp \
         device/ti/omap5sevm/boot/u-boot.bin:boot/u-boot.bin \
         device/ti/omap5sevm/init.omap5430evmboard.rc:root/init.omap5430evmboard.rc \
+	device/ti/omap5sevm/init.omap5430evmboard.usb.rc:root/init.omap5430evmboard.usb.rc \
         device/ti/omap5sevm/ueventd.omap5430evmboard.rc:root/ueventd.omap5430evmboard.rc \
 	device/ti/omap5sevm/omap4-keypad.kl:system/usr/keylayout/omap4-keypad.kl \
 	device/ti/omap5sevm/qtouch-touchscreen.idc:system/usr/idc/qtouch-touchscreen.idc \
