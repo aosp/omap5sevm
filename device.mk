@@ -24,15 +24,10 @@ endif
 
 PRODUCT_COPY_FILES := \
 	$(LOCAL_KERNEL):kernel \
-        device/ti/omap5sevm/boot/fastboot.sh:fastboot.sh \
-	device/ti/omap5sevm/boot/fastboot:fastboot \
-        $(LOCAL_KERNEL):boot/zImage \
-        device/ti/omap5sevm/boot/MLO_es2.2_emu:boot/MLO_es2.2_emu \
-        device/ti/omap5sevm/boot/MLO_es2.2_gp:boot/MLO_es2.2_gp \
-        device/ti/omap5sevm/boot/u-boot.bin:boot/u-boot.bin \
-        device/ti/omap5sevm/init.omap5sevmboard.rc:root/init.omap5sevmboard.rc \
+	$(LOCAL_KERNEL):boot/zImage \
+	device/ti/omap5sevm/init.omap5sevmboard.rc:root/init.omap5sevmboard.rc \
 	device/ti/omap5sevm/init.omap5sevmboard.usb.rc:root/init.omap5sevmboard.usb.rc \
-        device/ti/omap5sevm/ueventd.omap5sevmboard.rc:root/ueventd.omap5sevmboard.rc \
+	device/ti/omap5sevm/ueventd.omap5sevmboard.rc:root/ueventd.omap5sevmboard.rc \
 	device/ti/omap5sevm/omap4-keypad.kl:system/usr/keylayout/omap4-keypad.kl \
 	device/ti/omap5sevm/qtouch-touchscreen.idc:system/usr/idc/qtouch-touchscreen.idc \
 	device/ti/omap5sevm/omap4-keypad.kcm:system/usr/keychars/omap4-keypad.kcm \
