@@ -23,14 +23,14 @@
 #include <sys/select.h>
 #include <cutils/log.h>
 
-#include "AccelSensor.h"
+#include "MPU6050Sensor.h"
 
 #define FETCH_FULL_EVENT_BEFORE_RETURN 1
 
 /*****************************************************************************/
 
 AccelSensor::AccelSensor()
-    : SensorBase(NULL, "cma3000-acclerometer"),
+    : SensorBase(NULL, "mpu6050-accelerometer"),
       mEnabled(0),
       mInputReader(4),
       mHasPendingEvent(false)
@@ -41,7 +41,7 @@ AccelSensor::AccelSensor()
     memset(mPendingEvent.data, 0, sizeof(mPendingEvent.data));
 
     if (data_fd) {
-        strcpy(input_sysfs_path, "/sys/bus/i2c/drivers/cma3000_accl/4-001c/");
+        strcpy(input_sysfs_path, "/sys/bus/i2c/drivers/mpu6050/2-0068/");
         input_sysfs_path_len = strlen(input_sysfs_path);
         enable(0, 1);
     }
@@ -143,10 +143,10 @@ again:
         int type = event->type;
         if (type == EV_ABS) {
             float value = event->value;
-            if (event->code == EVENT_TYPE_ACCEL_Y) {
-                mPendingEvent.data[0] = value * CONVERT_A_Y;
-            } else if (event->code == EVENT_TYPE_ACCEL_X) {
-                mPendingEvent.data[1] = value * CONVERT_A_X;
+            if (event->code == EVENT_TYPE_ACCEL_X) {
+                mPendingEvent.data[0] = value * CONVERT_A_X;
+            } else if (event->code == EVENT_TYPE_ACCEL_Y) {
+                mPendingEvent.data[1] = value * CONVERT_A_Y;
             } else if (event->code == EVENT_TYPE_ACCEL_Z) {
                 mPendingEvent.data[2] = value * CONVERT_A_Z;
             }
@@ -176,4 +176,3 @@ again:
 
     return numEventReceived;
 }
-
