@@ -31,6 +31,13 @@ on boot
 	insmod /system/lib/modules/mac80211.ko
 	insmod /system/lib/modules/wl12xx.ko
 
+on fs
+	mkdir /factory 0775 radio radio
+	mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/system /system wait ro
+	mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/userdata /data wait noatime nosuid nodev nomblk_io_submit
+	mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/cache /cache wait noatime nosuid nodev nomblk_io_submit
+	mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/efs /factory wait ro
+
 # change permissions for ION driver
     chmod 0777 /dev/ion
 
@@ -51,6 +58,15 @@ service uim /system/bin/uim-sysfs
          class core
          user bluetooth
          group bluetooth net_bt_admin
+
+# create filesystems if necessary
+service setup_fs /system/bin/setup_fs \
+	/dev/block/platform/omap/omap_hsmmc.1/by-name/cache \
+	/dev/block/platform/omap/omap_hsmmc.1/by-name/userdata
+	class core
+	user root
+	group root
+	oneshot
 
 # create virtual SD card at /mnt/sdcard, based on the /data/media directory
 # daemon will drop to user/group system/media_rw after initializing
