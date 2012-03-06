@@ -47,6 +47,10 @@ on fs
     chmod 0660 /dev/ttyO4
     chown bluetooth bluetooth /dev/ttyO4
 
+# change permissions for Sensors
+    chown system system /sys/bus/i2c/drivers/mpu6050/2-0068
+    chown system system /sys/bus/i2c/drivers/mpu6050/2-0068/enable
+
 service pvrsrvinit /vendor/bin/pvrsrvinit
 	class core
 	user root
