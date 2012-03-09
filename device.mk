@@ -37,6 +37,7 @@ PRODUCT_COPY_FILES := \
 	device/ti/omap5sevm/qtouch-touchscreen.idc:system/usr/idc/qtouch-touchscreen.idc \
 	device/ti/omap5sevm/omap4-keypad.kcm:system/usr/keychars/omap4-keypad.kcm \
         device/ti/omap5sevm/twl6030_pwrbutton.kl:system/usr/keylayout/twl6030_pwrbutton.kl \
+        device/ti/omap5sevm/palmas-pwrbutton.kl:system/usr/keylayout/palmas-pwrbutton.kl \
 	device/ti/omap5sevm/media_profiles.xml:system/etc/media_profiles.xml \
 	device/ti/omap5sevm/init.rc:root/init.rc
 
