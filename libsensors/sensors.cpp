@@ -32,7 +32,7 @@
 
 #include "sensors.h"
 
-#include "AccelSensor.h"
+#include "MPU6050Sensor.h"
 #include "LightSensor.h"
 #include "ProximitySensor.h"
 #include "BMP085Sensor.h"
@@ -69,8 +69,8 @@
 
 /* The SENSORS Module */
 static const struct sensor_t sSensorList[] = {
-        { "VTI 3 axis accelerometer",
-          "VTI",
+        { "MPU6050 3 axis accelerometer",
+          "Invensense",
           1, SENSORS_ACCELERATION_HANDLE,
           SENSOR_TYPE_ACCELEROMETER, RANGE_A, RESOLUTION_A, 0.23f, 20000, { } },
         { "BH1780gli Light sensor",
@@ -117,7 +117,7 @@ struct sensors_module_t HAL_MODULE_INFO_SYM = {
                 version_major: 1,
                 version_minor: 0,
                 id: SENSORS_HARDWARE_MODULE_ID,
-                name: "Blaze Sensor module",
+                name: "OMAP5 EVM Sensor module",
                 author: "Texas Instruments Inc.",
                 methods: &sensors_module_methods,
         },

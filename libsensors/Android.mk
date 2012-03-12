@@ -31,12 +31,13 @@ LOCAL_CFLAGS := -DLOG_TAG=\"Sensors\"
 LOCAL_SRC_FILES := \
 				sensors.cpp 			\
 				SensorBase.cpp			\
-				AccelSensor.cpp			\
+				MPU6050Sensor.cpp		\
 				LightSensor.cpp			\
 				ProximitySensor.cpp		\
 				BMP085Sensor.cpp		\
 				HMC5843Sensor.cpp		\
 				InputEventReader.cpp
+
 
 LOCAL_SHARED_LIBRARIES := liblog libcutils libdl
 LOCAL_PRELINK_MODULE := false
