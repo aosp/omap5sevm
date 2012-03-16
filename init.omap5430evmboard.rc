@@ -18,6 +18,13 @@ on post-fs-data
     mkdir /data/smc 0770 drmrpc drmrpc
     chmod 0777 /mnt/sdcard/Android/data/com.android.gallery3d/cache
 
+#insert bluetooth modules
+    insmod /system/lib/modules/bluetooth.ko force_acl_master=1 enable_mgmt=1 enable_le=1
+    insmod /system/lib/modules/rfcomm.ko
+    insmod /system/lib/modules/hidp.ko
+    insmod /system/lib/modules/bnep.ko
+    insmod /system/lib/modules/btwilink.ko
+
 on boot
 	mount debugfs /sys/kernel/debug /sys/kernel/debug
 	chmod 0666 /dev/pvrsrvkm
@@ -43,12 +50,11 @@ on fs
 	mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/cache /cache wait noatime nosuid nodev nomblk_io_submit
 	mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/efs /factory wait ro
 
+
 # change permissions for ION driver
     chmod 0777 /dev/ion
 
 # change permissions for Bluetooth/FM/GPS
-    chmod 0660 /sys/class/rfkill/rfkill0/state
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
     chmod 0660 /dev/ttyO4
     chown bluetooth bluetooth /dev/ttyO4
 
@@ -70,7 +76,7 @@ service pvrsrvinit /vendor/bin/pvrsrvinit
 #shared transport user space mgr service for Bluetooth, FM and GPS
 service uim /system/bin/uim-sysfs
          class core
-         user bluetooth
+         user root
          group bluetooth net_bt_admin
 
 # create filesystems if necessary
