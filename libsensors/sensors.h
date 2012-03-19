@@ -87,8 +87,8 @@ __BEGIN_DECLS
 #define RANGE_A                     (4*GRAVITY_EARTH)
 #define RESOLUTION_A                (GRAVITY_EARTH / LSG)
 #define CONVERT_A                   (GRAVITY_EARTH / LSG)
-#define CONVERT_A_X                 (CONVERT_A)
-#define CONVERT_A_Y                 (CONVERT_A)
+#define CONVERT_A_X                 (-CONVERT_A)
+#define CONVERT_A_Y                 (-CONVERT_A)
 #define CONVERT_A_Z                 (CONVERT_A)
 
 // conversion of magnetic data to uT units
