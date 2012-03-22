@@ -32,8 +32,6 @@ LOCAL_SRC_FILES := \
 				sensors.cpp 			\
 				SensorBase.cpp			\
 				MPU6050Sensor.cpp		\
-				LightSensor.cpp			\
-				ProximitySensor.cpp		\
 				BMP085Sensor.cpp		\
 				HMC5843Sensor.cpp		\
 				InputEventReader.cpp
