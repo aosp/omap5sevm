@@ -44,7 +44,7 @@ BMP085Sensor::BMP085Sensor()
     mPendingEvents[Temperature].type = SENSOR_TYPE_TEMPERATURE;
 
     if (data_fd) {
-        strcpy(input_sysfs_path, "/sys/bus/i2c/drivers/bmp085/4-0077/");
+        strcpy(input_sysfs_path, "/sys/bus/i2c/drivers/bmp085/2-0077/");
         input_sysfs_path_len = strlen(input_sysfs_path);
     }
 }
