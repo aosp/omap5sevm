@@ -33,6 +33,7 @@
 #include "sensors.h"
 
 #include "MPU6050Sensor.h"
+#include "TSL2771Sensor.h"
 #include "BMP085Sensor.h"
 #include "HMC5843Sensor.h"
 
@@ -71,6 +72,14 @@ static const struct sensor_t sSensorList[] = {
           "Invensense",
           1, SENSORS_ACCELERATION_HANDLE,
           SENSOR_TYPE_ACCELEROMETER, RANGE_A, RESOLUTION_A, 0.23f, 20000, { } },
+        { "TAOS TSL2771 Light sensor",
+          "TAOS",
+          1, SENSORS_LIGHT_HANDLE,
+          SENSOR_TYPE_LIGHT, 27000.0f, 1.0f, 0.75f, 0, { } },
+        { "TAOS TSL2771 Proximity sensor",
+          "TAOS",
+          1, SENSORS_PROXIMITY_HANDLE,
+          SENSOR_TYPE_PROXIMITY, 5.0f, 5.0f, 0.75f, 0, { } },
         { "BMP085 Pressure sensor",
           "Bosch",
           1, SENSORS_PRESSURE_HANDLE,
@@ -169,6 +178,16 @@ sensors_poll_context_t::sensors_poll_context_t()
     mPollFds[accel].fd = mSensors[accel]->getFd();
     mPollFds[accel].events = POLLIN;
     mPollFds[accel].revents = 0;
+
+    mSensors[light] = new TSL2771Sensor(ALS_INPUT_NAME);
+    mPollFds[light].fd = mSensors[light]->getFd();
+    mPollFds[light].events = POLLIN;
+    mPollFds[light].revents = 0;
+
+    mSensors[proximity] = new TSL2771Sensor(PROX_INPUT_NAME);
+    mPollFds[proximity].fd = mSensors[proximity]->getFd();
+    mPollFds[proximity].events = POLLIN;
+    mPollFds[proximity].revents = 0;
 
     mSensors[press_temp] = new BMP085Sensor();
     mPollFds[press_temp].fd = mSensors[press_temp]->getFd();
