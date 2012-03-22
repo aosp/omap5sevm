@@ -54,7 +54,7 @@ on fs
 
 # change permissions for Sensors
     chown system system /sys/bus/i2c/drivers/mpu6050/2-0068
-    chown system system /sys/bus/i2c/drivers/mpu6050/2-0068/enable
+    chown system system /sys/bus/i2c/drivers/mpu6050/2-0068/accel_enable
     chown system system /sys/bus/i2c/drivers/bmp085/2-0077
     chown system system /sys/bus/i2c/drivers/bmp085/2-0077/enable
 
