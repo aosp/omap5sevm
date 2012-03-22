@@ -189,9 +189,6 @@ on post-fs-data
     chown system system /sys/class/android_usb/android0/f_rndis/ethaddr
     chmod 0660 /sys/class/android_usb/android0/f_rndis/ethaddr
 
-    # HACK, keeping wake_lock to avoid suspend
-    write /sys/power/wake_lock dsgm
-
 on boot
 # basic network init
     ifup lo
