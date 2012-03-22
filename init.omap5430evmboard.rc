@@ -57,6 +57,9 @@ on fs
     chown system system /sys/bus/i2c/drivers/mpu6050/2-0068/accel_enable
     chown system system /sys/bus/i2c/drivers/bmp085/2-0077
     chown system system /sys/bus/i2c/drivers/bmp085/2-0077/enable
+    chown system system /sys/bus/i2c/drivers/tsl2771/2-0039
+    chown system system /sys/bus/i2c/drivers/tsl2771/2-0039/als_enable
+    chown system system /sys/bus/i2c/drivers/tsl2771/2-0039/prox_enable
 
 service pvrsrvinit /vendor/bin/pvrsrvinit
 	class core
