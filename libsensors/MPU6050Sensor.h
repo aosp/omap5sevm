@@ -26,6 +26,8 @@
 #include "SensorBase.h"
 #include "InputEventReader.h"
 
+#define ACCEL_INPUT_NAME    "mpu6050-accelerometer"
+
 /*****************************************************************************/
 
 struct input_event;
@@ -41,7 +43,7 @@ class MPU6050Sensor : public SensorBase {
     int setInitialState();
 
 public:
-            MPU6050Sensor();
+            MPU6050Sensor(const char *name);
     virtual ~MPU6050Sensor();
     virtual int readEvents(sensors_event_t* data, int count);
     virtual bool hasPendingEvents() const;

@@ -174,7 +174,7 @@ private:
 
 sensors_poll_context_t::sensors_poll_context_t()
 {
-    mSensors[accel] = new MPU6050Sensor();
+    mSensors[accel] = new MPU6050Sensor(ACCEL_INPUT_NAME);
     mPollFds[accel].fd = mSensors[accel]->getFd();
     mPollFds[accel].events = POLLIN;
     mPollFds[accel].revents = 0;

@@ -29,8 +29,8 @@
 
 /*****************************************************************************/
 
-MPU6050Sensor::MPU6050Sensor()
-    : SensorBase(NULL, "mpu6050-accelerometer"),
+MPU6050Sensor::MPU6050Sensor(const char *name)
+    : SensorBase(NULL, name),
       mEnabled(0),
       mInputReader(4),
       mHasPendingEvent(false)
