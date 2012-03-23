@@ -30,7 +30,7 @@
 
 struct input_event;
 
-class AccelSensor : public SensorBase {
+class MPU6050Sensor : public SensorBase {
     int mEnabled;
     InputEventCircularReader mInputReader;
     sensors_event_t mPendingEvent;
@@ -41,8 +41,8 @@ class AccelSensor : public SensorBase {
     int setInitialState();
 
 public:
-            AccelSensor();
-    virtual ~AccelSensor();
+            MPU6050Sensor();
+    virtual ~MPU6050Sensor();
     virtual int readEvents(sensors_event_t* data, int count);
     virtual bool hasPendingEvents() const;
     virtual int setDelay(int32_t handle, int64_t ns);

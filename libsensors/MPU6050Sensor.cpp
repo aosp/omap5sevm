@@ -29,7 +29,7 @@
 
 /*****************************************************************************/
 
-AccelSensor::AccelSensor()
+MPU6050Sensor::MPU6050Sensor()
     : SensorBase(NULL, "mpu6050-accelerometer"),
       mEnabled(0),
       mInputReader(4),
@@ -47,13 +47,13 @@ AccelSensor::AccelSensor()
     }
 }
 
-AccelSensor::~AccelSensor() {
+MPU6050Sensor::~MPU6050Sensor() {
     if (mEnabled) {
         enable(0, 0);
     }
 }
 
-int AccelSensor::setInitialState() {
+int MPU6050Sensor::setInitialState() {
     struct input_absinfo absinfo_x;
     struct input_absinfo absinfo_y;
     struct input_absinfo absinfo_z;
@@ -72,7 +72,7 @@ int AccelSensor::setInitialState() {
     return 0;
 }
 
-int AccelSensor::enable(int32_t, int en) {
+int MPU6050Sensor::enable(int32_t, int en) {
     int flags = en ? 1 : 0;
     if (flags != mEnabled) {
         int fd;
@@ -97,11 +97,11 @@ int AccelSensor::enable(int32_t, int en) {
     return 0;
 }
 
-bool AccelSensor::hasPendingEvents() const {
+bool MPU6050Sensor::hasPendingEvents() const {
     return mHasPendingEvent;
 }
 
-int AccelSensor::setDelay(int32_t handle, int64_t delay_ns)
+int MPU6050Sensor::setDelay(int32_t handle, int64_t delay_ns)
 {
     int fd;
     strcpy(&input_sysfs_path[input_sysfs_path_len], "delay");
@@ -117,7 +117,7 @@ int AccelSensor::setDelay(int32_t handle, int64_t delay_ns)
     return -1;
 }
 
-int AccelSensor::readEvents(sensors_event_t* data, int count)
+int MPU6050Sensor::readEvents(sensors_event_t* data, int count)
 {
     if (count < 1)
         return -EINVAL;
