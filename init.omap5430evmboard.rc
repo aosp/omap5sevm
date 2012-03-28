@@ -137,3 +137,8 @@ service hostapd_bin /system/bin/hostapd -d /data/misc/wifi/hostapd.conf
 
 on property:wlan.driver.status=ok
     chown wifi wifi /sys/devices/platform/wl1271/bt_coex_state
+
+service devproxy /system/bin/devproxy
+        class main
+        disabled
+        oneshot
