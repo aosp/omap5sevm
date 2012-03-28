@@ -33,6 +33,9 @@ on boot
 	insmod /system/lib/modules/wl12xx.ko
 	insmod /system/lib/modules/wl18xx.ko
 
+# GPS
+        insmod /system/lib/modules/gps_drv.ko
+
 on fs
 	mkdir /factory 0775 radio radio
 	mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/system /system wait ro
