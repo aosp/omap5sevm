@@ -10,3 +10,6 @@
 
 #for FM v4l2 Radio
 /dev/radio0               0600   fmradio   fmradio
+
+#NFC
+/dev/nfc                  0666   system    system
