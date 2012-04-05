@@ -1,4 +1,4 @@
-import init.omap5430evmboard.usb.rc
+import init.omap5sevmboard.usb.rc
 
 on early-init
     export EXTERNAL_STORAGE /mnt/sdcard
