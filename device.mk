@@ -63,10 +63,6 @@ PRODUCT_PACKAGES := \
 PRODUCT_PACKAGES += \
     libtimemmgr
 
-#HWC Hal
-PRODUCT_PACKAGES += \
-    hwcomposer.omap5
-
 #Lib Skia test
 PRODUCT_PACKAGES += \
     SkLibTiJpeg_Test
@@ -171,7 +167,7 @@ PRODUCT_PACKAGES += \
 	tinycap
 
 $(call inherit-product, frameworks/base/build/tablet-dalvik-heap.mk)
-$(call inherit-product, hardware/ti/omap4xxx/omap4.mk)
+$(call inherit-product, hardware/ti/omap4xxx/omap5.mk)
 $(call inherit-product-if-exists, hardware/ti/wpan/ti-wpan-products.mk)
 $(call inherit-product-if-exists, vendor/ti/omap5sevm/device-vendor.mk)
 $(call inherit-product-if-exists, device/ti/proprietary-open/wl12xx/wlan/wl12xx-wlan-fw-products.mk)
