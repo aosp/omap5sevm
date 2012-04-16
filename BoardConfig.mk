@@ -19,6 +19,7 @@
 BOARD_USES_GENERIC_AUDIO := false
 USE_CAMERA_STUB := true
 OMAP_ENHANCEMENT := true
+BLUETI_ENHANCEMENT := true
 ENHANCED_DOMX := true
 # Use the non-open-source parts, if they're present
 #-include vendor/ti/omap5sevm/BoardConfigVendor.mk
@@ -84,6 +85,9 @@ ifdef OMAP_ENHANCEMENT
 COMMON_GLOBAL_CFLAGS += -DOMAP_ENHANCEMENT -DTARGET_OMAP4
 ifdef NFC_TI_DEVICE
 COMMON_GLOBAL_CFLAGS += -DNFC_JNI_TI_DEVICE
+endif
+ifdef BLUETI_ENHANCEMENT
+COMMON_GLOBAL_CFLAGS += -DBLUETI_ENHANCEMENT
 endif
 endif
 
