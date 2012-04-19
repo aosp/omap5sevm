@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export FASTBOOT=${FASTBOOT-"./../../../../out/host/linux-x86/bin/fastboot"}
-export PRODUCT_OUT=${PRODUCT_OUT-"./"}
+export FASTBOOT=./fastboot
+export PRODUCT_OUT=./
 
 usage ()
 {
@@ -56,6 +56,11 @@ product=`${FASTBOOT} getvar product 2>&1 | grep product | awk '{print$2}'`
 cputype=`${FASTBOOT} getvar secure 2>&1  | grep secure  | awk '{print$2}'`
 cpurev=`${FASTBOOT} getvar cpurev 2>&1   | grep cpurev  | awk '{print$2}'`
 
+# Make EMU = HS
+if [ ${cputype} = "EMU" ]; then
+        cputype="HS"
+fi
+
 # Panda board can not be flashed using fastboot
 if [ "${product}" = "PANDA" ]; then
         errormsg "Panda board can not be flashed using fastboot"
@@ -70,7 +75,6 @@ fi
 # Create the filename
 bootimg="${PRODUCT_OUT}boot.img"
 xloader="${PRODUCT_OUT}${product}_${cputype}_${cpurev}_MLO"
-uboot="${PRODUCT_OUT}u-boot.img"
 systemimg="${PRODUCT_OUT}system.img"
 userdataimg="${PRODUCT_OUT}userdata.img"
 cacheimg="${PRODUCT_OUT}cache.img"
@@ -87,10 +91,6 @@ if [ ! -e "${bootimg}" ] ; then
 fi
 if [ ! -e "$xloader" ] ; then
   echo "Missing ${xloader}"
-  exit -1;
-fi
-if [ ! -e "${uboot}" ] ; then
-  echo "Missing ${uboot}"
   exit -1;
 fi
 if [ ! -e "${systemimg}" ] ; then
@@ -110,15 +110,12 @@ if [ ! -e "${recoveryimg}" ] ; then
 #  exit -1;
 fi
 
+echo "Create GPT partition table"
+${FASTBOOT} oem format
+
 echo "Flashing bootloader....."
 echo "   xloader: ${xloader}"
 ${FASTBOOT} flash xloader 	${xloader}
-${FASTBOOT} flash bootloader 	${uboot}
-
-sleep 5
-
-echo "Create GPT partition table"
-${FASTBOOT} oem format
 
 echo "Flash android partitions"
 ${FASTBOOT} flash boot 		${bootimg}
@@ -146,30 +143,14 @@ then
 	echo "Creating cache.img as empty ext4 img...."
 	rm -rf /tmp/fastboot-cache
 	mkdir /tmp/fastboot-cache
-	./../../../../out/host/linux-x86/bin/make_ext4fs -s -l 256M -a cache ${cacheimg} /tmp/fastboot-cache/
+	./make_ext4fs -s -l 256M -a cache ${cacheimg} /tmp/fastboot-cache/
 	rm -rf /tmp/fastboot-cache
 fi
 
 #flash cache.img
 ${FASTBOOT} flash cache 		${cacheimg}
 
-## Fastboot reboot not supported yet
+## Fastboot reboot not supported yet on OMAP5 devices
 #reboot now
 #${FASTBOOT} reboot
-
-if [ $resizefail -eq 1 ]; then
-	echo "--------------------------------------------------"
-	echo "Attempt was made to resize the userdata partition image"
-	echo "to the size available on your SOM. But it failed either"
-	echo "because it failed to remove existing ./data folder or because"
-	echo "you are not running this script with superuser privileges"
-	echo "Don't panic! The script just loaded the original userdata.img"
-	echo "so, things should just work as expected. Just that the size"
-	echo "of /data will be smaller on target."
-	echo ""
-	echo "If you really want to resize userdata.img, remove any existing"
-	echo "./data folder and run \"sudo ./fastboot.sh\""
-	echo "For now, we are defaulting to original userdata.img"
-	echo "--------------------------------------------------"
-fi
 
