@@ -1,4 +1,5 @@
 import init.omap5sevmboard.usb.rc
+import init.modem.rc
 
 on early-init
     export EXTERNAL_STORAGE /mnt/sdcard

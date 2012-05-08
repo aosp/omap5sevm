@@ -23,6 +23,7 @@
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/telephony.mk)
 $(call inherit-product, device/ti/omap5sevm/device.mk)
 $(call inherit-product-if-exists, vendor/ti/proprietary/omap4/ti-omap4-vendor.mk)
 

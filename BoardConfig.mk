@@ -14,6 +14,9 @@
 # limitations under the License.
 #
 
+# Include Modem vendor specific BoardConfig file
+-include device/modem-vendor/BoardConfig.mk
+
 # These two variables are set first, so they can be overridden
 # by BoardConfigVendor.mk
 BOARD_USES_GENERIC_AUDIO := false

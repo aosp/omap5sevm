@@ -16,3 +16,6 @@
 
 #NFC
 /dev/nfc                  0666   system    system
+
+#for MODEM
+/dev/hsi0                 0660   radio     radio

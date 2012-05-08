@@ -128,6 +128,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += audio.primary.omap5
 
 
+PRODUCT_COPY_FILES += \
+        device/ti/omap5sevm/apns-conf.xml:system/etc/apns-conf.xml
+
 # BlueZ a2dp Audio HAL module
 PRODUCT_PACKAGES += audio.a2dp.default
 
@@ -176,3 +179,4 @@ $(call inherit-product, hardware/ti/omap4xxx/omap5.mk)
 $(call inherit-product-if-exists, hardware/ti/wpan/ti-wpan-products.mk)
 $(call inherit-product-if-exists, vendor/ti/omap5sevm/device-vendor.mk)
 $(call inherit-product-if-exists, device/ti/proprietary-open/wl12xx/wlan/wl12xx-wlan-fw-products.mk)
+$(call inherit-product-if-exists, device/modem-vendor/device.mk)
