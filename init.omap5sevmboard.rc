@@ -149,3 +149,8 @@ service devproxy /system/bin/devproxy
         class main
         disabled
         oneshot
+
+service agnss_connect /system/bin/agnss_connect -p
+        class main
+        disabled
+        oneshot
