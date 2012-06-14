@@ -107,7 +107,8 @@ PRODUCT_PACKAGES += \
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
-	make_ext4fs
+	make_ext4fs \
+	setup_fs
 
 # Generated kcm keymaps
 PRODUCT_PACKAGES += \
@@ -176,6 +177,12 @@ PRODUCT_PACKAGES += \
 	tinymix \
 	tinyplay \
 	tinycap
+
+# for bugmailer
+PRODUCT_PACKAGES += send_bug
+PRODUCT_COPY_FILES += \
+	system/extras/bugmailer/bugmailer.sh:system/bin/bugmailer.sh \
+	system/extras/bugmailer/send_bug:system/bin/send_bug
 
 $(call inherit-product, frameworks/base/build/tablet-dalvik-heap.mk)
 $(call inherit-product, hardware/ti/omap4xxx/omap5.mk)
