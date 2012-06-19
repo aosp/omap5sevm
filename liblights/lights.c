@@ -115,10 +115,6 @@ set_light_backlight(struct light_device_t* dev,
     int brightness = rgb_to_brightness(state);
 
     pthread_mutex_lock(&g_lock);
-    //  HACK: Brightness value less 151 results in a black screen. Report the
-    //  brightness value as "151" for the following brigthness range 1-150
-    if (brightness <= 150)
-        brightness = 151;
     err = write_int(LCD_FILE, brightness);
     pthread_mutex_unlock(&g_lock);
 
