@@ -72,6 +72,9 @@ on fs
     chown system system /sys/bus/i2c/drivers/tsl2771/2-0039/als_enable
     chown system system /sys/bus/i2c/drivers/tsl2771/2-0039/prox_enable
 
+# change permissions for display backlight
+    chown system system /sys/class/backlight/lg4591/brightness
+
 service pvrsrvinit /vendor/bin/pvrsrvinit
 	class core
 	user root
