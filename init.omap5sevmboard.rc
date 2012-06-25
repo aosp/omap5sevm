@@ -71,6 +71,10 @@ on fs
     chown system system /sys/bus/i2c/drivers/tsl2771/2-0039
     chown system system /sys/bus/i2c/drivers/tsl2771/2-0039/als_enable
     chown system system /sys/bus/i2c/drivers/tsl2771/2-0039/prox_enable
+    chown compass compass /dev/akm8975_dev
+    chmod 660 /dev/akm8975_dev
+    chown compass compass /dev/akm8975_aot
+    chmod 660 /dev/akm8975_aot
 
 # change permissions for display backlight
     chown system system /sys/class/backlight/lg4591/brightness
