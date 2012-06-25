@@ -34,6 +34,7 @@ LOCAL_SRC_FILES := \
 				MPU6050Sensor.cpp		\
 				TSL2771Sensor.cpp		\
 				BMP085Sensor.cpp		\
+				AkmSensor.cpp			\
 				InputEventReader.cpp
 
 

@@ -35,7 +35,7 @@
 #include "MPU6050Sensor.h"
 #include "TSL2771Sensor.h"
 #include "BMP085Sensor.h"
-#include "HMC5843Sensor.h"
+#include "AkmSensor.h"
 
 
 /*****************************************************************************/
@@ -88,7 +88,7 @@ static const struct sensor_t sSensorList[] = {
           "Bosch",
           1, SENSORS_TEMPERATURE_HANDLE,
           SENSOR_TYPE_TEMPERATURE, 120.0f, 1.0f, 120.0f, 0.045f, { } },
-        { "HMC5843 3-Axis Magnetometer",
+        { "AKM8975 3-Axis Magnetometer",
           "HoneyWell",
           1, SENSORS_MAGNETIC_FIELD_HANDLE,
           SENSOR_TYPE_MAGNETIC_FIELD, 2000.0f, 2000.0f, 1.0f, 6.7f, { } },
@@ -194,7 +194,7 @@ sensors_poll_context_t::sensors_poll_context_t()
     mPollFds[press_temp].events = POLLIN;
     mPollFds[press_temp].revents = 0;
 
-    mSensors[magno] = new HMC5843Sensor();
+    mSensors[magno] = new AkmSensor();
     mPollFds[magno].fd = mSensors[magno]->getFd();
     mPollFds[magno].events = POLLIN;
     mPollFds[magno].revents = 0;
