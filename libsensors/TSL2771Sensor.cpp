@@ -127,7 +127,7 @@ int TSL2771Sensor::readEvents(sensors_event_t* data, int count) {
                 mPendingMask |= 1 << light;
                 mInputReader.next();
 #ifdef DEBUG_TSL2771
-                LOGD("TSL2771Sensor: Received LUX value=%d", event->value);
+                ALOGD("TSL2771Sensor: Received LUX value=%d", event->value);
 #endif
             }
         } else if (type == EV_ABS) {
@@ -136,7 +136,7 @@ int TSL2771Sensor::readEvents(sensors_event_t* data, int count) {
                 mPendingMask |= 1 << proximity;
                 mInputReader.next();
 #ifdef DEBUG_TSL2771
-                LOGD("TSL2771Sensor: Received Proximity value=%d", event->value);
+                ALOGD("TSL2771Sensor: Received Proximity value=%d", event->value);
 #endif
             }
         } else if (type == EV_SYN) {
@@ -154,7 +154,7 @@ int TSL2771Sensor::readEvents(sensors_event_t* data, int count) {
                 mInputReader.next();
             }
         } else {
-            LOGE("TSL2771Sensor: unknown event (type=%d, code=%d)",
+            ALOGE("TSL2771Sensor: unknown event (type=%d, code=%d)",
                     type, event->code);
         }
     }
