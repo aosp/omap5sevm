@@ -27,10 +27,10 @@ OMAP_ENHANCEMENT :=
 ifdef OMAP_ENHANCEMENT
 OMAP_ENHANCEMENT_CPCAM := true
 OMAP_ENHANCEMENT_VTC := true
+OMAP_ENHANCEMENT_S3D := true
 endif
 
 BLUETI_ENHANCEMENT := true
-OMAP_ENHANCEMENT_S3D := true
 ENHANCED_DOMX :=
 WITH_JIT := false
 # Use the non-open-source parts, if they're present
