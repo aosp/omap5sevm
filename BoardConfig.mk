@@ -22,7 +22,7 @@
 BOARD_USES_GENERIC_AUDIO := false
 USE_CAMERA_STUB := true
 
-OMAP_ENHANCEMENT := true
+OMAP_ENHANCEMENT :=
 
 ifdef OMAP_ENHANCEMENT
 OMAP_ENHANCEMENT_CPCAM := true
@@ -31,7 +31,7 @@ endif
 
 BLUETI_ENHANCEMENT := true
 OMAP_ENHANCEMENT_S3D := true
-ENHANCED_DOMX := true
+ENHANCED_DOMX :=
 WITH_JIT := false
 # Use the non-open-source parts, if they're present
 #-include vendor/ti/omap5sevm/BoardConfigVendor.mk
@@ -118,3 +118,6 @@ endif
 BOARD_LIB_DUMPSTATE := libdumpstate.omap5sevm
 
 BOARD_VENDOR_TI_GPS_HARDWARE := omap5
+
+# Common device independent definitions
+include device/ti/common-open/BoardConfig.mk
