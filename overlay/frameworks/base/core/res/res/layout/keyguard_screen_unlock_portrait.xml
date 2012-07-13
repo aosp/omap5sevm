@@ -179,7 +179,7 @@
         android:layout_gravity="fill"
         android:layout_width="0dip"
         android:layout_height="0dip"
-        android:background="@color/facelock_color_background"
+        android:background="@drawable/intro_bg"
     />
 
 </GridLayout>
