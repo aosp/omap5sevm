@@ -224,7 +224,7 @@
                    bitRate="384000"
                    width="176"
                    height="144"
-                   frameRate="27" />
+                   frameRate="30" />
             <Audio codec="aac"
                    bitRate="12200"
                    sampleRate="8000"
@@ -236,7 +236,7 @@
                    bitRate="2000000"
                    width="352"
                    height="288"
-                   frameRate="27" />
+                   frameRate="30" />
             <Audio codec="aac"
                    bitRate="12200"
                    sampleRate="8000"
@@ -248,7 +248,7 @@
                    bitRate="8000000"
                    width="720"
                    height="480"
-                   frameRate="27" />
+                   frameRate="30" />
             <Audio codec="aac"
                    bitRate="12200"
                    sampleRate="8000"
@@ -260,7 +260,7 @@
                    bitRate="12000000"
                    width="1280"
                    height="720"
-                   frameRate="27" />
+                   frameRate="30" />
             <Audio codec="aac"
                    bitRate="96000"
                    sampleRate="48000"
@@ -272,7 +272,7 @@
                    bitRate="384000"
                    width="176"
                    height="144"
-                   frameRate="27" />
+                   frameRate="30" />
             <Audio codec="aac"
                    bitRate="12200"
                    sampleRate="8000"
@@ -284,7 +284,7 @@
                    bitRate="2000000"
                    width="352"
                    height="288"
-                   frameRate="27" />
+                   frameRate="30" />
             <Audio codec="aac"
                    bitRate="12200"
                    sampleRate="8000"
@@ -296,7 +296,7 @@
                    bitRate="8000000"
                    width="720"
                    height="480"
-                   frameRate="27" />
+                   frameRate="30" />
             <Audio codec="aac"
                    bitRate="12200"
                    sampleRate="8000"
@@ -308,7 +308,7 @@
                    bitRate="12000000"
                    width="1280"
                    height="720"
-                   frameRate="27" />
+                   frameRate="30" />
             <Audio codec="aac"
                    bitRate="96000"
                    sampleRate="48000"
