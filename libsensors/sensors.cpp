@@ -88,8 +88,8 @@ static const struct sensor_t sSensorList[] = {
           "Bosch",
           1, SENSORS_TEMPERATURE_HANDLE,
           SENSOR_TYPE_TEMPERATURE, 120.0f, 1.0f, 120.0f, 0.045f, { } },
-        { "AKM8975 3-Axis Magnetometer",
-          "HoneyWell",
+        { "AK8975 3-Axis Magnetometer",
+          "AKM",
           1, SENSORS_MAGNETIC_FIELD_HANDLE,
           SENSOR_TYPE_MAGNETIC_FIELD, 2000.0f, 2000.0f, 1.0f, 6.7f, { } },
 };
