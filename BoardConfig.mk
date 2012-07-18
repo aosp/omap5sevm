@@ -32,7 +32,6 @@ endif
 BLUETI_ENHANCEMENT := true
 OMAP_ENHANCEMENT_S3D := true
 ENHANCED_DOMX := true
-WITH_JIT := false
 # Use the non-open-source parts, if they're present
 #-include vendor/ti/omap5sevm/BoardConfigVendor.mk
 
