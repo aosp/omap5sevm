@@ -71,6 +71,12 @@ if [ "${product}" = "SDP4" ]; then
         product="Blaze"
 fi
 
+if [ "${product}" = "omap5uevm" ]; then
+        bootloader_part="bootloader"
+else
+	bootloader_part="xloader"
+fi
+
 
 # Create the filename
 bootimg="${PRODUCT_OUT}boot.img"
@@ -114,8 +120,8 @@ echo "Create GPT partition table"
 ${FASTBOOT} oem format
 
 echo "Flashing bootloader....."
-echo "   xloader: ${xloader}"
-${FASTBOOT} flash xloader 	${xloader}
+echo "   ${bootloader_part}: ${xloader}"
+${FASTBOOT} flash ${bootloader_part} 	${xloader}
 
 echo "Flash android partitions"
 ${FASTBOOT} flash boot 		${bootimg}
