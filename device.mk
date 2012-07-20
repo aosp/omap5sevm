@@ -192,6 +192,6 @@ PRODUCT_COPY_FILES += \
 $(call inherit-product, frameworks/base/build/tablet-dalvik-heap.mk)
 $(call inherit-product, hardware/ti/omap4xxx/omap5.mk)
 $(call inherit-product-if-exists, hardware/ti/wpan/ti-wpan-products.mk)
-$(call inherit-product-if-exists, vendor/ti/omap5sevm/device-vendor.mk)
+$(call inherit-product-if-exists, device/ti/proprietary-open/omap5/ti-omap5-vendor.mk)
 $(call inherit-product-if-exists, device/ti/proprietary-open/wl12xx/wlan/wl12xx-wlan-fw-products.mk)
 $(call inherit-product-if-exists, device/modem-vendor/device.mk)
