@@ -22,6 +22,9 @@ else
 LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
 
+PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
+PRODUCT_AAPT_PREF_CONFIG := xhdpi
+
 PRODUCT_COPY_FILES := \
 	$(LOCAL_KERNEL):kernel \
 	$(LOCAL_KERNEL):boot/zImage \
