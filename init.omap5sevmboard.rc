@@ -63,6 +63,9 @@ on fs
     chmod 0660 /dev/ttyO4
     chown bluetooth bluetooth /dev/ttyO4
 
+# add symlink for HDCP key
+        symlink /factory/hdcp.keys /system/vendor/firmware/hdcp.keys
+
 # change permissions for Sensors
     chown system system /sys/bus/i2c/drivers/mpu6050/2-0068
     chown system system /sys/bus/i2c/drivers/mpu6050/2-0068/accel_enable
