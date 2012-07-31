@@ -92,6 +92,10 @@ static const struct sensor_t sSensorList[] = {
           "AKM",
           1, SENSORS_MAGNETIC_FIELD_HANDLE,
           SENSOR_TYPE_MAGNETIC_FIELD, 2000.0f, 2000.0f, 1.0f, 6.7f, { } },
+        { "MPU6050 3-Axis Gyroscope",
+          "Invensence",
+          1, SENSORS_GYROSCOPE_HANDLE,
+          SENSOR_TYPE_GYROSCOPE, RANGE_GYRO, CONVERT_GYRO, 6.1f, 1200, { } },
 };
 
 
@@ -119,6 +123,8 @@ struct sensors_module_t HAL_MODULE_INFO_SYM = {
                 name: "OMAP5 EVM Sensor module",
                 author: "Texas Instruments Inc.",
                 methods: &sensors_module_methods,
+                dso: 0,
+                reserved: {},
         },
         get_sensors_list: sensors__get_sensors_list,
 };
@@ -139,6 +145,7 @@ private:
         proximity       = 2,
 	press_temp	= 3,
 	magno		= 4,
+        gyro            = 5,
         numSensorDrivers,
         numFds,
 
@@ -165,6 +172,8 @@ private:
             case ID_PRESS:
             case ID_TEMP:
                 return press_temp;
+            case ID_GY:
+                return gyro;
         }
         return -EINVAL;
     }
@@ -178,6 +187,11 @@ sensors_poll_context_t::sensors_poll_context_t()
     mPollFds[accel].fd = mSensors[accel]->getFd();
     mPollFds[accel].events = POLLIN;
     mPollFds[accel].revents = 0;
+
+    mSensors[gyro] = new MPU6050Sensor(GYRO_INPUT_NAME);
+    mPollFds[gyro].fd = mSensors[gyro]->getFd();
+    mPollFds[gyro].events = POLLIN;
+    mPollFds[gyro].revents = 0;
 
     mSensors[light] = new TSL2771Sensor(ALS_INPUT_NAME);
     mPollFds[light].fd = mSensors[light]->getFd();
