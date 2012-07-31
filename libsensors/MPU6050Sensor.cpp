@@ -31,25 +31,30 @@
 
 MPU6050Sensor::MPU6050Sensor(const char *name)
     : SensorBase(NULL, name),
+      mPendingMask(0),
       mEnabled(0),
-      mInputReader(4),
+      mInputReader(96),
       mHasPendingEvent(false)
 {
-    mPendingEvent.version = sizeof(sensors_event_t);
-    mPendingEvent.sensor = ID_A;
-    mPendingEvent.type = SENSOR_TYPE_ACCELEROMETER;
-    memset(mPendingEvent.data, 0, sizeof(mPendingEvent.data));
+
+    mPendingEvents[accelerometer].version = sizeof(sensors_event_t);
+    mPendingEvents[accelerometer].sensor = ID_A;
+    mPendingEvents[accelerometer].type = SENSOR_TYPE_ACCELEROMETER;
+
+    mPendingEvents[gyroscope].version = sizeof(sensors_event_t);
+    mPendingEvents[gyroscope].sensor = ID_GY;
+    mPendingEvents[gyroscope].type = SENSOR_TYPE_GYROSCOPE;
 
     if (data_fd) {
         strcpy(input_sysfs_path, "/sys/bus/i2c/drivers/mpu6050/2-0068/");
         input_sysfs_path_len = strlen(input_sysfs_path);
-        enable(0, 1);
     }
 }
 
 MPU6050Sensor::~MPU6050Sensor() {
     if (mEnabled) {
-        enable(0, 0);
+        enable(ID_A, 0);
+        enable(ID_GY, 0);
     }
 }
 
@@ -62,38 +67,59 @@ int MPU6050Sensor::setInitialState() {
         !ioctl(data_fd, EVIOCGABS(EVENT_TYPE_ACCEL_Y), &absinfo_y) &&
         !ioctl(data_fd, EVIOCGABS(EVENT_TYPE_ACCEL_Z), &absinfo_z)) {
         value = absinfo_y.value;
-        mPendingEvent.data[0] = value * CONVERT_A_X;
+        mPendingEvents[accelerometer].data[0] = value * CONVERT_A_X;
         value = absinfo_x.value;
-        mPendingEvent.data[1] = value * CONVERT_A_Y;
+        mPendingEvents[accelerometer].data[1] = value * CONVERT_A_Y;
         value = absinfo_z.value;
-        mPendingEvent.data[2] = value * CONVERT_A_Z;
-        mHasPendingEvent = true;
+        mPendingEvents[accelerometer].data[2] = value * CONVERT_A_Z;
+    }
+
+    if (!ioctl(data_fd, EVIOCGABS(EVENT_TYPE_GYRO_X), &absinfo_x) &&
+        !ioctl(data_fd, EVIOCGABS(EVENT_TYPE_GYRO_X), &absinfo_y) &&
+        !ioctl(data_fd, EVIOCGABS(EVENT_TYPE_GYRO_X), &absinfo_z)) {
+        value = absinfo_x.value;
+        mPendingEvents[gyroscope].data[0] = value * CONVERT_GYRO_X;
+        value = absinfo_x.value;
+        mPendingEvents[gyroscope].data[1] = value * CONVERT_GYRO_Y;
+        value = absinfo_x.value;
+        mPendingEvents[gyroscope].data[2] = value * CONVERT_GYRO_Z;
     }
     return 0;
 }
 
-int MPU6050Sensor::enable(int32_t, int en) {
-    int flags = en ? 1 : 0;
-    if (flags != mEnabled) {
-        int fd;
+int MPU6050Sensor::enable(int32_t handle, int en) {
+   int flags = en ? 1 : 0;
+    int accel_fd = -1;
+    int gyro_fd = -1;
+
+    if (handle == ID_A) {
         strcpy(&input_sysfs_path[input_sysfs_path_len], "accel_enable");
-        fd = open(input_sysfs_path, O_RDWR);
-        if (fd >= 0) {
-            char buf[1];
-            int err;
-            if (flags) {
-                buf[0] = '1';
-            } else {
-                buf[0] = '0';
-            }
-            err = write(fd, buf, sizeof(buf));
-            close(fd);
-            mEnabled = flags;
-            setInitialState();
-            return 0;
+        accel_fd = open(input_sysfs_path, O_RDWR);
+        if (accel_fd >= 0) {
+            char buffer[2];
+            sprintf(buffer, "%d\n", flags);
+            write(accel_fd, buffer, sizeof(buffer));
+            close(accel_fd);
+            mEnabled = flags << accelerometer;
+        } else {
+            return -1;
         }
+    } else if (handle == ID_GY) {
+        strcpy(&input_sysfs_path[input_sysfs_path_len], "gyro_enable");
+        gyro_fd = open(input_sysfs_path, O_RDWR);
+        if (gyro_fd >= 0) {
+            char buffer[2];
+            sprintf(buffer, "%d\n", flags);
+            write(gyro_fd, buffer, sizeof(buffer));
+            close(gyro_fd);
+            mEnabled = flags << gyroscope;
+        } else {
+            return -1;
+        }
+    } else {
         return -1;
     }
+
     return 0;
 }
 
@@ -103,31 +129,13 @@ bool MPU6050Sensor::hasPendingEvents() const {
 
 int MPU6050Sensor::setDelay(int32_t handle, int64_t delay_ns)
 {
-    int fd;
-    strcpy(&input_sysfs_path[input_sysfs_path_len], "delay");
-    fd = open(input_sysfs_path, O_RDWR);
-    if (fd >= 0) {
-        char buf[80];
-        int32_t delay_ms = (int32_t)delay_ns/1000000;
-        sprintf(buf, "%d", delay_ms);
-        write(fd, buf, strlen(buf)+1);
-        close(fd);
-        return 0;
-    }
-    return -1;
+    return 0;
 }
 
 int MPU6050Sensor::readEvents(sensors_event_t* data, int count)
 {
     if (count < 1)
         return -EINVAL;
-
-    if (mHasPendingEvent) {
-        mHasPendingEvent = false;
-        mPendingEvent.timestamp = getTimestamp();
-        *data = mPendingEvent;
-        return mEnabled ? 1 : 0;
-    }
 
     ssize_t n = mInputReader.fill(data_fd);
     if (n < 0)
@@ -141,27 +149,45 @@ again:
 #endif
     while (count && mInputReader.readEvent(&event)) {
         int type = event->type;
+        float value = event->value;
         if (type == EV_ABS) {
-            float value = event->value;
             if (event->code == EVENT_TYPE_ACCEL_X) {
-                mPendingEvent.data[0] = value * CONVERT_A_X;
+                mPendingEvents[accelerometer].data[0] = value * CONVERT_A_X;
             } else if (event->code == EVENT_TYPE_ACCEL_Y) {
-                mPendingEvent.data[1] = value * CONVERT_A_Y;
+                mPendingEvents[accelerometer].data[1] = value * CONVERT_A_Y;
             } else if (event->code == EVENT_TYPE_ACCEL_Z) {
-                mPendingEvent.data[2] = value * CONVERT_A_Z;
+                mPendingEvents[accelerometer].data[2] = value * CONVERT_A_Z;
             }
+            mPendingMask |= 1 << accelerometer;
+            mInputReader.next();
+       } else if (type == EV_REL) {
+            if (event->code == EVENT_TYPE_GYRO_X) {
+                mPendingEvents[gyroscope].data[0] = value * CONVERT_GYRO_X;
+            } else if (event->code == EVENT_TYPE_GYRO_Y) {
+                mPendingEvents[gyroscope].data[1] = value * CONVERT_GYRO_Y;
+            } else if (event->code == EVENT_TYPE_GYRO_Z) {
+                mPendingEvents[gyroscope].data[2] = value * CONVERT_GYRO_Z;
+            }
+            mPendingMask |= 1 << gyroscope;
+            mInputReader.next();
         } else if (type == EV_SYN) {
-            mPendingEvent.timestamp = timevalToNano(event->time);
-            if (mEnabled) {
-                *data++ = mPendingEvent;
-                count--;
-                numEventReceived++;
+           int64_t time = timevalToNano(event->time);
+            for (int j=0 ; count && mPendingMask && j<numSensors ; j++) {
+              if (mPendingMask & (1 << j)) {
+                    mPendingMask &= ~(1 << j);
+                    mPendingEvents[j].timestamp = time;
+                    *data++ = mPendingEvents[j];
+                        count--;
+                        numEventReceived++;
+              }
+            }
+            if (!mPendingMask) {
+                mInputReader.next();
             }
         } else {
-            LOGE("AccelSensor: unknown event (type=%d, code=%d)",
+            LOGE("MPU6050: unknown event (type=%d, code=%d)",
                     type, event->code);
         }
-        mInputReader.next();
     }
 
 #if FETCH_FULL_EVENT_BEFORE_RETURN

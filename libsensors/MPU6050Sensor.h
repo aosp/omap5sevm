@@ -27,24 +27,34 @@
 #include "InputEventReader.h"
 
 #define ACCEL_INPUT_NAME    "mpu6050-accelerometer"
+#define GYRO_INPUT_NAME    "mpu6050-gyroscope"
 
 /*****************************************************************************/
 
 struct input_event;
 
 class MPU6050Sensor : public SensorBase {
+public:
+            MPU6050Sensor(const char *name);
+    virtual ~MPU6050Sensor();
+
+    enum {
+        accelerometer   = 0,
+        gyroscope = 1,
+        numSensors
+    };
+
+private:
     int mEnabled;
     InputEventCircularReader mInputReader;
-    sensors_event_t mPendingEvent;
+    uint32_t mPendingMask;
+    sensors_event_t mPendingEvents[numSensors];
     bool mHasPendingEvent;
     char input_sysfs_path[PATH_MAX];
     int input_sysfs_path_len;
 
     int setInitialState();
 
-public:
-            MPU6050Sensor(const char *name);
-    virtual ~MPU6050Sensor();
     virtual int readEvents(sensors_event_t* data, int count);
     virtual bool hasPendingEvents() const;
     virtual int setDelay(int32_t handle, int64_t ns);
