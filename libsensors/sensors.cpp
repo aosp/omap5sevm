@@ -123,6 +123,8 @@ struct sensors_module_t HAL_MODULE_INFO_SYM = {
                 name: "OMAP5 EVM Sensor module",
                 author: "Texas Instruments Inc.",
                 methods: &sensors_module_methods,
+                dso: 0,
+                reserved: {},
         },
         get_sensors_list: sensors__get_sensors_list,
 };
