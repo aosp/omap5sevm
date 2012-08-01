@@ -42,6 +42,7 @@ PRODUCT_COPY_FILES := \
         device/ti/omap5sevm/palmas_pwron.kl:system/usr/keylayout/palmas_pwron.kl \
         device/ti/omap5sevm/smsc_keypad.kl:system/usr/keylayout/smsc_keypad.kl \
 	device/ti/omap5sevm/media_profiles.xml:system/etc/media_profiles.xml \
+        device/ti/common-open/audio/audio_policy.conf:system/etc/audio_policy.conf \
 	device/ti/omap5sevm/bootanimation.zip:/system/media/bootanimation.zip
 
 # to mount the external storage (sdcard)
