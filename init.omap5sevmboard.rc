@@ -26,6 +26,9 @@ on post-fs-data
     insmod /system/lib/modules/bnep.ko
     insmod /system/lib/modules/btwilink.ko
 
+on early-boot
+    start modem-detect
+
 on boot
 	mount debugfs /sys/kernel/debug /sys/kernel/debug
 	chmod 0666 /dev/pvrsrvkm
@@ -178,7 +181,14 @@ service modem-detect /system/vendor/bin/modem-detect.sh
     class core
     user root
     group root
+    disabled
     oneshot
+
+on property:modem.audio=*
+    restart media
+
+on property:rild.libpath=*
+    restart ril-daemon
 
 on property:wlan.driver.status=ok
     chown wifi wifi /sys/devices/platform/wl1271/bt_coex_state
