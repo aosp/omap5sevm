@@ -34,9 +34,6 @@ on boot
 	chmod 0666 /dev/pvrsrvkm
 	chmod 0444 /system/usr/keychars/omap4-keypad.kcm.bin
 
-# Power Management
-	write /sys/power/wake_lock temp
-
 # wi-fi
 	mkdir /data/misc/wifi/sockets 0770 wifi wifi
 	mkdir /data/misc/dhcp 0770 dhcp dhcp
