@@ -108,7 +108,7 @@ service setup_fs /system/bin/setup_fs \
 # daemon will drop to user/group system/media_rw after initializing
 # underlying files in /data/media will be created with user and group media_rw (1023)
 service sdcard /system/bin/sdcard /data/media 1023 1023
-    class late_start
+    class main
 
 # bugreport is triggered by holding down volume down, volume up, and power
 service bugreport /system/bin/bugmailer.sh -v
