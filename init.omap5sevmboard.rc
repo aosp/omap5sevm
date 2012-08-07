@@ -34,6 +34,9 @@ on boot
 	chmod 0666 /dev/pvrsrvkm
 	chmod 0444 /system/usr/keychars/omap4-keypad.kcm.bin
 
+# Remove the Ultra Fast Media Card Reader on EHCI bus
+        write /sys/bus/usb/devices/1-2.1/remove 1
+
 # wi-fi
 	mkdir /data/misc/wifi/sockets 0770 wifi wifi
 	mkdir /data/misc/dhcp 0770 dhcp dhcp
