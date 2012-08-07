@@ -19,7 +19,6 @@ for file in /sys/class/rfkill/*
 do
 	if [ $(cat ${file}/type) == "wwan" ]
 	then
-		setprop modem.audio 1
 		setprop modem.$(cat ${file}/name) 1
 	fi
 done
