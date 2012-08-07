@@ -19,7 +19,7 @@
 
 <!-- The <device> element should contain one or more <storage> elements.
      Exactly one of these should have the attribute primary="true".
-     This storage will be the primary external storage and should have mountPoint="/mnt/sdcard".
+     This storage will be the primary external storage and should have mountPoint="/storage/sdcard".
      Each storage should have both a mountPoint and storageDescription attribute.
      The following attributes are optional:
 
@@ -34,11 +34,11 @@
 
 <StorageList xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- removable is not set in nosdcard product -->
-    <storage android:mountPoint="/mnt/sdcard"
+    <storage android:mountPoint="/storage/sdcard"
              android:storageDescription="@string/storage_internal"
              android:emulated="true"
              android:primary="true" />
-    <storage android:mountPoint="/mnt/ext_sdcard"
+    <storage android:mountPoint="/storage/ext_sdcard"
              android:storageDescription="@string/storage_sd_card"
              android:removable="true" />
 </StorageList>
