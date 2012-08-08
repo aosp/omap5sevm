@@ -193,3 +193,11 @@ service agnss_connect /system/bin/agnss_connect -p -a
         class main
         disabled
         oneshot
+
+service ethernet-detect /system/vendor/bin/ethernet-detect.sh
+	class main
+	disabled
+	oneshot
+
+on property:init.svc.dhcpcd_eth0=stopped
+	start ethernet-detect
