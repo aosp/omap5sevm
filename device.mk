@@ -137,6 +137,10 @@ PRODUCT_PACKAGES += \
 # Add modem scripts
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/modem-detect.sh:system/vendor/bin/modem-detect.sh
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/ethernet-detect.sh:system/vendor/bin/ethernet-detect.sh
+
 # Audio HAL module
 PRODUCT_PACKAGES += audio.primary.omap5
 PRODUCT_PACKAGES += audio.hdmi.omap5
