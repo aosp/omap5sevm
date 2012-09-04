@@ -92,7 +92,7 @@ on fs
 # change permissions for display backlight
     chown system system /sys/class/backlight/lg4591/brightness
 
-service pvrsrvinit /vendor/bin/pvrsrvinit
+service pvrsrvinit /system/vendor/bin/pvrsrvinit
 	class core
 	user root
 	group root
