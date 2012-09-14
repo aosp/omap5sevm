@@ -74,6 +74,9 @@ PRODUCT_PACKAGES := \
     libOMX_Core \
     libOMX.TI.DUCATI1.VIDEO.DECODER
 
+#to flow down to ti-wpan-products.mk
+BLUETI_ENHANCEMENT := true
+
 # Tiler
 PRODUCT_PACKAGES += \
     libtimemmgr

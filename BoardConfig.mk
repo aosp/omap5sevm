@@ -19,6 +19,9 @@
 
 # These two variables are set first, so they can be overridden
 # by BoardConfigVendor.mk
+
+BLUETI_ENHANCEMENT := true
+
 BOARD_USES_GENERIC_AUDIO := false
 USE_CAMERA_STUB := true
 
@@ -110,6 +113,10 @@ endif
 ifdef OMAP_ENHANCEMENT_VTC
 COMMON_GLOBAL_CFLAGS += -DOMAP_ENHANCEMENT_VTC
 endif
+endif
+
+ifdef BLUETI_ENHANCEMENT
+COMMON_GLOBAL_CFLAGS += -DBLUETI_ENHANCEMENT
 endif
 
 BOARD_LIB_DUMPSTATE := libdumpstate.omap5sevm
