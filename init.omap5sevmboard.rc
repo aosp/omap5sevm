@@ -202,9 +202,6 @@ on property:modem.audio=*
 on property:rild.libpath=*
     restart ril-daemon
 
-on property:wlan.driver.status=ok
-    chown wifi wifi /sys/devices/platform/wl1271/bt_coex_state
-
 service devproxy /system/bin/devproxy
         class main
         disabled
