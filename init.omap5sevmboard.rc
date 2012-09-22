@@ -219,6 +219,10 @@ service cplc_main /system/bin/cplc_main XML
         disabled
         oneshot
 
+service supl20clientd /system/bin/supl20clientd
+        class main
+        oneshot
+
 service ethernet-detect /system/vendor/bin/ethernet-detect.sh
 	class main
 	disabled
