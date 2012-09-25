@@ -209,7 +209,7 @@ service devproxy /system/bin/devproxy
         disabled
         oneshot
 
-service agnss_connect /system/bin/agnss_connect -p -a
+service agnss_connect /system/bin/agnss_connect -p
         class main
         disabled
         oneshot
