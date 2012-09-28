@@ -136,7 +136,7 @@ PRODUCT_PACKAGES += \
 	TQS_D_1.7_127x.ini \
 	crda \
 	regulatory.bin \
-	calibrator
+	wlconf
 
 # Add modem scripts
 PRODUCT_COPY_FILES += \
