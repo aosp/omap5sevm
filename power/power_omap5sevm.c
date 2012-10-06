@@ -48,6 +48,29 @@ struct omap5sevm_power_module {
     int boostpulse_warned;
 };
 
+static int sysfs_read(char *path, void *dest, int nbytes)
+{
+    char buf[80];
+    int len, ret = 0;
+    int fd = open(path, O_RDONLY);
+
+    if (fd < 0) {
+        strerror_r(errno, buf, sizeof(buf));
+        ALOGE("Error opening %s: %s\n", path, buf);
+        return -EBADF;
+    }
+
+    len = read(fd, dest, nbytes);
+    if (len < 0) {
+        strerror_r(errno, buf, sizeof(buf));
+        ALOGE("Error writing to %s: %s\n", path, buf);
+        ret = -EIO;
+    }
+
+    close(fd);
+    return ret;
+}
+
 static void sysfs_write(char *path, char *s)
 {
     char buf[80];
