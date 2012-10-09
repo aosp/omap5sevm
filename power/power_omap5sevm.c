@@ -26,6 +26,7 @@
 #include <hardware/hardware.h>
 #include <hardware/power.h>
 
+#define CPUFREQ_INTERACTIVE     "/sys/devices/system/cpu/cpufreq/interactive/"
 #define BOOSTPULSE_PATH 	"/sys/devices/system/cpu/cpufreq/interactive/boostpulse"
 #define MAX_SCALING_FREQ_PATH	"/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"
 #define TIMER_RATE_PATH		"/sys/devices/system/cpu/cpufreq/interactive/timer_rate"
@@ -51,6 +52,57 @@ static int nomspeed_freq_idx = 1;
  * by the cpu. This frequency needs to be fetched from kernel side
  */
 static int hispeed_freq_idx;
+
+/* Tuning parameters table index definition */
+#define NUM_TUNING_PARAMS       2
+#define NUM_PROFILES            2
+
+/*
+ * Tuning parameters table structure
+ * col_param_path  : <path to governor> <specific
+ *                                       sysfs parameter>
+ *                   The path defines the sysfs path for the
+ *                   governor parameter
+ * row_profile_name: defines a profile that consists of a
+ *                   set of parameters
+ * param_val       : param values for a profile
+ */
+struct tuning_table {
+    char *col_param_path[NUM_TUNING_PARAMS];
+    char *row_profile_name[NUM_PROFILES];
+    char *param_val[][NUM_TUNING_PARAMS];
+};
+
+/*
+ * The values below define the parameters that can
+ * be changed for interactive governor.
+ * These are specific to a platform
+ * current table representation is follows. Values are example
+ *                      go_hispeed_load  min_sample_time
+ *    high_performance          40           60000
+ *    low_power                 80           40000
+ */
+static struct tuning_table omap_tuning_table = {
+        .col_param_path   = {
+                             CPUFREQ_INTERACTIVE "go_hispeed_load",
+                             CPUFREQ_INTERACTIVE "min_sample_time",
+                            },
+        .row_profile_name = {
+                             "high_performance",
+                             "low_power"
+                            },
+        .param_val        = {
+                             {"40", "40000"},
+                             {"70", "20000"},
+                            },
+};
+
+#define HI_PERF_ROW_IDX                 0  /* Row index in tuning
+                                              table for high
+                                              performance profile*/
+#define LOW_PWR_ROW_IDX                 1  /* Row index in tuning
+                                              table for Low Power
+                                              profile */
 
 static int num_avail_freq;
 #define MAX_FREQ_NUMBER 10
