@@ -18,8 +18,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <stdbool.h>
 
-#define LOG_TAG "OMAP5 PowerHAL"
+#define LOG_TAG "OMAPPowerHAL"
 #include <utils/Log.h>
 
 #include <hardware/hardware.h>
@@ -33,11 +34,6 @@
 #define HISPEED_LOAD_VAL_PATH	"/sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load"
 #define HISPEED_DELAY_PATH	"/sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay"
 
-#define TIMER_RATE_VAL		"20000"
-#define MIN_SAMPLE_TIME_VAL	"60000"
-#define HISPEED_LOAD_VAL	"50"
-#define HISPEED_DELAY_VAL	"100000"
-
 #define NOMSPEED_FREQ_VAL	"700000"
 #define HISPEED_FREQ_VAL	"1200000"
 
@@ -46,6 +42,7 @@ struct omap5sevm_power_module {
     pthread_mutex_t lock;
     int boostpulse_fd;
     int boostpulse_warned;
+    bool ready;
 };
 
 static int str_to_tokens(char *str, char **token,
@@ -116,12 +113,9 @@ static void sysfs_write(char *path, char *s)
 
 static void omap5sevm_power_init(struct power_module *module)
 {
-
-    sysfs_write(TIMER_RATE_PATH, TIMER_RATE_VAL);
-    sysfs_write(MIN_SAMPLE_TIME_PATH, MIN_SAMPLE_TIME_VAL);
-    sysfs_write(HISPEED_FREQ_PATH, NOMSPEED_FREQ_VAL);
-    sysfs_write(HISPEED_LOAD_VAL_PATH, HISPEED_LOAD_VAL);
-    sysfs_write(HISPEED_DELAY_PATH, HISPEED_DELAY_VAL);
+    struct omap5sevm_power_module *omap5sevm = (struct omap5sevm_power_module *) module;
+    omap5sevm->ready = true;
+    ALOGI(LOG_TAG " initialized");
 }
 
 static int boostpulse_open(struct omap5sevm_power_module *omap5sevm)
@@ -207,4 +201,5 @@ struct omap5sevm_power_module HAL_MODULE_INFO_SYM = {
     lock: PTHREAD_MUTEX_INITIALIZER,
     boostpulse_fd: -1,
     boostpulse_warned: 0,
+    ready: false,
 };
