@@ -33,9 +33,29 @@
 #define HISPEED_FREQ_PATH	"/sys/devices/system/cpu/cpufreq/interactive/hispeed_freq"
 #define HISPEED_LOAD_VAL_PATH	"/sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load"
 #define HISPEED_DELAY_PATH	"/sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay"
+#define AVAIL_FREQ_PATH         "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies"
 
-#define NOMSPEED_FREQ_VAL	"700000"
-#define HISPEED_FREQ_VAL	"1200000"
+/*
+ * Nominal frequency is the maximum frequency allowed for the
+ * system to operate under specific conditions
+ * For OMAP based smart phones and tablets, this condition
+ * is identified as the display OFF scenario.
+ * The max nominal frequency allowed is fixed at 2nd lowest
+ * frequency at which the cpu can operate. The index of this
+ * frequency is 1
+ */
+static int nomspeed_freq_idx = 1;
+
+/*
+ * Max high speed frequency is the maximum frequency supported
+ * by the cpu. This frequency needs to be fetched from kernel side
+ */
+static int hispeed_freq_idx;
+
+static int num_avail_freq;
+#define MAX_FREQ_NUMBER 10
+#define MAX_TOKEN_SIZE 9
+static char *freq_list[MAX_FREQ_NUMBER];
 
 struct omap5sevm_power_module {
     struct power_module base;
@@ -114,6 +134,30 @@ static void sysfs_write(char *path, char *s)
 static void omap5sevm_power_init(struct power_module *module)
 {
     struct omap5sevm_power_module *omap5sevm = (struct omap5sevm_power_module *) module;
+    char freq_buf[MAX_FREQ_NUMBER* MAX_TOKEN_SIZE];
+    char delim[] = " \n";
+    int ret;
+
+    memset(freq_buf, '\0', sizeof(freq_buf));
+    ret = sysfs_read(AVAIL_FREQ_PATH, freq_buf, sizeof(freq_buf));
+    if (ret < 0) {
+        ALOGI(LOG_TAG " initialization failed");
+        /* governor works now with its default parameters */
+        return;
+    }
+
+    num_avail_freq = str_to_tokens(freq_buf, freq_list,
+                                   MAX_FREQ_NUMBER, delim);
+    if (num_avail_freq < 0) {
+        /* governor works now with its default parameters */
+        ALOGI(LOG_TAG " initialization failed");
+        return;
+    }
+
+    hispeed_freq_idx = num_avail_freq - 1;
+    if (num_avail_freq == 1)
+        nomspeed_freq_idx = hispeed_freq_idx;
+
     omap5sevm->ready = true;
     ALOGI(LOG_TAG " initialized");
 }
@@ -142,12 +186,14 @@ static int boostpulse_open(struct omap5sevm_power_module *omap5sevm)
 
 static void omap5sevm_power_set_interactive(struct power_module *module, int on)
 {
+
     /*
      * Lower maximum frequency when screen is off.  CPU 0 and 1 share a
      * cpufreq policy.
      */
 
-    sysfs_write(MAX_SCALING_FREQ_PATH, on ? HISPEED_FREQ_VAL : NOMSPEED_FREQ_VAL);
+    sysfs_write(MAX_SCALING_FREQ_PATH, on ? freq_list[hispeed_freq_idx]
+                                          : freq_list[nomspeed_freq_idx]);
 }
 
 static void omap5sevm_power_hint(struct power_module *module, power_hint_t hint,
