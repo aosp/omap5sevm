@@ -48,6 +48,28 @@ struct omap5sevm_power_module {
     int boostpulse_warned;
 };
 
+static int str_to_tokens(char *str, char **token,
+                         int max_token_idx, char *delim)
+{
+    char *pos, *start_pos = str;
+    char *token_pos;
+    int token_idx = 0;
+
+    if (!str || !token || !max_token_idx) {
+        return -EINVAL;
+    }
+
+    do {
+        token_pos = strtok_r(start_pos, delim, &pos);
+        if (token_pos)
+            token[token_idx++] = strdup(token_pos);
+
+        start_pos = NULL;
+    } while (token_pos && token_idx < max_token_idx);
+
+    return token_idx;
+}
+
 static int sysfs_read(char *path, void *dest, int nbytes)
 {
     char buf[80];
