@@ -255,14 +255,19 @@ static int boostpulse_open(struct omap5sevm_power_module *omap5sevm)
 
 static void omap5sevm_power_set_interactive(struct power_module *module, int on)
 {
+    struct omap5sevm_power_module *omap5sevm = (struct omap5sevm_power_module *) module;
+    int idx;
+
+    if (omap5sevm->ready == false)
+        return;
+
+    idx = on ? HI_PERF_ROW_IDX : LOW_PWR_ROW_IDX;
 
     /*
-     * Lower maximum frequency when screen is off.  CPU 0 and 1 share a
-     * cpufreq policy.
+     * Policy: Go to low power profile when screen is off.
+     * Go to high performance profile when screen is on
      */
-
-    sysfs_write(MAX_SCALING_FREQ_PATH, on ? freq_list[hispeed_freq_idx]
-                                          : freq_list[nomspeed_freq_idx]);
+    sysfs_write_tuning_params(idx);
 }
 
 static void omap5sevm_power_hint(struct power_module *module, power_hint_t hint,
