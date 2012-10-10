@@ -183,6 +183,23 @@ static void sysfs_write(char *path, char *s)
     close(fd);
 }
 
+static void sysfs_write_tuning_params(int profile_idx)
+{
+    int i, idx;
+     /* set parameters for the governors */
+     for (i = 0; i < NUM_TUNING_PARAMS; i++) {
+         if (omap_tuning_table.param_val[profile_idx][i])
+             sysfs_write(omap_tuning_table.col_param_path[i],
+                         omap_tuning_table.param_val[profile_idx][i]);
+     }
+
+     if (profile_idx == HI_PERF_ROW_IDX)
+         idx = hispeed_freq_idx;
+     else
+         idx = nomspeed_freq_idx;
+     sysfs_write(MAX_SCALING_FREQ_PATH, freq_list[idx]);
+}
+
 static void omap5sevm_power_init(struct power_module *module)
 {
     struct omap5sevm_power_module *omap5sevm = (struct omap5sevm_power_module *) module;
