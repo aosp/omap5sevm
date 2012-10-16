@@ -27,3 +27,8 @@
 
 #BlueTI- for BT Dial Up Networking
 /dev/rfcomm0              0660   bluetooth   bluetooth
+
+# for Distributed Vision Processing
+/dev/dvp_kgm_dsp          0666   system     system
+/dev/dvp_kgm_simcop       0666   system     system
+

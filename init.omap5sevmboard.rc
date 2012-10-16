@@ -241,3 +241,16 @@ service ethernet-detect /system/vendor/bin/ethernet-detect.sh
 
 on property:init.svc.dhcpcd_eth0=stopped
 	start ethernet-detect
+
+# Texas Instruments Shared Memory Service
+service shm_service /system/bin/shm_service --no-fork
+	class core
+	user system
+	group system
+
+# Texas Instruments Augmented Reality X-celerator Daemon
+service arxd /system/bin/arxd
+	class main
+	user system
+	group drmrpc
+	ioprio rt 4
