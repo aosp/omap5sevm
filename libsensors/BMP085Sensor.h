@@ -26,13 +26,15 @@
 #include "SensorBase.h"
 #include "InputEventReader.h"
 
+#define PRESS_INPUT_NAME    "bmp085"
+
 /*****************************************************************************/
 
 struct input_event;
 
 class BMP085Sensor : public SensorBase {
 public:
-            BMP085Sensor();
+            BMP085Sensor(int device_fd);
     virtual ~BMP085Sensor();
 
     enum {

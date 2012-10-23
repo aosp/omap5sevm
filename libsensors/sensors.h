@@ -117,6 +117,11 @@ __BEGIN_DECLS
 
 /*****************************************************************************/
 
+struct input_device_nodes_t {
+    char input_dev_name[PATH_MAX];
+    char event_node[PATH_MAX];
+};
+
 __END_DECLS
 
 #endif  // ANDROID_SENSORS_H

@@ -28,27 +28,29 @@
 
 /*****************************************************************************/
 
-TSL2771Sensor::TSL2771Sensor(const char *name)
-    : SensorBase(NULL, name),
+TSL2771Sensor::TSL2771Sensor(const char *name, int device_fd)
+    : SensorBase(NULL, name, device_fd),
       mEnabled(0),
       mPendingMask(0),
       mInputReader(32),
       mHasPendingEvent(false) {
 
-    mPendingEvents[light].version = sizeof(sensors_event_t);
-    mPendingEvents[light].sensor = ID_L;
-    mPendingEvents[light].type = SENSOR_TYPE_LIGHT;
-
-    mPendingEvents[proximity].version = sizeof(sensors_event_t);
-    mPendingEvents[proximity].sensor = ID_P;
-    mPendingEvents[proximity].type = SENSOR_TYPE_PROXIMITY;
+    if (!strcmp(ALS_INPUT_NAME, name)) {
+        mPendingEvents[light].version = sizeof(sensors_event_t);
+        mPendingEvents[light].sensor = ID_L;
+        mPendingEvents[light].type = SENSOR_TYPE_LIGHT;
+    } else if (!strcmp(PROX_INPUT_NAME, name)) {
+        mPendingEvents[proximity].version = sizeof(sensors_event_t);
+        mPendingEvents[proximity].sensor = ID_P;
+        mPendingEvents[proximity].type = SENSOR_TYPE_PROXIMITY;
+    }
 
     if (data_fd) {
         strcpy(input_sysfs_path, "/sys/bus/i2c/drivers/tsl2771/2-0039/");
         input_sysfs_path_len = strlen(input_sysfs_path);
     }
 
-    if (strcmp(name, ALS_INPUT_NAME)) {
+    if (!strcmp(name, ALS_INPUT_NAME)) {
         enable(ID_L, 1);
     }
 }

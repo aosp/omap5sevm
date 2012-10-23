@@ -29,21 +29,25 @@
 
 /*****************************************************************************/
 
-MPU6050Sensor::MPU6050Sensor(const char *name)
-    : SensorBase(NULL, name),
+MPU6050Sensor::MPU6050Sensor(const char *name, int device_fd)
+    : SensorBase(NULL, name, device_fd),
       mPendingMask(0),
       mEnabled(0),
-      mInputReader(96),
+      mInputReader(64),
       mHasPendingEvent(false)
 {
 
-    mPendingEvents[accelerometer].version = sizeof(sensors_event_t);
-    mPendingEvents[accelerometer].sensor = ID_A;
-    mPendingEvents[accelerometer].type = SENSOR_TYPE_ACCELEROMETER;
-
-    mPendingEvents[gyroscope].version = sizeof(sensors_event_t);
-    mPendingEvents[gyroscope].sensor = ID_GY;
-    mPendingEvents[gyroscope].type = SENSOR_TYPE_GYROSCOPE;
+    if (!strcmp(ACCEL_INPUT_NAME, name)) {
+        mPendingEvents[accelerometer].version = sizeof(sensors_event_t);
+        mPendingEvents[accelerometer].sensor = ID_A;
+        mPendingEvents[accelerometer].type = SENSOR_TYPE_ACCELEROMETER;
+    }else if (!strcmp(GYRO_INPUT_NAME, name)) {
+        mPendingEvents[gyroscope].version = sizeof(sensors_event_t);
+        mPendingEvents[gyroscope].sensor = ID_GY;
+        mPendingEvents[gyroscope].type = SENSOR_TYPE_GYROSCOPE;
+    } else {
+        return;
+    }
 
     if (data_fd) {
         strcpy(input_sysfs_path, "/sys/bus/i2c/drivers/mpu6050/2-0068/");
@@ -56,35 +60,6 @@ MPU6050Sensor::~MPU6050Sensor() {
         enable(ID_A, 0);
         enable(ID_GY, 0);
     }
-}
-
-int MPU6050Sensor::setInitialState() {
-    struct input_absinfo absinfo_x;
-    struct input_absinfo absinfo_y;
-    struct input_absinfo absinfo_z;
-    float value;
-    if (!ioctl(data_fd, EVIOCGABS(EVENT_TYPE_ACCEL_X), &absinfo_x) &&
-        !ioctl(data_fd, EVIOCGABS(EVENT_TYPE_ACCEL_Y), &absinfo_y) &&
-        !ioctl(data_fd, EVIOCGABS(EVENT_TYPE_ACCEL_Z), &absinfo_z)) {
-        value = absinfo_y.value;
-        mPendingEvents[accelerometer].data[0] = value * CONVERT_A_X;
-        value = absinfo_x.value;
-        mPendingEvents[accelerometer].data[1] = value * CONVERT_A_Y;
-        value = absinfo_z.value;
-        mPendingEvents[accelerometer].data[2] = value * CONVERT_A_Z;
-    }
-
-    if (!ioctl(data_fd, EVIOCGABS(EVENT_TYPE_GYRO_X), &absinfo_x) &&
-        !ioctl(data_fd, EVIOCGABS(EVENT_TYPE_GYRO_X), &absinfo_y) &&
-        !ioctl(data_fd, EVIOCGABS(EVENT_TYPE_GYRO_X), &absinfo_z)) {
-        value = absinfo_x.value;
-        mPendingEvents[gyroscope].data[0] = value * CONVERT_GYRO_X;
-        value = absinfo_x.value;
-        mPendingEvents[gyroscope].data[1] = value * CONVERT_GYRO_Y;
-        value = absinfo_x.value;
-        mPendingEvents[gyroscope].data[2] = value * CONVERT_GYRO_Z;
-    }
-    return 0;
 }
 
 int MPU6050Sensor::enable(int32_t handle, int en) {

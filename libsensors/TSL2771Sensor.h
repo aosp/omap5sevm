@@ -39,7 +39,7 @@ struct input_event;
 
 class TSL2771Sensor : public SensorBase {
 public:
-            TSL2771Sensor(const char *name);
+            TSL2771Sensor(const char *name, int device_fd);
     virtual ~TSL2771Sensor();
 
     enum {

@@ -35,7 +35,7 @@ struct input_event;
 
 class AkmSensor : public SensorBase {
 public:
-            AkmSensor();
+            AkmSensor(int device_fd);
     virtual ~AkmSensor();
 
     enum {

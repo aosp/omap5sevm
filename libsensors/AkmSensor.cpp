@@ -30,8 +30,8 @@
 
 /*****************************************************************************/
 
-AkmSensor::AkmSensor()
-    : SensorBase(AKM_DEVICE_NAME, "compass"),
+AkmSensor::AkmSensor(int device_fd)
+    : SensorBase(AKM_DEVICE_NAME, "compass", device_fd),
       mEnabled(0),
       mPendingMask(0),
       mInputReader(32)
