@@ -78,7 +78,7 @@ PRODUCT_PACKAGES := \
 BLUETI_ENHANCEMENT := true
 
 PRODUCT_PACKAGES += \
-	power.omap5sevm
+	power.omap5
 
 # Tiler
 PRODUCT_PACKAGES += \
