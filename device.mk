@@ -88,7 +88,7 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     Camera \
-    CameraOMAP4 \
+    CameraOMAP \
     camera_test
 
 PRODUCT_PACKAGES += \
