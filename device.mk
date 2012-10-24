@@ -77,6 +77,9 @@ PRODUCT_PACKAGES := \
 #to flow down to ti-wpan-products.mk
 BLUETI_ENHANCEMENT := true
 
+PRODUCT_PACKAGES += \
+	power.omap5sevm
+
 # Tiler
 PRODUCT_PACKAGES += \
     libtimemmgr
