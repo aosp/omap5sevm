@@ -35,7 +35,7 @@ struct input_event;
 
 class MPU6050Sensor : public SensorBase {
 public:
-            MPU6050Sensor(const char *name);
+            MPU6050Sensor(const char *name, int device_fd);
     virtual ~MPU6050Sensor();
 
     enum {

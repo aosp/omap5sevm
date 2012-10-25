@@ -118,7 +118,7 @@ struct sensors_module_t HAL_MODULE_INFO_SYM = {
         common: {
                 tag: HARDWARE_MODULE_TAG,
                 version_major: 1,
-                version_minor: 0,
+                version_minor: 1,
                 id: SENSORS_HARDWARE_MODULE_ID,
                 name: "OMAP5 EVM Sensor module",
                 author: "Texas Instruments Inc.",
@@ -134,6 +134,11 @@ struct sensors_poll_context_t {
 
         sensors_poll_context_t();
         ~sensors_poll_context_t();
+
+    int mNumber_of_events;
+
+    void populate_event_nodes(void);
+    int find_open_sensor_event(const char* device_name);
     int activate(int handle, int enabled);
     int setDelay(int handle, int64_t ns);
     int pollEvents(sensors_event_t* data, int count);
@@ -143,8 +148,8 @@ private:
         accel           = 0,
         light           = 1,
         proximity       = 2,
-	press_temp	= 3,
-	magno		= 4,
+        press_temp  	= 3,
+        magno	    	= 4,
         gyro            = 5,
         numSensorDrivers,
         numFds,
@@ -155,6 +160,7 @@ private:
     static const size_t wake = numFds - 1;
     static const char WAKE_MESSAGE = 'W';
     struct pollfd mPollFds[numFds];
+    struct input_device_nodes_t mInputDevNodes[255];
     int mWritePipeFd;
     SensorBase* mSensors[numSensorDrivers];
 
@@ -179,36 +185,123 @@ private:
     }
 };
 
+int sensors_poll_context_t::find_open_sensor_event(const char* device_name)
+{
+    int i;
+    int fd = -1;
+
+    for (i = 0; i <= mNumber_of_events; i++) {
+        if (!strcmp(device_name, mInputDevNodes[i].input_dev_name)) {
+                fd = open(mInputDevNodes[i].event_node, O_RDONLY);
+#ifdef DEBUG
+              ALOGE("Found dev node %s %s handle is %i\n",
+                           mInputDevNodes[i].input_dev_name,
+                           mInputDevNodes[i].event_node, fd);
+#endif
+                break;
+            }
+    }
+    return fd;
+}
+
+void sensors_poll_context_t::populate_event_nodes(void)
+{
+    int fd = -1;
+    const char *dirname = "/dev/input/";
+    char devname[PATH_MAX];
+    char *filename;
+    DIR *dir;
+    struct dirent *de;
+    int i = 0;
+
+    dir = opendir(dirname);
+    if(dir == NULL)
+        return;
+
+    strcpy(devname, dirname);
+    filename = devname + strlen(devname);
+    *filename++ = '/';
+    while((de = readdir(dir))) {
+        /* Look only for event nodes we don't care about anything else */
+        if (strncmp(de->d_name, "event", 5) > 0) {
+            continue;
+        }
+        /* Remove directory connotations */
+        if(de->d_name[0] == '.' &&
+                (de->d_name[1] == '\0' ||
+                        (de->d_name[1] == '.' && de->d_name[2] == '\0')))
+            continue;
+
+        strcpy(filename, de->d_name);
+        fd = open(devname, O_RDONLY);
+        if (fd >= 0) {
+            char name[80];
+            if (ioctl(fd, EVIOCGNAME(sizeof(name) - 1), &name) < 1) {
+                name[0] = '\0';
+            }
+
+            strcpy(mInputDevNodes[i].input_dev_name, name);
+            strcpy(mInputDevNodes[i].event_node, dirname);
+            strcat(mInputDevNodes[i].event_node, filename);
+#ifdef DEBUG
+            ALOGD("populating %s %s\n",
+                mInputDevNodes[i].input_dev_name,
+                mInputDevNodes[i].event_node);
+#endif
+            i++;
+            close(fd);
+            fd = -1;
+        }
+    }
+    closedir(dir);
+    mNumber_of_events = i;
+}
+
 /*****************************************************************************/
 
 sensors_poll_context_t::sensors_poll_context_t()
 {
-    mSensors[accel] = new MPU6050Sensor(ACCEL_INPUT_NAME);
+    int event_fd = -1;
+
+    populate_event_nodes();
+
+    event_fd = find_open_sensor_event(ACCEL_INPUT_NAME);
+    mSensors[accel] = new MPU6050Sensor(ACCEL_INPUT_NAME, event_fd);
     mPollFds[accel].fd = mSensors[accel]->getFd();
     mPollFds[accel].events = POLLIN;
     mPollFds[accel].revents = 0;
+    event_fd = -1;
 
-    mSensors[gyro] = new MPU6050Sensor(GYRO_INPUT_NAME);
+    event_fd = find_open_sensor_event(GYRO_INPUT_NAME);
+    mSensors[gyro] = new MPU6050Sensor(GYRO_INPUT_NAME, event_fd);
     mPollFds[gyro].fd = mSensors[gyro]->getFd();
     mPollFds[gyro].events = POLLIN;
     mPollFds[gyro].revents = 0;
+    event_fd = -1;
 
-    mSensors[light] = new TSL2771Sensor(ALS_INPUT_NAME);
+    event_fd = find_open_sensor_event(ALS_INPUT_NAME);
+    mSensors[light] = new TSL2771Sensor(ALS_INPUT_NAME, event_fd);
     mPollFds[light].fd = mSensors[light]->getFd();
     mPollFds[light].events = POLLIN;
     mPollFds[light].revents = 0;
+    event_fd = -1;
 
-    mSensors[proximity] = new TSL2771Sensor(PROX_INPUT_NAME);
+    event_fd = find_open_sensor_event(PROX_INPUT_NAME);
+    mSensors[proximity] = new TSL2771Sensor(PROX_INPUT_NAME, event_fd);
     mPollFds[proximity].fd = mSensors[proximity]->getFd();
     mPollFds[proximity].events = POLLIN;
     mPollFds[proximity].revents = 0;
+    event_fd = -1;
 
-    mSensors[press_temp] = new BMP085Sensor();
+    event_fd = find_open_sensor_event(PRESS_INPUT_NAME);
+    mSensors[press_temp] = new BMP085Sensor(event_fd);
     mPollFds[press_temp].fd = mSensors[press_temp]->getFd();
     mPollFds[press_temp].events = POLLIN;
     mPollFds[press_temp].revents = 0;
+    event_fd = -1;
 
-    mSensors[magno] = new AkmSensor();
+    event_fd = find_open_sensor_event("compass");
+    mSensors[magno] = new AkmSensor(event_fd);
     mPollFds[magno].fd = mSensors[magno]->getFd();
     mPollFds[magno].events = POLLIN;
     mPollFds[magno].revents = 0;
@@ -331,22 +424,20 @@ static int poll__poll(struct sensors_poll_device_t *dev,
 static int open_sensors(const struct hw_module_t* module, const char* id,
                         struct hw_device_t** device)
 {
-        int status = -EINVAL;
-        sensors_poll_context_t *dev = new sensors_poll_context_t();
+    int status = -EINVAL;
+    sensors_poll_context_t *dev = new sensors_poll_context_t();
 
-        memset(&dev->device, 0, sizeof(sensors_poll_device_t));
+    dev->device.common.tag = HARDWARE_DEVICE_TAG;
+    dev->device.common.version  = 0;
+    dev->device.common.module   = const_cast<hw_module_t*>(module);
+    dev->device.common.close    = poll__close;
+    dev->device.activate        = poll__activate;
+    dev->device.setDelay        = poll__setDelay;
+    dev->device.poll            = poll__poll;
 
-        dev->device.common.tag = HARDWARE_DEVICE_TAG;
-        dev->device.common.version  = 0;
-        dev->device.common.module   = const_cast<hw_module_t*>(module);
-        dev->device.common.close    = poll__close;
-        dev->device.activate        = poll__activate;
-        dev->device.setDelay        = poll__setDelay;
-        dev->device.poll            = poll__poll;
+    *device = &dev->device.common;
+    status = 0;
 
-        *device = &dev->device.common;
-        status = 0;
-
-        return status;
+    return status;
 }
 

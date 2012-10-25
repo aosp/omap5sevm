@@ -49,7 +49,8 @@ protected:
 public:
             SensorBase(
                     const char* dev_name,
-                    const char* data_name);
+                    const char* data_name,
+                    int device_event_fd);
 
     virtual ~SensorBase();
 

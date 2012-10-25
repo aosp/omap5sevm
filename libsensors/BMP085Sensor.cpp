@@ -28,8 +28,8 @@
 
 /*****************************************************************************/
 
-BMP085Sensor::BMP085Sensor()
-    : SensorBase(NULL, "bmp085"),
+BMP085Sensor::BMP085Sensor(int device_fd)
+    : SensorBase(NULL, PRESS_INPUT_NAME, device_fd),
       mEnabled(0),
       mPendingMask(0),
       mInputReader(32),
