@@ -24,3 +24,6 @@
 
 #for MODEM
 /dev/hsi0                 0660   radio     radio
+
+#BlueTI- for BT Dial Up Networking
+/dev/rfcomm0              0660   bluetooth   bluetooth
